@@ -7,7 +7,7 @@ const MainScreen = ({ navigation }) => {
 //   };
 //ejemplo de que colocar en cada touchable opacity: onPress={() => navigateToCRUDComponent('Componente1')}
 
-  let backgroundImageSource = 'https://i.blogs.es/5f74ce/1366_2000/1366_2000.jpeg';
+  let backgroundImageSource = "https://i.blogs.es/5f74ce/1366_2000/1366_2000.jpeg";
   return (
     <ImageBackground
       source={(backgroundImageSource)}
