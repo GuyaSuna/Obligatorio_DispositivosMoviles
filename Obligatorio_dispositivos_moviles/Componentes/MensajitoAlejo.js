@@ -5,6 +5,7 @@ const MensajitoNahuel = () => {
   return (
     <View>
       <Text> Hola pibres, estoy haciendo pruebitas</Text>
+      <Text>A ver ramita</Text>
       
     </View>
   )
