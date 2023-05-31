@@ -12,6 +12,7 @@ const MainScreen = ({ navigation }) => {
     <ImageBackground
       source={(backgroundImageSource)}
       style={styles.background}
+      resizeMode="cover"
       imageStyle={styles.backgroundImage}
     >
       <View style={styles.overlay}>

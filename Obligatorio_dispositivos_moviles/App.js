@@ -8,10 +8,10 @@ import MainScreen from './Componentes/PaginaPrincipal';
 const App = () => {
   return (
 
-    <View style={styles.container}>     
+    <>     
       <MainScreen/>     
 
-    </View>
+    </>
   );
 };
 
