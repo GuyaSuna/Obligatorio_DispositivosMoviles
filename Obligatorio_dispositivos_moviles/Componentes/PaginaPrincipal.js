@@ -10,7 +10,7 @@ const MainScreen = ({ navigation }) => {
   let backgroundImageSource = "https://i.blogs.es/5f74ce/1366_2000/1366_2000.jpeg";
   return (
     <ImageBackground
-      source={(backgroundImageSource)}
+      source={{ uri: backgroundImageSource }}
       style={styles.background}
       resizeMode="cover"
       imageStyle={styles.backgroundImage}
