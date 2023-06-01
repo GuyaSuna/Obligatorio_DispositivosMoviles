@@ -1,7 +1,7 @@
 import React from 'react'
 import { View , Text, Button } from 'react-native'
 
-const MensajitoNahuel = () => {
+const MensajitoAlejo = () => {
   return (
     <View>
       <Text> Hola pibres, estoy haciendo pruebitas</Text>
@@ -11,4 +11,4 @@ const MensajitoNahuel = () => {
   )
 }
 
-export default MensajitoNahuel
+export default MensajitoAlejo
