@@ -1,13 +1,20 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
+import React from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
+} from "react-native";
 
 const MainScreen = ({ navigation }) => {
-//   const navigateToCRUDComponent = (componentName) => {
-//     navigation.navigate(componentName);
-//   };
-//ejemplo de que colocar en cada touchable opacity: onPress={() => navigateToCRUDComponent('Componente1')}
+  //   const navigateToCRUDComponent = (componentName) => {
+  //     navigation.navigate(componentName);
+  //   };
+  //ejemplo de que colocar en cada touchable opacity: onPress={() => navigateToCRUDComponent('Componente1')}
 
-  let backgroundImageSource = "https://i.blogs.es/5f74ce/1366_2000/1366_2000.jpeg";
+  let backgroundImageSource =
+    "https://i.blogs.es/5f74ce/1366_2000/1366_2000.jpeg";
   return (
     <ImageBackground
       source={{ uri: backgroundImageSource }}
@@ -16,40 +23,22 @@ const MainScreen = ({ navigation }) => {
       imageStyle={styles.backgroundImage}
     >
       <View style={styles.overlay}>
-        <TouchableOpacity
-          style={styles.button}
-          
-        >
+        <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Componente 1</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-         
-        >
+        <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Componente 2</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-        
-        >
+        <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Componente 3</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-         
-        >
+        <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Componente 4</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-         
-        >
+        <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Componente 5</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          
-        >
+        <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Componente 6</Text>
         </TouchableOpacity>
       </View>
@@ -60,32 +49,32 @@ const MainScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
   backgroundImage: {
     opacity: 0.5,
   },
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
   },
   button: {
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     width: 200,
     height: 40,
     borderRadius: 10,
     marginBottom: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderWidth: 2,
-    borderColor: 'white',
+    borderColor: "white",
   },
   buttonText: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: 'white',
+    fontWeight: "bold",
+    color: "white",
   },
 });
 
