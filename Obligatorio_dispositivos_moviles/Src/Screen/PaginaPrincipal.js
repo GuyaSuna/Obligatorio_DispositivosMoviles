@@ -24,19 +24,19 @@ const MainScreen = ({ navigation }) => {
     >
       <View style={styles.overlay}>
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Componente 1</Text>
+          <Text style={styles.buttonText}>USUARIOS</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Componente 2</Text>
+          <Text style={styles.buttonText}>ZONAS</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Componente 3</Text>
+          <Text style={styles.buttonText}>INSUMOS</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Componente 4</Text>
+          <Text style={styles.buttonText}>OBSERVACIONES</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Componente 5</Text>
+          <Text style={styles.buttonText}>TRATAMIENTOS</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Componente 6</Text>
