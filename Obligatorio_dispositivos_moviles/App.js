@@ -8,7 +8,7 @@ const App = () => {
 
     <>     
       <MainScreen/>     
-
+      <View>Manga de putos</View>
     </>
   );
 };
