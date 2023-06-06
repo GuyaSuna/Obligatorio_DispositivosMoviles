@@ -5,10 +5,9 @@ import MainScreen from './Src/Screen/PaginaPrincipal';
 
 const App = () => {
   return (
-
     <>     
       <MainScreen/>     
-      <View>Manga de putos</View>
+      <View>Manga de putos</View>     
     </>
   );
 };
@@ -19,6 +18,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
 });
 
 export default App;
