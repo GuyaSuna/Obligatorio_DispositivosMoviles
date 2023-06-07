@@ -1,15 +1,11 @@
 import React from 'react';
 import { StyleSheet, View , Text } from 'react-native';
 import MainScreen from './Src/Screen/PaginaPrincipal';
-
+import Navigation from './Src/Routes/Navigation';
 
 const App = () => {
   return (
-
-    <>     
-      <MainScreen/>     
-     
-    </>
+<Navigation/>
   );
 };
 
