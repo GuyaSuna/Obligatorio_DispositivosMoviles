@@ -1,13 +1,12 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const BotonPrincipal = ({ title = 'Fallo', btnIcon = 'user-plus', onPress = () => console.log('click') }) => {
+const BotonPrincipal = ({
+  title = 'Fallo',
+  btnIcon = 'user-plus',
+  onPress = () => console.log('click')
+}) => {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
       <View style={styles.container}>
@@ -25,21 +24,20 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   button: {
-    backgroundColor: "transparent",
-
+    backgroundColor: 'rgba(0, 128, 0, 0.5)',
     width: 150,
-    height: 180,
+    height: 100,
     borderRadius: 10,
     marginBottom: 10,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     borderWidth: 2,
-    borderColor: "black",
+    borderColor: 'black',
   },
   text: {
     fontSize: 16,
-    fontWeight: "bold",
-    color: "white",
+    fontWeight: 'bold',
+    color: 'white',
   },
 });
 
