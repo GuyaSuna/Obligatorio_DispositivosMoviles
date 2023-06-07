@@ -31,7 +31,7 @@ const Navigation = () => {
             <Stack.Navigator >  
                 
                 <Stack.Screen
-          name="HomeScreen"
+          name="PaginaPrincipal"
           component={PaginaPrincipal}
           options={{
             headerTitle: "Bienvenido!",
