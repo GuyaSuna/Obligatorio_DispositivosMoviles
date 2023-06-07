@@ -1,7 +1,9 @@
 import React from "react";
 import {Text, Box, ScrollView, FormControl} from "native-base"
 
-const Form = () => {
+
+
+export const Form = () => {
   return (
     <ScrollView w="100%">
       <Stack

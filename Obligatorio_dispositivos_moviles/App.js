@@ -6,8 +6,7 @@ import MainScreen from './Src/Screen/PaginaPrincipal';
 const App = () => {
   return (
     <>     
-      <MainScreen/>     
-      <View>Manga de putos</View>     
+      <MainScreen/>    
     </>
   );
 };
