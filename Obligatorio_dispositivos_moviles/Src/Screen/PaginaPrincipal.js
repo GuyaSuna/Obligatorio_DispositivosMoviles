@@ -14,7 +14,7 @@ import Menu from "../Componentes/Menu";
 const MainScreen = ({ navigation }) => {
  
 
-  let backgroundImageSource = "https://i.blogs.es/5f74ce/1366_2000/1366_2000.jpeg";
+  let backgroundImageSource = "https://p4.wallpaperbetter.com/wallpaper/106/443/591/love-heart-love-heart-wallpaper-preview.jpg";
   return (
     <ImageBackground
       source={{ uri: backgroundImageSource }}

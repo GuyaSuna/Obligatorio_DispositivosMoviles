@@ -11,14 +11,12 @@ const Menu = ({ navigation }) => {
             <View style={styles.viewContainerFirstColumn}>
               <BotonPrincipal
                 title="Usuarios"
-                btnColor="green"
                 btnIcon="user-plus"
                 onPress={() => navigation.navigate("Usuarios")}
               />
 
               <BotonPrincipal
                 title="Zonas"
-                btnColor="orange"
                 btnIcon="user-circle"
                 onPress={() => navigation.navigate("Zonas")}
               />
@@ -27,7 +25,6 @@ const Menu = ({ navigation }) => {
             <View style={styles.viewContainerSecondColumn}>
               <BotonPrincipal
                 title="Insumos"
-                btnColor="blue"
                 btnIcon="user-circle-o"
                 onPress={() => navigation.navigate("Insumos")}
               />
@@ -44,14 +41,12 @@ const Menu = ({ navigation }) => {
             <View style={styles.viewContainerFirstColumn}>
               <BotonPrincipal
                 title="Tratamientos"
-                btnColor="red"
                 btnIcon="heart"
                 onPress={() => navigation.navigate("Tratamientos")}
               />
 
               <BotonPrincipal
                 title="Por las dudas"
-                btnColor="purple"
                 btnIcon="star"
                 onPress={() => navigation.navigate("")}
               />
@@ -60,14 +55,12 @@ const Menu = ({ navigation }) => {
             <View style={styles.viewContainerSecondColumn}>
               <BotonPrincipal
                 title="Por las dudas"
-                btnColor="pink"
                 btnIcon="bookmark"
                 onPress={() => navigation.navigate("")}
               />
 
               <BotonPrincipal
                 title="Por las dudas"
-                btnColor="yellow"
                 btnIcon="bell"
                 onPress={() => navigation.navigate("")}
               />
@@ -82,7 +75,6 @@ const Menu = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
   },
   scrollViewContainer: {
     flexGrow: 1,
