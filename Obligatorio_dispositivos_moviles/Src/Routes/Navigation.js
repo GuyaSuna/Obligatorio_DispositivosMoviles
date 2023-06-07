@@ -31,16 +31,19 @@ const Navigation = () => {
           name="PaginaPrincipal"
           component={PaginaPrincipal}
           options={{
-            headerTitle: "Bienvenido!",
+            headerTitle: "Fruit Farm",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
               fontWeight: "bold",
             },
+            headerTitleAlign: "center",
+            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
           }}
         />
+
         <Stack.Screen
           name="Usuarios"
           component={User}
