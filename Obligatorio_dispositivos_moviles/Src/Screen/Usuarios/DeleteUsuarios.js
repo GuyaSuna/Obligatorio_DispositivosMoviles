@@ -5,7 +5,8 @@ import MyText from "../../Componentes/MyText";
 import MyInputText from '../../Componentes/MyInputText';
 import MySingleButton from '../../Componentes/MySingleButton';
 
-import DatabaseConnection from '../../DataBase/dbConnection";
+//Conexion con la basede datos
+import DatabaseConnection from "../../DataBase/dbConnection";
 const db = DatabaseConnection.getConnection();
 
 const DeleteUser = () => {

@@ -65,7 +65,7 @@ const Navigation = () => {
           name="Insumos"
           component={ScreenInsumos}
           options={{
-            title: "Registrar Usuario",
+            title: "Insumos",
             headerStyle: {
               backgroundColor: "#f4511e",
             },
