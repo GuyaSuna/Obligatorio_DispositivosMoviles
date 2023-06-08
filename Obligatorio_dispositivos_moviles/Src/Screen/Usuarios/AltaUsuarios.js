@@ -80,7 +80,7 @@ const clearData = () =>{
 
 
     return ( 
-        <View>Espera mostro, estamos en mantenimiento ;D</View>
+        <View>Espera mostro, estamos en mantenimiento jeje ;D</View>
      );
 }
  

@@ -103,7 +103,7 @@ const EditUser = () => {
 
     return ( 
     
-    <View>Aca va el formulario </View>
+    <View>Aca va el formulario xd  </View>
      );
 }
  
