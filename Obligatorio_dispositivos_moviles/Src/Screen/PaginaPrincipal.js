@@ -9,7 +9,7 @@ import {
   ScrollView
 } from "react-native";
 import BotonPrincipal from "../Componentes/BotonPrincipal";
-import Menu from "../Componentes/Menu";
+
 
 const MainScreen = ({ navigation }) => {
  

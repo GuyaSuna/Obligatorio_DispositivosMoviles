@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import MyInputText from "../../Componentes/MyInputText";
+
 import MySingleButton from "../../Componentes/MySingleButton";
 import DatabaseConnection from "../../DataBase/dbConnection";
 import { useNavigation } from "@react-navigation/native";
@@ -108,8 +109,7 @@ const AddInsumo = () => {
                 value={insumoCantidad}
               />
 
-              <MySingleButton
-                styles={styles.button}
+              <MySingleButton              
                 title="Ingresar"
                 btnColor="green"
                 onPress={addInsumo}
