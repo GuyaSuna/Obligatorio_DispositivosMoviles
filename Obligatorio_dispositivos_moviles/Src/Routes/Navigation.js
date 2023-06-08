@@ -13,6 +13,7 @@ import Zonas from "../Screen/Zonas/Zonas";
 import AddInsumo from "../Screen/Insumos/AddInsumo";
 import DeleteInsumo from "../Screen/Insumos/DeleteInsumo";
 import EditInsumo from "../Screen/Insumos/EditInsumo";
+import ViewAllInsumos from "../Screen/Insumos/ViewAllInsumos";
 
 const Stack = createStackNavigator();
 
@@ -109,6 +110,20 @@ const Navigation = () => {
           component={EditInsumo}
           options={{
             title: "EDITAR INSUMOS",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="ViewAllInsumos"
+          component={ViewAllInsumos}
+          options={{
+            title: "INSUMOS",
             headerStyle: {
               backgroundColor: "#f4511e",
             },

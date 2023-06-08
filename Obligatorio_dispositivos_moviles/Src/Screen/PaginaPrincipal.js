@@ -1,20 +1,16 @@
 import React from "react";
 import {
   View,
-  Text,
-  TouchableOpacity,
   StyleSheet,
   ImageBackground,
   SafeAreaView,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import BotonPrincipal from "../Componentes/BotonPrincipal";
-import Menu from "../Componentes/Menu";
 
 const MainScreen = ({ navigation }) => {
- 
-
-  let backgroundImageSource = "https://image.winudf.com/v2/image/Y29tLkZydWl0V0xQUF9zY3JlZW5fMF8xNTEwOTUzNDYxXzAwMA/screen-0.webp?fakeurl=1&type=.webp";
+  let backgroundImageSource =
+    "https://image.winudf.com/v2/image/Y29tLkZydWl0V0xQUF9zY3JlZW5fMF8xNTEwOTUzNDYxXzAwMA/screen-0.webp?fakeurl=1&type=.webp";
   return (
     <ImageBackground
       source={{ uri: backgroundImageSource }}
@@ -22,72 +18,72 @@ const MainScreen = ({ navigation }) => {
       resizeMode="cover"
       imageStyle={styles.backgroundImage}
     >
-       <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-        <View style={styles.viewContainer}>
-          <View style={styles.generalContainer}>
-            <View style={styles.viewContainerFirstColumn}>
-              <BotonPrincipal
-                title="Usuarios"
-                btnIcon="user-circle"
-                onPress={() => navigation.navigate("Usuarios")}
-              />
+      <SafeAreaView style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+          <View style={styles.viewContainer}>
+            <View style={styles.generalContainer}>
+              <View style={styles.viewContainerFirstColumn}>
+                <BotonPrincipal
+                  title="Usuarios"
+                  btnIcon="user-circle"
+                  onPress={() => navigation.navigate("Usuarios")}
+                />
 
-              <BotonPrincipal
-                title="Zonas"
-                btnIcon="map"
-                onPress={() => navigation.navigate("Zonas")}
-              />
+                <BotonPrincipal
+                  title="Zonas"
+                  btnIcon="map"
+                  onPress={() => navigation.navigate("Zonas")}
+                />
+              </View>
+
+              <View style={styles.viewContainerSecondColumn}>
+                <BotonPrincipal
+                  title="Insumos"
+                  btnIcon="flask"
+                  onPress={() => navigation.navigate("Insumos")}
+                />
+
+                <BotonPrincipal
+                  title=" Observaciones"
+                  btnIcon="eye"
+                  onPress={() => navigation.navigate("Observaciones")}
+                />
+              </View>
             </View>
 
-            <View style={styles.viewContainerSecondColumn}>
-              <BotonPrincipal
-                title="Insumos"
-                btnIcon="flask"
-                onPress={() => navigation.navigate("Insumos")}
-              />
+            <View style={styles.generalContainer}>
+              <View style={styles.viewContainerFirstColumn}>
+                <BotonPrincipal
+                  title="Tratamientos"
+                  btnIcon="heart"
+                  onPress={() => navigation.navigate("Tratamientos")}
+                />
 
-              <BotonPrincipal
-                title=" Observaciones"
-                btnIcon="eye"
-                onPress={() => navigation.navigate("Observaciones")}
-              />
+                <BotonPrincipal
+                  title="Por las dudas"
+                  btnIcon="star"
+                  onPress={() => navigation.navigate("")}
+                />
+              </View>
+
+              <View style={styles.viewContainerSecondColumn}>
+                <BotonPrincipal
+                  title="Por las dudas"
+                  btnIcon="bookmark"
+                  onPress={() => navigation.navigate("")}
+                />
+
+                <BotonPrincipal
+                  title="Por las dudas"
+                  btnIcon="map"
+                  onPress={() => navigation.navigate("")}
+                />
+              </View>
             </View>
           </View>
-
-          <View style={styles.generalContainer}>
-            <View style={styles.viewContainerFirstColumn}>
-              <BotonPrincipal
-                title="Tratamientos"
-                btnIcon="heart"
-                onPress={() => navigation.navigate("Tratamientos")}
-              />
-
-              <BotonPrincipal
-                title="Por las dudas"
-                btnIcon="star"
-                onPress={() => navigation.navigate("")}
-              />
-            </View>
-
-            <View style={styles.viewContainerSecondColumn}>
-              <BotonPrincipal
-                title="Por las dudas"
-                btnIcon="bookmark"
-                onPress={() => navigation.navigate("")}
-              />
-
-              <BotonPrincipal
-                title="Por las dudas"
-                btnIcon="map"
-                onPress={() => navigation.navigate("")}
-              />
-            </View>
-          </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  </ImageBackground>
+        </ScrollView>
+      </SafeAreaView>
+    </ImageBackground>
   );
 };
 
@@ -113,7 +109,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
-
   },
   viewContainerSecondColumn: {
     flex: 1,
@@ -131,18 +126,13 @@ const styles = StyleSheet.create({
 
 export default MainScreen;
 
-
-
-
-
-
-
-
-{/* <ImageBackground
+{
+  /* <ImageBackground
       source={{ uri: backgroundImageSource }}
       style={styles.background}
       resizeMode="cover"
       imageStyle={styles.backgroundImage}
     >
      <Menu navigation={navigation}/>
-    </ImageBackground> */}
+    </ImageBackground> */
+}

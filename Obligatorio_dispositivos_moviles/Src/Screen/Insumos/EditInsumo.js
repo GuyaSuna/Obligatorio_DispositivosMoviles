@@ -12,11 +12,12 @@ import MyInputText from "../../Componentes/MyInputText";
 import MySingleButton from "../../Componentes/MySingleButton";
 import { useNavigation } from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection";
+import BotonPrincipal from "../../Componentes/BotonPrincipal";
 
 const db = DatabaseConnection.getConnection();
 
 const EditInsumo = () => {
-  // Estados
+  //Definimos un estado local para guardar los datos de Insumos
 
   const [insumoName, setInsumoName] = useState("");
   const [insumoCantidad, setInsumoCantidad] = useState("");

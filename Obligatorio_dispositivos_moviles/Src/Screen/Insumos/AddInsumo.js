@@ -10,6 +10,7 @@ import MyInputText from "../../Componentes/MyInputText";
 import MySingleButton from "../../Componentes/MySingleButton";
 import DatabaseConnection from "../../DataBase/dbConnection";
 import { useNavigation } from "@react-navigation/native";
+import BotonPrincipal from "../../Componentes/BotonPrincipal";
 
 const db = DatabaseConnection.getConnection();
 
