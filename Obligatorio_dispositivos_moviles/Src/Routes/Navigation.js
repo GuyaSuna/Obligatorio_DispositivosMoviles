@@ -1,53 +1,53 @@
-import React from 'react'
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Menu from '../Componentes/Menu';
-import PaginaPrincipal from '../Screen/PaginaPrincipal'
+import Menu from "../Componentes/Menu";
+import PaginaPrincipal from "../Screen/PaginaPrincipal";
 
-import { Button , Icon} from 'react-native';
-import User from '../Screen/Usuarios/User';
-import Insumos from '../Screen/Insumos/Insumos';
-import Observaciones from '../Screen/Observaciones/Observaciones'
-import Tratamientos from '../Screen/Tratamientos/Tratamientos'
-import Zonas from '../Screen/Zonas/Zonas';
-
-
+import { Button, Icon } from "react-native";
+import User from "../Screen/Usuarios/User";
+import ScreenInsumos from "../Screen/Insumos/ScreenInsumos";
+import Observaciones from "../Screen/Observaciones/Observaciones";
+import Tratamientos from "../Screen/Tratamientos/Tratamientos";
+import Zonas from "../Screen/Zonas/Zonas";
+import AddInsumo from "../Screen/Insumos/AddInsumo";
+import DeleteInsumo from "../Screen/Insumos/DeleteInsumo";
+import EditInsumo from "../Screen/Insumos/EditInsumo";
 
 const Stack = createStackNavigator();
 
 const screenOptions = {
-    headerStyle: {
-        backgroundColor: "#f4511e",
-      },
-    headerTintColor: "#fff",
-    headerTitleStyle: {
-        fontWeight: "bold",
-    }
-}
+  headerStyle: {
+    backgroundColor: "#f4511e",
+  },
+  headerTintColor: "#fff",
+  headerTitleStyle: {
+    fontWeight: "bold",
+  },
+};
 
 const Navigation = () => {
   return (
     <NavigationContainer>
-            <Stack.Navigator >  
-                
-            <Stack.Screen
-  name="PaginaPrincipal"
-  component={PaginaPrincipal}
-  options={{
-    headerTitle: "Fruit Farm",
-    headerStyle: {
-      backgroundColor: "#95C117",
-    },
-    headerTintColor: "#fff",
-    headerTitleStyle: {
-      fontWeight: "bold",
-    },
-    headerTitleAlign: "center",
-    headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
-  }}
-/>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="PaginaPrincipal"
+          component={PaginaPrincipal}
+          options={{
+            headerTitle: "Fruit Farm",
+            headerStyle: {
+              backgroundColor: "#95C117",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            headerTitleAlign: "center",
+            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
+          }}
+        />
 
-                <Stack.Screen
+        <Stack.Screen
           name="Usuarios"
           component={User}
           options={{
@@ -61,9 +61,9 @@ const Navigation = () => {
             },
           }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="Insumos"
-          component={Insumos}
+          component={ScreenInsumos}
           options={{
             title: "Registrar Usuario",
             headerStyle: {
@@ -75,7 +75,50 @@ const Navigation = () => {
             },
           }}
         />
-         <Stack.Screen
+        <Stack.Screen
+          name="AddInsumo"
+          component={AddInsumo}
+          options={{
+            title: "INGRESO DE INSUMOS",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="DeleteInsumo"
+          component={DeleteInsumo}
+          options={{
+            title: "ELIMINAR INSUMOS",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+
+        <Stack.Screen
+          name="EditInsumo"
+          component={EditInsumo}
+          options={{
+            title: "EDITAR INSUMOS",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+        <Stack.Screen
           name="Zonas"
           component={Zonas}
           options={{
@@ -89,7 +132,7 @@ const Navigation = () => {
             },
           }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="Observaciones"
           component={Observaciones}
           options={{
@@ -103,7 +146,7 @@ const Navigation = () => {
             },
           }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="Tratamientos"
           component={Tratamientos}
           options={{
@@ -117,10 +160,12 @@ const Navigation = () => {
             },
           }}
         />
+           
+       
 
            </Stack.Navigator>
     </NavigationContainer>                
   )
 }
 
-export default Navigation
+export default Navigation;

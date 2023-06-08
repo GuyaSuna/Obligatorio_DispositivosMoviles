@@ -1,20 +1,22 @@
 import React, { useState } from "react";
 import {
   StyleSheet,
-  SafeAreaView,
   View,
+  SafeAreaView,
   ScrollView,
   KeyboardAvoidingView,
+  Alert,
 } from "react-native";
+// import MyText from "../../Componentes/MyText"; Lo vamos a usar para el buscador.
 import MyInputText from "../../Componentes/MyInputText";
 import MySingleButton from "../../Componentes/MySingleButton";
-import DatabaseConnection from "../../DataBase/dbConnection";
 import { useNavigation } from "@react-navigation/native";
+import DatabaseConnection from "../../DataBase/dbConnection";
 
 const db = DatabaseConnection.getConnection();
 
-const AddInsumo = () => {
-  // Estados para los campos del forumulario
+const EditInsumo = () => {
+  // Estados
 
   const [insumoName, setInsumoName] = useState("");
   const [insumoCantidad, setInsumoCantidad] = useState("");
@@ -31,42 +33,7 @@ const AddInsumo = () => {
     setInsumoCantidad(insumoCantidad);
   };
 
-  // Metodo para guardar el formulario
-
-  const addInsumo = () => {
-    // console.log("### ADD INSUMO ###");
-
-    if (validateData()) {
-      // console.log("### Guardar Insumo ###");
-
-      db.transaction((tx) => {
-        tx.executeSql(
-          "INSERT INTO insumos (insumoName, insumoCantidad) VALUES (?,?)",
-          [insumoName, insumoCantidad],
-          (tx, results) => {
-            if (results.rowsAffected > 0) {
-              Alert.alert(
-                "Insumo agregado correctamente",
-                [
-                  {
-                    text: "OK",
-                    onPress: () => navigation.navigate("HomeScreen"),
-                  },
-                ],
-                {
-                  cancelable: false,
-                }
-              );
-              clearData();
-            } else {
-              Alert.alert("Error al agregar el Insumo.");
-            }
-          }
-        );
-      });
-    }
-  };
-  // Metodo para validar los datos
+  // Metodo con el que validamos datos.
 
   const validateData = () => {
     if (insumoName === "" && !insumoName.trim()) {
@@ -86,8 +53,32 @@ const AddInsumo = () => {
     setInsumoCantidad("");
   };
 
-  // Formulario de registro de insumos.
-
+  const editUser = () => {
+    if (validateData) {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "UPDATE insumos set insumoName=?, insumoCantidad=? WHERE insumoName=?",
+          [insumoName, insumoCantidad],
+          (_, results) => {
+            if (results.rowsAffected > 0) {
+              clearData();
+              Alert.alert("Insumo actualizado satisfactoriamente.", [
+                {
+                  text: "OK",
+                  onPress: () => navigation.navigate("PaginaPrincipal"),
+                },
+                {
+                  cancelable: false,
+                },
+              ]);
+            } else {
+              Alert.alert("Error al actualizar el Insumo.");
+            }
+          }
+        );
+      });
+    }
+  };
   return (
     <SafeAreaView>
       <View>
@@ -109,10 +100,9 @@ const AddInsumo = () => {
               />
 
               <MySingleButton
-                styles={styles.button}
-                title="Ingresar"
+                title="Editar Insumo"
                 btnColor="green"
-                onPress={addInsumo}
+                onPress={EditInsumo}
               />
             </KeyboardAvoidingView>
           </ScrollView>
@@ -122,20 +112,28 @@ const AddInsumo = () => {
   );
 };
 
+export default EditInsumo;
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center" },
-  button: {
+  container: {
     flex: 1,
-    alignContent: "center",
-    alignItems: "center",
-    backgroundColor: "black",
-    color: "white",
+  },
+  viewContainer: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  generalView: {
+    flex: 1,
+  },
+  textStyle: {
     padding: 10,
-    marginTop: 10,
-    marginLeft: 35,
-    marginRight: 35,
-    borderRadius: 5,
+    marginLeft: 20,
+    color: "black",
+  },
+  input: {
+    padding: 15,
+  },
+  keyboardView: {
+    flex: 1,
+    justifyContent: "space-between",
   },
 });
-
-export default AddInsumo;
