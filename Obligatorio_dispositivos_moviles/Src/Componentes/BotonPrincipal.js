@@ -5,20 +5,23 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const BotonPrincipal = ({
 
   title = 'Fallo',
-  btnIcon = ' ',
+  btnIcon = '',
+  btnColor = '',
   onPress = () => console.log('click')
 }) => {
   return (
 
-   <TouchableOpacity style={styles.button} onPress={onPress}>
+   <TouchableOpacity style={btnIcon ? styles.button : styles.button2} onPress={onPress}>
            <View style={styles.container}>
-        {btnIcon != ' ' &&  <Icon name={btnIcon} size={40} color="white" />}
+        {btnIcon != '' &&  <Icon name={btnIcon} size={40} color="white" />}
         <Text style={styles.text}>{title}</Text>
       </View>
    </TouchableOpacity>
 
   );
+  
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -30,7 +33,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: "center",
     alignItems: "center",
-    backgroundColor: "black",
+    backgroundColor: "green",
+    borderColor: 'black',
     color: "white",
     padding: 10,
     marginTop: 10,
