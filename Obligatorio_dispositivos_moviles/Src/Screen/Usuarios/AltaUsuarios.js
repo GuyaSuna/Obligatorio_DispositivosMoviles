@@ -1,6 +1,10 @@
-import { AltRoute } from "@mui/icons-material";
 import React, {useState} from "react";
 import {StyleSheet, Text, View, SafeAreaView, ScrollView, KeyboardAvoidingView,Alert} from "react-native";
+import MyInputText from "../../Componentes/MyInputText";
+import MySingleButton from "../../Componentes/MySingleButton";
+import {useNavigation} from "@react-navigation/native";
+
+const db = DataBaseConnection.getConnection();
 
 const AddUser = () => {
 
@@ -80,8 +84,50 @@ const clearData = () =>{
 
 
     return ( 
-        <View>Espera mostro, estamos en mantenimiento jeje ;D</View>
+        <SafeAreaView style={styles.container}>
+            <View>
+                <View>
+                    <ScrollView>
+                        <KeyboardAvoidingView behavior="padding" style={styles.container}>
+                            <MyInputText
+                            styles={styles.inputUser}
+                            placeholder="Nombre de usuario"
+                            value={userName}
+                            onChangeText={handleUserName}
+                            />
+                            <MyInputText 
+                            styles={styles.inputPassword}
+                            placeholder="Contraseña"
+                            value={password}
+                            onChangeText={handlePassword}
+                            minLength={8}
+                            maxLength={16}
+                            />
+                            <MyInputText
+                            styles={styles.inputEmail}
+                            placeholder="Correo"
+                            value={email}
+                            onChangeText={handleEmail}
+                            keyboardType="email-address"
+                            />
+                            <MySingleButton
+                            title="Registrar Usuario"
+                            btnColor="green"
+                            onPress={addUser}
+                            />
+                        </KeyboardAvoidingView>
+                    </ScrollView>
+                </View>
+            </View>
+        </SafeAreaView>
      );
 }
  
 export default AddUser;
+
+const styles = StyleSheet.create({
+    container: {},
+    inputUser: {},
+    inputPassword: {},
+    inputEmail: {},
+});
