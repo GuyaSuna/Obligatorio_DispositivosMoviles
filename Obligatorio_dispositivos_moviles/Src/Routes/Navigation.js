@@ -5,7 +5,6 @@ import Menu from "../Componentes/Menu";
 import PaginaPrincipal from "../Screen/PaginaPrincipal";
 
 import { Button, Icon } from "react-native";
-import User from "../Screen/Usuarios/User";
 import ScreenInsumos from "../Screen/Insumos/ScreenInsumos";
 import Observaciones from "../Screen/Observaciones/Observaciones";
 import Tratamientos from "../Screen/Tratamientos/Tratamientos";
@@ -13,6 +12,7 @@ import Zonas from "../Screen/Zonas/Zonas";
 import AddInsumo from "../Screen/Insumos/AddInsumo";
 import DeleteInsumo from "../Screen/Insumos/DeleteInsumo";
 import EditInsumo from "../Screen/Insumos/EditInsumo";
+import ScreenUsuarios from "../Screen/Usuarios/ScreenUsuarios";
 
 const Stack = createStackNavigator();
 
@@ -49,7 +49,7 @@ const Navigation = () => {
 
         <Stack.Screen
           name="Usuarios"
-          component={User}
+          component={ScreenUsuarios}
           options={{
             title: "Registrar Usuario",
             headerStyle: {

@@ -126,8 +126,17 @@ const clearData = () =>{
 export default AddUser;
 
 const styles = StyleSheet.create({
-    container: {},
-    inputUser: {},
-    inputPassword: {},
-    inputEmail: {},
+    container: { flex: 1, justifyContent: "center", alignItems: "center" },
+  button: {
+    flex: 1,
+    alignContent: "center",
+    alignItems: "center",
+    backgroundColor: "black",
+    color: "white",
+    padding: 10,
+    marginTop: 10,
+    marginLeft: 35,
+    marginRight: 35,
+    borderRadius: 5,
+  },
 });
