@@ -8,11 +8,11 @@ const MySingleButton = ({
 }) => {
   return (
     <TouchableOpacity
-      style={[styles.button, { backgroundColor: btnColor }]}
+      styles={[styles.button, { backgroundColor: btnColor }]}
       onPress={onPress}
     >
-      <View style={styles.container}>
-        <Text style={style.text}>{title}</Text>
+      <View styles={styles.container}>
+        <Text styles={styles.text}>{title}</Text>
       </View>
     </TouchableOpacity>
   );

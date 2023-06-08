@@ -100,9 +100,9 @@ const EditInsumo = () => {
               />
 
               <MySingleButton
-                title="Ingresar"
+                title="Editar Insumo"
                 btnColor="green"
-                onPress={addInsumo}
+                onPress={EditInsumo}
               />
             </KeyboardAvoidingView>
           </ScrollView>
@@ -113,3 +113,27 @@ const EditInsumo = () => {
 };
 
 export default EditInsumo;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  viewContainer: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  generalView: {
+    flex: 1,
+  },
+  textStyle: {
+    padding: 10,
+    marginLeft: 20,
+    color: "black",
+  },
+  input: {
+    padding: 15,
+  },
+  keyboardView: {
+    flex: 1,
+    justifyContent: "space-between",
+  },
+});

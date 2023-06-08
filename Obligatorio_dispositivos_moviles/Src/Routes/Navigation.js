@@ -6,10 +6,13 @@ import PaginaPrincipal from "../Screen/PaginaPrincipal";
 
 import { Button, Icon } from "react-native";
 import User from "../Screen/Usuarios/User";
-import Insumos from "../Screen/Insumos/Insumos";
+import ScreenInsumos from "../Screen/Insumos/ScreenInsumos";
 import Observaciones from "../Screen/Observaciones/Observaciones";
 import Tratamientos from "../Screen/Tratamientos/Tratamientos";
 import Zonas from "../Screen/Zonas/Zonas";
+import AddInsumo from "../Screen/Insumos/AddInsumo";
+import DeleteInsumo from "../Screen/Insumos/DeleteInsumo";
+import EditInsumo from "../Screen/Insumos/EditInsumo";
 
 const Stack = createStackNavigator();
 
@@ -60,9 +63,52 @@ const Navigation = () => {
         />
         <Stack.Screen
           name="Insumos"
-          component={Insumos}
+          component={ScreenInsumos}
           options={{
             title: "Registrar Usuario",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="AddInsumo"
+          component={AddInsumo}
+          options={{
+            title: "INGRESO DE INSUMOS",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="DeleteInsumo"
+          component={DeleteInsumo}
+          options={{
+            title: "ELIMINAR INSUMOS",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+
+        <Stack.Screen
+          name="EditInsumo"
+          component={EditInsumo}
+          options={{
+            title: "EDITAR INSUMOS",
             headerStyle: {
               backgroundColor: "#f4511e",
             },

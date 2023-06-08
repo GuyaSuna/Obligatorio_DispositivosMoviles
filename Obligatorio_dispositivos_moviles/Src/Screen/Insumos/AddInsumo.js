@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import {} from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  View,
+  ScrollView,
+  KeyboardAvoidingView,
+} from "react-native";
 import MyInputText from "../../Componentes/MyInputText";
 import MySingleButton from "../../Componentes/MySingleButton";
 import DatabaseConnection from "../../DataBase/dbConnection";
@@ -103,6 +109,7 @@ const AddInsumo = () => {
               />
 
               <MySingleButton
+                styles={styles.button}
                 title="Ingresar"
                 btnColor="green"
                 onPress={addInsumo}
@@ -115,10 +122,20 @@ const AddInsumo = () => {
   );
 };
 
-export default AddInsumo;
-
 const styles = StyleSheet.create({
-  container: {},
-  inputInsumo: {},
-  inputCantidadInsumo: {},
+  container: { flex: 1, justifyContent: "center", alignItems: "center" },
+  button: {
+    flex: 1,
+    alignContent: "center",
+    alignItems: "center",
+    backgroundColor: "black",
+    color: "white",
+    padding: 10,
+    marginTop: 10,
+    marginLeft: 35,
+    marginRight: 35,
+    borderRadius: 5,
+  },
 });
+
+export default AddInsumo;
