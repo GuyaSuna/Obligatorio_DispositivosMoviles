@@ -8,7 +8,7 @@ const Zonas = ({navigation}) => {
       <View style={styles.viewContainer}>
         <View style={styles.generalContainer}>
           <View style={styles.viewContainerFirstColumn}>
-     <BotonPrincipal   onPress={() => navigation.navigate("Usuarios")}
+     <BotonPrincipal   onPress={() => navigation.navigate("AltaZona")}
      btnIcon="plus"
      title='Alta Zona'
      />
