@@ -5,16 +5,16 @@ import {
   TouchableOpacity,
   StyleSheet,
   ImageBackground,
+  SafeAreaView,
+  ScrollView
 } from "react-native";
+import BotonPrincipal from "../Componentes/BotonPrincipal";
+import Menu from "../Componentes/Menu";
 
 const MainScreen = ({ navigation }) => {
-  //   const navigateToCRUDComponent = (componentName) => {
-  //     navigation.navigate(componentName);
-  //   };
-  //ejemplo de que colocar en cada touchable opacity: onPress={() => navigateToCRUDComponent('Componente1')}
+ 
 
-  let backgroundImageSource =
-    "https://i.blogs.es/5f74ce/1366_2000/1366_2000.jpeg";
+  let backgroundImageSource = "https://image.winudf.com/v2/image/Y29tLkZydWl0V0xQUF9zY3JlZW5fMF8xNTEwOTUzNDYxXzAwMA/screen-0.webp?fakeurl=1&type=.webp";
   return (
     <ImageBackground
       source={{ uri: backgroundImageSource }}
@@ -22,31 +22,104 @@ const MainScreen = ({ navigation }) => {
       resizeMode="cover"
       imageStyle={styles.backgroundImage}
     >
-      <View style={styles.overlay}>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>USUARIOS</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>ZONAS</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>INSUMOS</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>OBSERVACIONES</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>TRATAMIENTOS</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Componente 6</Text>
-        </TouchableOpacity>
-      </View>
-    </ImageBackground>
+       <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+        <View style={styles.viewContainer}>
+          <View style={styles.generalContainer}>
+            <View style={styles.viewContainerFirstColumn}>
+              <BotonPrincipal
+                title="Usuarios"
+                btnIcon="user-circle"
+                onPress={() => navigation.navigate("Usuarios")}
+              />
+
+              <BotonPrincipal
+                title="Zonas"
+                btnIcon="map"
+                onPress={() => navigation.navigate("Zonas")}
+              />
+            </View>
+
+            <View style={styles.viewContainerSecondColumn}>
+              <BotonPrincipal
+                title="Insumos"
+                btnIcon="flask"
+                onPress={() => navigation.navigate("Insumos")}
+              />
+
+              <BotonPrincipal
+                title=" Observaciones"
+                btnIcon="eye"
+                onPress={() => navigation.navigate("Observaciones")}
+              />
+            </View>
+          </View>
+
+          <View style={styles.generalContainer}>
+            <View style={styles.viewContainerFirstColumn}>
+              <BotonPrincipal
+                title="Tratamientos"
+                btnIcon="heart"
+                onPress={() => navigation.navigate("Tratamientos")}
+              />
+
+              <BotonPrincipal
+                title="Por las dudas"
+                btnIcon="star"
+                onPress={() => navigation.navigate("")}
+              />
+            </View>
+
+            <View style={styles.viewContainerSecondColumn}>
+              <BotonPrincipal
+                title="Por las dudas"
+                btnIcon="bookmark"
+                onPress={() => navigation.navigate("")}
+              />
+
+              <BotonPrincipal
+                title="Por las dudas"
+                btnIcon="map"
+                onPress={() => navigation.navigate("")}
+              />
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  scrollViewContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  viewContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 20,
+  },
+  generalContainer: {
+    flexDirection: "row",
+  },
+  viewContainerFirstColumn: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+
+  },
+  viewContainerSecondColumn: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+  },
   background: {
     flex: 1,
     resizeMode: "cover",
@@ -54,28 +127,22 @@ const styles = StyleSheet.create({
   backgroundImage: {
     opacity: 0.5,
   },
-  overlay: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  button: {
-    backgroundColor: "transparent",
-    width: 200,
-    height: 40,
-    borderRadius: 10,
-    marginBottom: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 2,
-    borderColor: "white",
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "white",
-  },
 });
 
 export default MainScreen;
+
+
+
+
+
+
+
+
+{/* <ImageBackground
+      source={{ uri: backgroundImageSource }}
+      style={styles.background}
+      resizeMode="cover"
+      imageStyle={styles.backgroundImage}
+    >
+     <Menu navigation={navigation}/>
+    </ImageBackground> */}
