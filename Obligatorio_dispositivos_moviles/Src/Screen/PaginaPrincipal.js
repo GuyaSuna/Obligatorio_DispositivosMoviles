@@ -14,7 +14,7 @@ import BotonPrincipal from "../Componentes/BotonPrincipal";
 const MainScreen = ({ navigation }) => {
  
 
-  let backgroundImageSource = "https://image.winudf.com/v2/image/Y29tLkZydWl0V0xQUF9zY3JlZW5fMF8xNTEwOTUzNDYxXzAwMA/screen-0.webp?fakeurl=1&type=.webp";
+  let backgroundImageSource = "https://s2.best-wallpaper.net/wallpaper/iphone/1311/Green-nature-branch-leaves-bokeh_iphone_320x480.jpg";
   return (
     <ImageBackground
       source={{ uri: backgroundImageSource }}
