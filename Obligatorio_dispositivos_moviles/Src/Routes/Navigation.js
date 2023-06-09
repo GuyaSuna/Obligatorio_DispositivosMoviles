@@ -4,6 +4,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Button, Icon } from "react-native";
 
 import PaginaPrincipal from "../Screen/PaginaPrincipal";
+
+import { Button, Icon } from "react-native";
+import ScreenInsumos from "../Screen/Insumos/ScreenInsumos";
 import User from "../Screen/Usuarios/User";
 
 import Observaciones from "../Screen/Observaciones/Observaciones";
@@ -18,6 +21,8 @@ import ScreenInsumos from "../Screen/Insumos/ScreenInsumos";
 import AddInsumo from "../Screen/Insumos/AddInsumo";
 import DeleteInsumo from "../Screen/Insumos/DeleteInsumo";
 import EditInsumo from "../Screen/Insumos/EditInsumo";
+import ScreenUsuarios from "../Screen/Usuarios/ScreenUsuarios";
+import AltaUsuario from "../Screen/Usuarios/AltaUsuarios";
 
 const Stack = createStackNavigator();
 
@@ -54,9 +59,23 @@ const Navigation = () => {
 
         <Stack.Screen
           name="Usuarios"
-          component={User}
+          component={ScreenUsuarios}
           options={{
             title: "Registrar Usuario",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Agregar Usuarios"
+          component={AltaUsuario}
+          options={{
+            title: "Alta Usuario",
             headerStyle: {
               backgroundColor: "#f4511e",
             },
@@ -70,7 +89,7 @@ const Navigation = () => {
           name="Insumos"
           component={ScreenInsumos}
           options={{
-            title: "Registrar Usuario",
+            title: "Insumos",
             headerStyle: {
               backgroundColor: "#f4511e",
             },

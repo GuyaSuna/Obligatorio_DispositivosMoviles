@@ -102,9 +102,80 @@ const EditUser = () => {
         };                    
 
     return ( 
+        <SafeAreaView style={styles.container}>
+      <View style={styles.viewContainer}>
+        <View style={styles.generalView}>
+          <ScrollView>
+            <KeyboardAvoidingView style={styles.keyboardView}>
+              <MyText textValue="Buscar usuario" textStyle={styles.textStyle} />
+              <MyInputText
+                placeholder="Ingrese el nombre de usuario"
+                onChangeText={handleUserNameSearch}
+                styles={styles.input}
+                value={userNameSearch}
+              />
+              <MySingleButton 
+                title="Buscar" 
+                onPress={searchUser} 
+                btnColor='green'
+              />
+
+            <MyInputText 
+              placeholder="Nombre de usuario"
+              value={userName}
+              onChangeText={handleUserName}
+              />
+
+            <MyInputText 
+              placeholder="Contraseña"
+              value={password}
+              onChangeText={handlePassword}
+            />
+
+            <MyInputText 
+              placeholder="Correo electronico"
+              value={email}
+              onChangeText={handleEmail}
+            />
+
+            <MySingleButton 
+              title="Editar" onPress={() => editUser()} 
+              btnColor='orange'
+              />
+
+            </KeyboardAvoidingView>
+          </ScrollView>
+        </View>
+      </View>
+    </SafeAreaView>
     
-    <View>Aca va el formulario xd  </View>
      );
 }
  
 export default EditUser;
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    viewContainer: {
+      flex: 1,
+      backgroundColor: "white",
+    },
+    generalView: {
+      flex: 1,
+    }, 
+    textStyle: {
+      padding: 10,
+      marginLeft: 20,
+      color: "black",
+    },
+    input: {
+      padding: 15
+    },
+    keyboardView: {
+      flex: 1,
+      justifyContent: "space-between",
+    }
+  });
+  
