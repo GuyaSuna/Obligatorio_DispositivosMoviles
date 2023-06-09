@@ -1,15 +1,20 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Menu from "../Componentes/Menu";
-import PaginaPrincipal from "../Screen/PaginaPrincipal";
-
 import { Button, Icon } from "react-native";
+
+import PaginaPrincipal from "../Screen/PaginaPrincipal";
 import User from "../Screen/Usuarios/User";
-import ScreenInsumos from "../Screen/Insumos/ScreenInsumos";
+
 import Observaciones from "../Screen/Observaciones/Observaciones";
 import Tratamientos from "../Screen/Tratamientos/Tratamientos";
+
 import Zonas from "../Screen/Zonas/Zonas";
+import AltaZona from "../Screen/Zonas/AltaZona";
+import BajaZona from "../Screen/Zonas/BajaZona";
+import ModificarZona from "../Screen/Zonas/ModificarZona";
+
+import ScreenInsumos from "../Screen/Insumos/ScreenInsumos";
 import AddInsumo from "../Screen/Insumos/AddInsumo";
 import DeleteInsumo from "../Screen/Insumos/DeleteInsumo";
 import EditInsumo from "../Screen/Insumos/EditInsumo";
@@ -119,6 +124,7 @@ const Navigation = () => {
             },
           }}
         />
+         
         <Stack.Screen
           name="ViewAllInsumos"
           component={ViewAllInsumos}
@@ -137,14 +143,64 @@ const Navigation = () => {
           name="Zonas"
           component={Zonas}
           options={{
-            title: "Zonas",
+            headerTitle: "Zonas",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
               fontWeight: "bold",
             },
+            headerTitleAlign: "center",
+            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
+          }}
+        />
+         <Stack.Screen
+          name="AltaZona"
+          component={AltaZona}
+          options={{
+            headerTitle: "Alta Zonas",
+            headerStyle: {
+              backgroundColor: "#95C117",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            headerTitleAlign: "center",
+            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
+          }}
+        />
+         <Stack.Screen
+          name="BajaZona"
+          component={BajaZona}
+          options={{
+            headerTitle: "Baja Zonas",
+            headerStyle: {
+              backgroundColor: "#95C117",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            headerTitleAlign: "center",
+            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
+          }}
+        />
+         <Stack.Screen
+          name="ModificarZona"
+          component={ModificarZona}
+          options={{
+            headerTitle: "Modificar Zonas",
+            headerStyle: {
+              backgroundColor: "#95C117",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            headerTitleAlign: "center",
+            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
           }}
         />
         <Stack.Screen
@@ -175,9 +231,12 @@ const Navigation = () => {
             },
           }}
         />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
+           
+       
+
+           </Stack.Navigator>
+    </NavigationContainer>                
+  )
+}
 
 export default Navigation;

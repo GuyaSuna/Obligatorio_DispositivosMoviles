@@ -17,8 +17,6 @@ import DatabaseConnection from "../../DataBase/dbConnection";
 const db = DatabaseConnection.getConnection();
 
 const DeleteInsumo = () => {
-  //Definimos un estado local para guardar los datos de Insumos
-
   const [insumoName, setInsumoName] = useState("");
   const navigation = useNavigation();
 
@@ -27,43 +25,43 @@ const DeleteInsumo = () => {
       Alert.alert("El nombre del usuario es obligatorio.");
       return false;
     }
-
-    db.transaction((tx) => {
-      tx.executeSql(
-        "DELETE FROM insumos WHERE insumoName = ?",
-        [insumoName],
-        (tx, results) => {
-          console.log("Results", results.rowsAffected);
-          if (results.rowsAffected > 0) {
-            Alert.alert(
-              "Usuario borrado correctamente",
-              [
-                {
-                  text: "Ok",
-                  onPress: () => navigation.navigate("PaginaPrincipal"),
-                },
-              ],
-              {
-                cancelable: false,
-              }
-            );
-          } else {
-            Alert.alert(
-              "El item no existe",
-              [
-                {
-                  text: "Ok",
-                  onPress: () => navigation.navigate("PaginaPrincipal"),
-                },
-              ],
-              {
-                cancelable: false,
-              }
-            );
-          }
-        }
-      );
-    });
+    console.log("### Delete Zona ###");
+    // db.transaction((tx) => {
+    //   tx.executeSql(
+    //     "DELETE FROM insumos WHERE insumoName = ?",
+    //     [insumoName],
+    //     (tx, results) => {
+    //       console.log("Results", results.rowsAffected);
+    //       if (results.rowsAffected > 0) {
+    //         Alert.alert(
+    //           "Usuario borrado correctamente",
+    //           [
+    //             {
+    //               text: "Ok",
+    //               onPress: () => navigation.navigate("PaginaPrincipal"),
+    //             },
+    //           ],
+    //           {
+    //             cancelable: false,
+    //           }
+    //         );
+    //       } else {
+    //         Alert.alert(
+    //           "El item no existe",
+    //           [
+    //             {
+    //               text: "Ok",
+    //               onPress: () => navigation.navigate("PaginaPrincipal"),
+    //             },
+    //           ],
+    //           {
+    //             cancelable: false,
+    //           }
+    //         );
+    //       }
+    //     }
+    //   );
+    // });
   };
 
   const handleInsumoName = (insumoname) => {
