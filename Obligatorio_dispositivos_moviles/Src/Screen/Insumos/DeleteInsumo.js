@@ -17,6 +17,8 @@ import DatabaseConnection from "../../DataBase/dbConnection";
 const db = DatabaseConnection.getConnection();
 
 const DeleteInsumo = () => {
+  //Definimos un estado local para guardar los datos de Insumos
+
   const [insumoName, setInsumoName] = useState("");
   const navigation = useNavigation();
 

@@ -16,7 +16,7 @@ import DatabaseConnection from "../../DataBase/dbConnection";
 const db = DatabaseConnection.getConnection();
 
 const EditInsumo = () => {
-  // Estados
+  //Definimos un estado local para guardar los datos de Insumos
 
   const [insumoName, setInsumoName] = useState("");
   const [insumoCantidad, setInsumoCantidad] = useState("");
