@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import MyInputText from "../../Componentes/MyInputText";
 
-import MySingleButton from "../../Componentes/MySingleButton";
+import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import DatabaseConnection from "../../DataBase/dbConnection";
 import { useNavigation } from "@react-navigation/native";
 
@@ -109,7 +109,7 @@ const AddInsumo = () => {
                 value={insumoCantidad}
               />
 
-              <MySingleButton              
+              <BotonPrincipal
                 title="Ingresar"
                 btnColor="green"
                 onPress={addInsumo}

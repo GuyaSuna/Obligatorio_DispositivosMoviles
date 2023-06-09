@@ -1,18 +1,17 @@
-import {React, useState } from 'react'
+import { React, useState } from "react";
 import {
-    StyleSheet,
-    SafeAreaViewBase,
-    View,
-    SafeAreaView,
-    ScrollView,
-    KeyboardAvoidingView,
-
-    Alert,
-  } from "react-native";
-  import MyInputText from '../../Componentes/MyInputText';
-  import MyText from '../../Componentes/MyText'
-  import BotonPrincipal from '../../Componentes/BotonPrincipal'
-  import { useNavigation } from "@react-navigation/native";
+  StyleSheet,
+  SafeAreaViewBase,
+  View,
+  SafeAreaView,
+  ScrollView,
+  KeyboardAvoidingView,
+  Alert,
+} from "react-native";
+import MyInputText from "../../Componentes/MyInputText";
+import MyText from "../../Componentes/MyText";
+import BotonPrincipal from "../../Componentes/BotonPrincipal";
+import { useNavigation } from "@react-navigation/native";
 
 const AltaZona = () => {
   const [userName, setUserName] = useState("");
@@ -21,31 +20,30 @@ const AltaZona = () => {
 
   const navigation = useNavigation();
 
-
   const handleUserName = (userName) => {
     setUserName(userName);
-  }
+  };
 
   const handlePassword = (password) => {
     setPassword(password);
-  }
+  };
 
   const handleEmail = (email) => {
     setEmail(email);
-  }
+  };
 
   const validateData = () => {
-    if(userName === "" && !userName.trim()){
+    if (userName === "" && !userName.trim()) {
       Alert.alert("Error", "El nombre de usuario es obligatorio");
       return false;
     }
 
-    if(password === "" && !password.trim()){
+    if (password === "" && !password.trim()) {
       Alert.alert("Error", "La contraseña es obligatoria");
       return false;
     }
 
-    if(!email.trim()){
+    if (!email.trim()) {
       Alert.alert("Error", "El correo electronico es obligatorio");
       return false;
     }
@@ -54,11 +52,9 @@ const AltaZona = () => {
       Alert.alert("Error", "El correo electronico no es valido");
       return false;
     }
-    
+
     return true;
-  }
-
-
+  };
 
   const addUser = () => {
     // llamar a la validacion de datos
@@ -66,7 +62,7 @@ const AltaZona = () => {
     // llamar al metodo de guardar
     console.log("### add user ###");
 
-    if(validateData()){
+    if (validateData()) {
       console.log("### save user ###");
       // llamar a la db y guarar los datos
       // db.transaction((tx) => {
@@ -89,30 +85,28 @@ const AltaZona = () => {
       //         Alert.alert("Error", "Error al registrar el usuario");
       //       }
       //     }
-        // )
+      // )
       // });
     }
-  }
-
-
+  };
 
   const clearData = () => {
     setUserName("");
     setPassword("");
     setEmail("");
-  }
+  };
   return (
     <SafeAreaView>
       <View>
         <View>
           <ScrollView>
             <KeyboardAvoidingView>
-              <MyInputText 
+              <MyInputText
                 styles={styles.inputUser}
                 placeholder="Nombre de usuario"
                 onChangeText={handleUserName}
                 value={userName}
-                />
+              />
 
               <MyInputText
                 styles={styles.inputPassword}
@@ -132,24 +126,19 @@ const AltaZona = () => {
                 value={email}
               />
 
-              <BotonPrincipal
-                title="Alta Zona"
-                onPress={addUser}
-              />
-
+              <BotonPrincipal title="Alta Zona" onPress={addUser} />
             </KeyboardAvoidingView>
           </ScrollView>
         </View>
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default AltaZona
-
+export default AltaZona;
 
 const styles = StyleSheet.create({
   container: {},
-  inputUser:{},
-  inputPassword:{}
+  inputUser: {},
+  inputPassword: {},
 });

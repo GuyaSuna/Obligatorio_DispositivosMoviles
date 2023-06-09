@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MyInputText from "../../Componentes/MyInputText";
-import MySingleButton from "../../Componentes/MySingleButton";
+import BotonPrincipal from "../../Componentes/BotonPrincipal";
 
 // Coneccion a DB
 import DatabaseConnection from "../../DataBase/dbConnection";
@@ -79,7 +79,7 @@ const DeleteInsumo = () => {
                 value={insumoName}
                 styles={styles.inputStyle}
               />
-              <MySingleButton title="Borrar" onPress={deleteInsumo} />
+              <BotonPrincipal title="Borrar" onPress={deleteInsumo} />
             </KeyboardAvoidingView>
           </ScrollView>
         </View>

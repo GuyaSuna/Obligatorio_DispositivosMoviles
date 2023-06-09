@@ -9,7 +9,7 @@ import {
 } from "react-native";
 // import MyText from "../../Componentes/MyText"; Lo vamos a usar para el buscador.
 import MyInputText from "../../Componentes/MyInputText";
-import MySingleButton from "../../Componentes/MySingleButton";
+import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection";
 
@@ -55,7 +55,7 @@ const EditInsumo = () => {
 
   const EditZona = () => {
     if (validateData) {
-      console.log("### Editar Insumo ###")
+      console.log("### Editar Insumo ###");
       // db.transaction((tx) => {
       //   tx.executeSql(
       //     "UPDATE insumos set insumoName=?, insumoCantidad=? WHERE insumoName=?",
@@ -100,7 +100,7 @@ const EditInsumo = () => {
                 value={insumoCantidad}
               />
 
-              <MySingleButton
+              <BotonPrincipal
                 title="Editar Insumo"
                 btnColor="green"
                 onPress={EditZona}
