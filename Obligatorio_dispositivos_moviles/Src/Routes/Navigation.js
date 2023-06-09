@@ -13,6 +13,7 @@ import AddInsumo from "../Screen/Insumos/AddInsumo";
 import DeleteInsumo from "../Screen/Insumos/DeleteInsumo";
 import EditInsumo from "../Screen/Insumos/EditInsumo";
 import ScreenUsuarios from "../Screen/Usuarios/ScreenUsuarios";
+import AltaUsuario from "../Screen/Usuarios/AltaUsuarios";
 
 const Stack = createStackNavigator();
 
@@ -52,6 +53,20 @@ const Navigation = () => {
           component={ScreenUsuarios}
           options={{
             title: "Registrar Usuario",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Agregar Usuarios"
+          component={AltaUsuario}
+          options={{
+            title: "Alta Usuario",
             headerStyle: {
               backgroundColor: "#f4511e",
             },

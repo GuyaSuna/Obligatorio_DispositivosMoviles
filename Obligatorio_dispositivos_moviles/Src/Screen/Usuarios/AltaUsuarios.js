@@ -6,7 +6,7 @@ import {useNavigation} from "@react-navigation/native";
 
 const db = DataBaseConnection.getConnection();
 
-const AddUser = () => {
+const AltaUsuario = () => {
 
 //Aca definimos los estados de los campos del form
 const [userName, setUserName] = useState("");
@@ -123,7 +123,7 @@ const clearData = () =>{
      );
 }
  
-export default AddUser;
+export default AltaUsuario;
 
 const styles = StyleSheet.create({
     container: { flex: 1, justifyContent: "center", alignItems: "center" },
