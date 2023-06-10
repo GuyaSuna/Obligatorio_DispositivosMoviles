@@ -1,13 +1,13 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Button, Icon } from "react-native";
+
 
 import PaginaPrincipal from "../Screen/PaginaPrincipal";
 
-import { Button, Icon } from "react-native";
-import ScreenInsumos from "../Screen/Insumos/ScreenInsumos";
-import User from "../Screen/Usuarios/User";
+
+
+
 
 import Observaciones from "../Screen/Observaciones/Observaciones";
 import Tratamientos from "../Screen/Tratamientos/Tratamientos";

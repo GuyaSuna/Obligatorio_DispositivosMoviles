@@ -6,7 +6,7 @@ import {
   SafeAreaView,
   ScrollView,
 } from "react-native";
-import BotonPrincipal from "../Componentes/BotonPrincipal";
+import MyBotonPrincipal from "../Componentes/BotonPrincipal";
 
 const MainScreen = ({ navigation }) => {
   let backgroundImageSource =
@@ -23,13 +23,13 @@ const MainScreen = ({ navigation }) => {
           <View style={styles.viewContainer}>
             <View style={styles.generalContainer}>
               <View style={styles.viewContainerFirstColumn}>
-                <BotonPrincipal
+                <MyBotonPrincipal
                   title="Usuarios"
                   btnIcon="user-circle"
                   onPress={() => navigation.navigate("Usuarios")}
                 />
 
-                <BotonPrincipal
+                <MyBotonPrincipal
                   title="Zonas"
                   btnIcon="map"
                   onPress={() => navigation.navigate("Zonas")}
@@ -37,13 +37,13 @@ const MainScreen = ({ navigation }) => {
               </View>
 
               <View style={styles.viewContainerSecondColumn}>
-                <BotonPrincipal
+                <MyBotonPrincipal
                   title="Insumos"
                   btnIcon="flask"
                   onPress={() => navigation.navigate("Insumos")}
                 />
 
-                <BotonPrincipal
+                <MyBotonPrincipal
                   title=" Observaciones"
                   btnIcon="eye"
                   onPress={() => navigation.navigate("Observaciones")}
@@ -53,13 +53,13 @@ const MainScreen = ({ navigation }) => {
 
             <View style={styles.generalContainer}>
               <View style={styles.viewContainerFirstColumn}>
-                <BotonPrincipal
+                <MyBotonPrincipal
                   title="Tratamientos"
                   btnIcon="heart"
                   onPress={() => navigation.navigate("Tratamientos")}
                 />
 
-                <BotonPrincipal
+                <MyBotonPrincipal
                   title="Por las dudas"
                   btnIcon="star"
                   onPress={() => navigation.navigate("")}
@@ -67,13 +67,13 @@ const MainScreen = ({ navigation }) => {
               </View>
 
               <View style={styles.viewContainerSecondColumn}>
-                <BotonPrincipal
+                <MyBotonPrincipal
                   title="Por las dudas"
                   btnIcon="bookmark"
                   onPress={() => navigation.navigate("")}
                 />
 
-                <BotonPrincipal
+                <MyBotonPrincipal
                   title="Por las dudas"
                   btnIcon="map"
                   onPress={() => navigation.navigate("")}

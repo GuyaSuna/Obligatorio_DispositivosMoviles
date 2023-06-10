@@ -1,8 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import React, {useState,}  from 'react';
 import { StyleSheet, View } from 'react-native';
+import DatabaseConnection from '../../DataBase/dbConnection';
 
- const db = DataBaseConnection.getConnection();
+ const db = DatabaseConnection.getConnection();
 const EditUser = () => {
     const [userNameSearch, setUserNameSearch] = useState("");
     const [userName, setUser] = useState("");

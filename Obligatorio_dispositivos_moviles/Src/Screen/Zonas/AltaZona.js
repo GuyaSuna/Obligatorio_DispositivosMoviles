@@ -12,88 +12,108 @@ import MyInputText from "../../Componentes/MyInputText";
 import MyText from "../../Componentes/MyText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
+import DatabaseConnection from "../../DataBase/dbConnection"
 
 const AltaZona = () => {
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const [Lugar, setLugar] = useState("");
+  const [Departamento, setDepartamento] = useState("");
+  const [Cantidad, setCantidad] = useState("");
+  const [Latitud, setLatitud] = useState("");
+  const [Longitud, setLongitud] = useState("");
 
   const navigation = useNavigation();
+  const db = DatabaseConnection.getConnection(); 
 
-  const handleUserName = (userName) => {
-    setUserName(userName);
+  const handleLugar = (lugar) => {
+    setLugar(lugar);
   };
 
-  const handlePassword = (password) => {
-    setPassword(password);
+  const handleDepartamento= (departamento) => {
+    setDepartamento(departamento);
   };
 
-  const handleEmail = (email) => {
-    setEmail(email);
+  const handleCantidad = (cantidad) => {
+    setCantidad(cantidad);
+  };
+
+  const handleLatitud = (latitud) => {
+    setLatitud(latitud);
+  };
+
+  const handleLongitud = (longitud) => {
+    setLongitud(longitud);
   };
 
   const validateData = () => {
-    if (userName === "" && !userName.trim()) {
-      Alert.alert("Error", "El nombre de usuario es obligatorio");
+    if (Lugar === "" && !Lugar.trim()) {
+      Alert.alert("Error", "El Lugar de usuario es obligatorio");
       return false;
     }
 
-    if (password === "" && !password.trim()) {
-      Alert.alert("Error", "La contraseña es obligatoria");
+    if (Departamento === "" && !Departamento.trim()) {
+      Alert.alert("Error", "El Departamento es obligatoria");
       return false;
     }
 
-    if (!email.trim()) {
-      Alert.alert("Error", "El correo electronico es obligatorio");
+    if (isNaN(Cantidad) || Cantidad <= 0) {
+      Alert.alert("Error", "La cantidad debe ser un número válido");
       return false;
     }
-
-    if (!email.includes("@")) {
-      Alert.alert("Error", "El correo electronico no es valido");
+  
+    if (isNaN(Latitud)) {
+      Alert.alert("Error", "La latitud debe ser un número válido");
+      return false;
+    }
+  
+    if (isNaN(Longitud)) {
+      Alert.alert("Error", "La longitud debe ser un número válido");
       return false;
     }
 
     return true;
   };
 
-  const addUser = () => {
+  const addZone = () => {
     // llamar a la validacion de datos
     // si la validacion es correcta
     // llamar al metodo de guardar
     console.log("### add user ###");
 
     if (validateData()) {
-      console.log("### save user ###");
+      console.log("### save zona ###");
+      DatabaseConnection.createZonasTable();
       // llamar a la db y guarar los datos
-      // db.transaction((tx) => {
-      //   tx.executeSql(
-      //     'INSERT INTO users (userName, password, email) VALUES (?, ?, ?)',
-      //     [userName, password, email],
-      //     (tx, results) => {
-      //       if(results.rowsAffected > 0){
-      //         Alert.alert("Exito", "Usuario registrado correctamente", [
-      //           {
-      //             text: "Ok",
-      //             onPress: () => navigation.navigate("HomeScreen"),
-      //           }
-      //         ],
-      //         {
-      //           cancelable: false
-      //         } );
-      //         clearData();
-      //       }else{
-      //         Alert.alert("Error", "Error al registrar el usuario");
-      //       }
-      //     }
-      // )
-      // });
+       db.transaction((tx) => {
+         tx.executeSql(
+           'INSERT INTO Zonas (Lugar, Departamento, Cantidad , Latitud , Longitud) VALUES (?, ?, ?, ?, ?)',
+           [Lugar, Departamento, Cantidad, Latitud, Longitud],
+           (tx, results) => {
+             if(results.rowsAffected > 0){
+               Alert.alert("Exito", "Zona registrado correctamente", [
+                 {
+                   text: "Ok",
+                   onPress: () => navigation.navigate("PaginaPrincipal"),
+                 }
+               ],
+               {
+                 cancelable: false
+               } );
+               clearData();
+             }else{
+               Alert.alert("Error", "Error al registrar la zona");
+             }
+           }
+       )
+       });
     }
   };
 
   const clearData = () => {
-    setUserName("");
-    setPassword("");
-    setEmail("");
+    setLugar("");
+    setDepartamento("");
+    setCantidad("");
+    setLatitud("");
+    setLongitud("");
   };
   return (
     <SafeAreaView>
@@ -103,30 +123,44 @@ const AltaZona = () => {
             <KeyboardAvoidingView>
               <MyInputText
                 styles={styles.inputUser}
-                placeholder="Nombre de usuario"
-                onChangeText={handleUserName}
-                value={userName}
+                placeholder="Lugar"
+                onChangeText={handleLugar}
+                value={Lugar}
               />
 
               <MyInputText
                 styles={styles.inputPassword}
-                placeholder="Contraseña"
+                placeholder="Departamento"
                 minLength={8}
                 maxLength={16}
-                secureTextEntry={true}
-                onChangeText={handlePassword}
-                value={password}
+            
+                onChangeText={handleDepartamento}
+                value={Departamento}
               />
 
               <MyInputText
                 styles={styles.inputEmail}
-                placeholder="Coreo electronico"
-                keyboardType="email-address"
-                onChangeText={handleEmail}
-                value={email}
+                placeholder="Cantidad"
+             
+                onChangeText={handleCantidad}
+                value={Cantidad}
+              />
+                <MyInputText
+                styles={styles.inputEmail}
+                placeholder="Latutid"
+               
+                onChangeText={handleLatitud}
+                value={Latitud}
+              />
+                <MyInputText
+                styles={styles.inputEmail}
+                placeholder="Longitud"
+               
+                onChangeText={handleLongitud}
+                value={Longitud}
               />
 
-              <BotonPrincipal title="Alta Zona" onPress={addUser} />
+              <BotonPrincipal title="Alta Zona" onPress={addZone} />
             </KeyboardAvoidingView>
           </ScrollView>
         </View>

@@ -1,10 +1,11 @@
 import React, {useState} from "react";
 import {StyleSheet, Text, View, SafeAreaView, ScrollView, KeyboardAvoidingView,Alert} from "react-native";
 import MyInputText from "../../Componentes/MyInputText";
-import MySingleButton from "../../Componentes/MySingleButton";
+import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import {useNavigation} from "@react-navigation/native";
+import DatabaseConnection from "../../DataBase/dbConnection";
 
-const db = DataBaseConnection.getConnection();
+const db = DatabaseConnection.getConnection();
 
 const AltaUsuario = () => {
 
@@ -110,7 +111,7 @@ const clearData = () =>{
                             onChangeText={handleEmail}
                             keyboardType="email-address"
                             />
-                            <MySingleButton
+                            <BotonPrincipal
                             title="Registrar Usuario"
                             btnColor="green"
                             onPress={addUser}
