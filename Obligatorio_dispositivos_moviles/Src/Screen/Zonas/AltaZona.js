@@ -73,47 +73,67 @@ const AltaZona = () => {
     return true;
   };
 
-  const addZone = () => {
-    // llamar a la validacion de datos
-    // si la validacion es correcta
-    // llamar al metodo de guardar
+  const addZone = async () => {
     console.log("### add Zona ###");
-
+  
     if (validateData()) {
       console.log("### save zona ###");
       DatabaseConnection.createZonasTable();
-      // llamar a la db y guarar los datos
-       db.transaction((tx) => {
-        console.log("### entro transaccion ###");
-         tx.executeSql(
-           'INSERT INTO Zonas (Lugar, Departamento, Cantidad , Latitud , Longitud) VALUES (?, ?, ?, ?, ?)',
-           [Lugar, Departamento, Cantidad, Latitud, Longitud],
-           (tx, results) => {
-              console.log("### entro executeSql ###");
-             if(results.rowsAffected > 0){
-               Alert.alert("Exito", "Zona registrado correctamente", [
-                 {
-                   text: "Ok",
-                   onPress: () => navigation.navigate("PaginaPrincipal"),
-                 }
-               ],
-               {
-                 cancelable: false
-               } );
-               clearData();
-             }else{
-               Alert.alert("Error", "Error al registrar la zona");
-             }
-           },
-           (tx, error) => {
-
-            console.log('Error al ejecutar la consulta SQL:', error);
+      // llamar a la db y guardar los datos
+      try {
+        const rowsAffected = await DatabaseConnection.inserZona(
+          Lugar,
+          Departamento,
+          Cantidad,
+          Latitud,
+          Longitud
+        );
+      if (rowsAffected > 0) {
+        Alert.alert(
+          "Exito",
+          "Zona registrada correctamente",
+          [
+            {
+              text: "Ok",
+              onPress: () => navigation.navigate("PaginaPrincipal"),
+            },
+          ],
+          {
+            cancelable: false,
           }
-       )
-       });
+        );
+      } else {
+        Alert.alert(
+          "Error",
+          "Zona no se registró correctamente",
+          [
+            {
+              text: "Ok",
+            },
+          ],
+          {
+            cancelable: false,
+          }
+        );
+      }
+    }catch(error){
+      console.log("No se pudo recibir el dato");
     }
+    }
+    
   };
+  
 
+  // if(results.rowsAffected > 0){
+  //   Alert.alert("Exito", "Zona registrado correctamente", [
+  //     {
+  //       text: "Ok",
+  //       onPress: () => navigation.navigate("PaginaPrincipal"),
+  //     }
+  //   ],
+  //   {
+  //     cancelable: false
+  //   }
   const clearData = () => {
     setLugar("");
     setDepartamento("");

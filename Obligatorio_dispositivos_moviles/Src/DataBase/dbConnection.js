@@ -8,7 +8,7 @@ const DatabaseConnection = {
 
   // a modo de ejemplo
      inserUser: (userName, password, email) => {
-       const db = getConnection();
+      const db = DatabaseConnection.getConnection();
        db.transaction((tx) => {
            tx.executeSql(
                'INSERT INTO users (userName, password, email) VALUES (?, ?, ?)',
@@ -24,20 +24,27 @@ const DatabaseConnection = {
    },
 
    inserZona: (Lugar, Departamento, Cantidad, Latitud, Longitud) => {
-    const db = DatabaseConnection.getConnection();
-    db.transaction((tx) => {
-      tx.executeSql(
-        'INSERT INTO Zonas (Lugar, Departamento, Cantidad, Latitud, Longitud) VALUES (?, ?, ?, ?, ?)',
-        [Lugar, Departamento, Cantidad, Latitud, Longitud],
-        (tx, results) => {
-          if (results.rowsAffected > 0) {
-            return results.rowsAffected;
+    return new Promise((resolve, reject) => {
+      const db = DatabaseConnection.getConnection();
+      db.transaction((tx) => {
+        tx.executeSql(
+          'INSERT INTO Zonas (Lugar, Departamento, Cantidad, Latitud, Longitud) VALUES (?, ?, ?, ?, ?)',
+          [Lugar, Departamento, Cantidad, Latitud, Longitud],
+          (tx, results) => {
+            if (results.rowsAffected > 0) {
+              resolve(results.rowsAffected);
+            } else {
+              reject(new Error("Error al insertar la zona"));
+            }
+          },
+          (tx, error) => {
+            reject(error);
           }
-          return 0;
-        }
-      );
+        );
+      });
     });
   },
+  
   createZonasTable: () => {
     const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {
