@@ -40,6 +40,7 @@ const DatabaseConnection = {
   },
   createZonasTable: () => {
     const db = DatabaseConnection.getConnection();
+    console.log(db);
     db.transaction((tx) => {
       tx.executeSql(
         'SELECT name FROM sqlite_master WHERE type="table" AND name="Zonas"',
