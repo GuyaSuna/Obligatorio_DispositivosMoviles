@@ -22,14 +22,14 @@ const ScreenUsuarios = ({navigation}) => {
                         />
                         <BotonPrincipal
                         title="Borrar Usuarios"
-                        btnIcon="user-minus"
-                        onPress={() => navigation.navigate("DeleteUser")}
+                        btnIcon="user"
+                        onPress={() => navigation.navigate("DeleteUsuarios")}
                         />
                         <View style={styles.viewContainerSecondColumn}>
                             <BotonPrincipal
                             title="Editar Usuarios"
                             btnIcon="user-circle-o"
-                            onPress={() => navigation.navigate("EditUser")}
+                            onPress={() => navigation.navigate("EditUsuarios")}
                             />
 
                             <BotonPrincipal
