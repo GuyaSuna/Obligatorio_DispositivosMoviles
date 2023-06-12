@@ -61,8 +61,8 @@ const Navigation = () => {
             headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
           }}
         />
-//Usuario
-        <Stack.Screen
+        //Usuario
+        {/* <Stack.Screen
           name="ScreenUsuarios"
           component={ScreenUsuarios}
           options={{
@@ -117,8 +117,7 @@ const Navigation = () => {
               fontWeight: "bold",
             },
           }}
-        />
-
+        /> */}
         //Insumos
         <Stack.Screen
           name="Insumos"
@@ -162,7 +161,6 @@ const Navigation = () => {
             },
           }}
         />
-
         <Stack.Screen
           name="EditInsumo"
           component={EditInsumo}
@@ -177,7 +175,6 @@ const Navigation = () => {
             },
           }}
         />
-         
         <Stack.Screen
           name="ViewAllInsumos"
           component={ViewAllInsumos}
@@ -208,7 +205,7 @@ const Navigation = () => {
             headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
           }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="AltaZona"
           component={AltaZona}
           options={{
@@ -224,7 +221,7 @@ const Navigation = () => {
             headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
           }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="BajaZona"
           component={BajaZona}
           options={{
@@ -240,7 +237,7 @@ const Navigation = () => {
             headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
           }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="ModificarZona"
           component={ModificarZona}
           options={{
@@ -284,12 +281,9 @@ const Navigation = () => {
             },
           }}
         />
-           
-       
-
-           </Stack.Navigator>
-    </NavigationContainer>                
-  )
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
 
 export default Navigation;
