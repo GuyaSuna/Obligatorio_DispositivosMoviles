@@ -7,27 +7,53 @@ const DatabaseConnection = {
   closeConnection: () => SQLite.closeConnection(DBName),
 
   // a modo de ejemplo
-     inserUser: (userName, password, email) => {
-       const db = getConnection();
-       db.transaction((tx) => {
-           tx.executeSql(
-               'INSERT INTO users (userName, password, email) VALUES (?, ?, ?)',
-               [userName, password, email],
-               (tx, results) => {
-                   if(results.rowsAffected > 0){
-                       return results.rowsAffected;
-                   }
-                   return 0;
-               }
-           )
-       });
-   },
-
-   inserZona: (Lugar, Departamento, Cantidad, Latitud, Longitud) => {
+  inserUser: (userName, password, email) => {
+    const db = getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO users (userName, password, email) VALUES (?, ?, ?)",
+        [userName, password, email],
+        (tx, results) => {
+          if (results.rowsAffected > 0) {
+            return results.rowsAffected;
+          }
+          return 0;
+        }
+      );
+    });
+  },
+  insertInsumo: (Nombre, Cantidad) => {
     const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {
       tx.executeSql(
-        'INSERT INTO Zonas (Lugar, Departamento, Cantidad, Latitud, Longitud) VALUES (?, ?, ?, ?, ?)',
+        "INSERT INTO Insumos(Nombre, Cantidad) VALUES (?,?)",
+        [Nombre, Cantidad],
+        (tx, results) => {
+          if (results.rowsAffected > 0) {
+            return results.rowsAffected;
+          }
+          return 0;
+        }
+      );
+    });
+  },
+  // createInsumosTable: () => {
+  //   const db = DatabaseConnection.getConnection();
+  //   db.transaction((tx) => {
+  //     tx.executeSql(
+  //       'SELECT name FROM sqlite_master WHERE type = "table" AND name="Insumos"',
+  //       [],
+  //       (tx, results) = {
+  //         if(results)
+  //       }
+  //     )
+  //   })
+  // }
+  inserZona: (Lugar, Departamento, Cantidad, Latitud, Longitud) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO Zonas (Lugar, Departamento, Cantidad, Latitud, Longitud) VALUES (?, ?, ?, ?, ?)",
         [Lugar, Departamento, Cantidad, Latitud, Longitud],
         (tx, results) => {
           if (results.rowsAffected > 0) {
@@ -48,21 +74,25 @@ const DatabaseConnection = {
           if (results.rows.length === 0) {
             // La tabla no existe, se crea
             tx.executeSql(
-              'CREATE TABLE Zonas (id INTEGER PRIMARY KEY AUTOINCREMENT, Lugar TEXT, Departamento TEXT, Cantidad INTEGER, Latitud REAL, Longitud REAL)',
+              "CREATE TABLE Zonas (id INTEGER PRIMARY KEY AUTOINCREMENT, Lugar TEXT, Departamento TEXT, Cantidad INTEGER, Latitud REAL, Longitud REAL)",
               [],
-              () => console.log('Tabla Zonas creada correctamente'),
-              (tx, error) => console.log('Error al crear la tabla Zonas:', error)
+              () => console.log("Tabla Zonas creada correctamente"),
+              (tx, error) =>
+                console.log("Error al crear la tabla Zonas:", error)
             );
           } else {
             // La tabla ya existe, no es necesario crearla nuevamente
-            console.log('La tabla Zonas ya existe');
+            console.log("La tabla Zonas ya existe");
           }
         },
-        (tx, error) => console.log('Error al verificar la existencia de la tabla Zonas:', error)
+        (tx, error) =>
+          console.log(
+            "Error al verificar la existencia de la tabla Zonas:",
+            error
+          )
       );
     });
-  }
-  
+  },
 };
 
 export default DatabaseConnection;
