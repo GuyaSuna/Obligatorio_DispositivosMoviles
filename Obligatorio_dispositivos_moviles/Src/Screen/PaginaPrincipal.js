@@ -13,14 +13,7 @@ const MainScreen = ({ navigation }) => {
     "https://s2.best-wallpaper.net/wallpaper/iphone/1311/Green-nature-branch-leaves-bokeh_iphone_320x480.jpg";
 
 
-    useEffect(() => {
-      if (isLoggedIn && isLoggedIn.id != null) {
-        const response = getUser(isLoggedIn);
-        setUser(response.data);
-      } else {
-        navigation("/login");
-      }
-    }, [navigation]);
+
   
 
   return (
