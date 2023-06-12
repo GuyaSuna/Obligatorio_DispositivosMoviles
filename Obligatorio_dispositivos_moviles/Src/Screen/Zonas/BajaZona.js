@@ -13,7 +13,7 @@ import MyInputText from "../../Componentes/MyInputText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 
 // Coneccion a DB
-// import DatabaseConnection from "../../DataBase/dbConnection";
+import DatabaseConnection from "../../DataBase/dbConnection";
 const db = DatabaseConnection.getConnection();
 
 const DeleteInsumo = () => {

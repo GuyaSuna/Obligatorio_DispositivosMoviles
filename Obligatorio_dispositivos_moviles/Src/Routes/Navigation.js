@@ -62,7 +62,7 @@ const Navigation = () => {
           }}
         />
         //Usuario
-        {/* <Stack.Screen
+        <Stack.Screen
           name="ScreenUsuarios"
           component={ScreenUsuarios}
           options={{
@@ -117,7 +117,7 @@ const Navigation = () => {
               fontWeight: "bold",
             },
           }}
-        /> */}
+        />
         //Insumos
         <Stack.Screen
           name="Insumos"
