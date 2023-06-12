@@ -3,13 +3,14 @@ import { KeyboardAvoidingView, SafeAreaView, StyleSheet, } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import MyText from "../../Componentes/MyText";
 import MyInputText from '../../Componentes/MyInputText';
-import MySingleButton from '../../Componentes/MySingleButton';
+import BotonPrincipal from '../../Componentes/BotonPrincipal';
 
 //Conexion con la basede datos
 import DatabaseConnection from "../../DataBase/dbConnection";
 const db = DatabaseConnection.getConnection();
 
 const DeleteUser = () => {
+    //Aca definimos los estados de los campos del form
     const {userName, setUserName} = useState("");
     const navigation = useNavigation();
 
@@ -53,7 +54,7 @@ const DeleteUser = () => {
         );
     });
 }
-    
+    //Este es el metodo que setea los estados
     const handelUserName = (username) => {
         setUserName(username);
     }
@@ -71,7 +72,7 @@ const DeleteUser = () => {
                                 value={userName}
                                 styles={styles.inputStyle}
                                 />
-                                <MySingleButton
+                                <BotonPrincipal
                                 title="Borrar"
                                 onPress={deleteUser}
                                 />
