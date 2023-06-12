@@ -18,18 +18,18 @@ const ScreenUsuarios = ({navigation}) => {
                         <BotonPrincipal
                         title="Alta Usuarios"
                         btnIcon="user-plus"
-                        onPress={() => navigation.navigate("AddUsuarios")}
+                        onPress={() => navigation.navigate("AltaUsuarios")}
                         />
                         <BotonPrincipal
                         title="Borrar Usuarios"
                         btnIcon="user-minus"
-                        onPress={() => navigation.navigate("DeleteUsuarios")}
+                        onPress={() => navigation.navigate("DeleteUser")}
                         />
                         <View style={styles.viewContainerSecondColumn}>
                             <BotonPrincipal
                             title="Editar Usuarios"
                             btnIcon="user-circle-o"
-                            onPress={() => navigation.navigate("EditUsuarios")}
+                            onPress={() => navigation.navigate("EditUser")}
                             />
 
                             <BotonPrincipal

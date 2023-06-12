@@ -22,8 +22,12 @@ import AddInsumo from "../Screen/Insumos/AddInsumo";
 import DeleteInsumo from "../Screen/Insumos/DeleteInsumo";
 import EditInsumo from "../Screen/Insumos/EditInsumo";
 import ViewAllInsumos from "../Screen/Insumos/ViewAllInsumos";
+
 import ScreenUsuarios from "../Screen/Usuarios/ScreenUsuarios";
 import AltaUsuario from "../Screen/Usuarios/AltaUsuarios";
+import DeleteUser from "../Screen/Usuarios/DeleteUsuarios";
+import EditUser from "../Screen/Usuarios/EditUsuarios";
+
 
 const Stack = createStackNavigator();
 
@@ -57,12 +61,12 @@ const Navigation = () => {
             headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
           }}
         />
-
+//Usuario
         <Stack.Screen
-          name="Usuarios"
+          name="ScreenUsuarios"
           component={ScreenUsuarios}
           options={{
-            title: "Registrar Usuario",
+            title: "Usuarios",
             headerStyle: {
               backgroundColor: "#f4511e",
             },
@@ -73,7 +77,7 @@ const Navigation = () => {
           }}
         />
         <Stack.Screen
-          name="Agregar Usuarios"
+          name="AltaUsuarios"
           component={AltaUsuario}
           options={{
             title: "Alta Usuario",
@@ -86,6 +90,36 @@ const Navigation = () => {
             },
           }}
         />
+        <Stack.Screen
+          name="DeleteUser"
+          component={DeleteUser}
+          options={{
+            title: "ELIMINAR USUARIOS",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="EditUser"
+          component={EditUser}
+          options={{
+            title: "EDITAR USUARIOS",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+
+        //Insumos
         <Stack.Screen
           name="Insumos"
           component={ScreenInsumos}
