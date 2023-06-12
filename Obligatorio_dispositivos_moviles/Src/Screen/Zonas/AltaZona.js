@@ -7,6 +7,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Alert,
+  ImageBackground,
 } from "react-native";
 import MyInputText from "../../Componentes/MyInputText";
 import MyText from "../../Componentes/MyText";
@@ -24,6 +25,9 @@ const AltaZona = () => {
 
   const navigation = useNavigation();
   const db = DatabaseConnection.getConnection(); 
+
+
+  
 
   const handleLugar = (lugar) => {
     setLugar(lugar);
@@ -145,12 +149,22 @@ const AltaZona = () => {
     setLongitud("");
   };
   return (
+   
     <SafeAreaView>
       <View>
         <View>
           <ScrollView>
             <KeyboardAvoidingView>
-              <MyInputOpciones opciones={Deciciones}/>
+            <MyInputText
+                styles={styles.inputPassword}
+                placeholder="Lugar"
+                minLength={8}
+                maxLength={16}
+            
+                onChangeText={handleLugar}
+                value={Lugar}
+              />
+
 
               <MyInputText
                 styles={styles.inputPassword}
@@ -190,6 +204,7 @@ const AltaZona = () => {
         </View>
       </View>
     </SafeAreaView>
+ 
   );
 };
 

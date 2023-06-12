@@ -1,9 +1,9 @@
 import React from 'react';
-import { KeyboardAvoidingView, SafeAreaView, StyleSheet, } from "react-native";
+import { KeyboardAvoidingView, SafeAreaView, StyleSheet, useState } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import MyText from "../../Componentes/MyText";
 import MyInputText from '../../Componentes/MyInputText';
-import MySingleButton from '../../Componentes/MySingleButton';
+import BotonPrincipal from '../../Componentes/BotonPrincipal';
 
 //Conexion con la basede datos
 import DatabaseConnection from "../../DataBase/dbConnection";
@@ -71,7 +71,7 @@ const DeleteUser = () => {
                                 value={userName}
                                 styles={styles.inputStyle}
                                 />
-                                <MySingleButton
+                                <BotonPrincipal
                                 title="Borrar"
                                 onPress={deleteUser}
                                 />

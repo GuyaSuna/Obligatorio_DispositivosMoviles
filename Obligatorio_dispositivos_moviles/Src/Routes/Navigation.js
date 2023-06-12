@@ -12,6 +12,8 @@ import PaginaPrincipal from "../Screen/PaginaPrincipal";
 import Observaciones from "../Screen/Observaciones/Observaciones";
 import Tratamientos from "../Screen/Tratamientos/Tratamientos";
 
+
+
 import Zonas from "../Screen/Zonas/Zonas";
 import AltaZona from "../Screen/Zonas/AltaZona";
 import BajaZona from "../Screen/Zonas/BajaZona";
@@ -23,7 +25,9 @@ import DeleteInsumo from "../Screen/Insumos/DeleteInsumo";
 import EditInsumo from "../Screen/Insumos/EditInsumo";
 import ViewAllInsumos from "../Screen/Insumos/ViewAllInsumos";
 import ScreenUsuarios from "../Screen/Usuarios/ScreenUsuarios";
+
 import AltaUsuario from "../Screen/Usuarios/AltaUsuarios";
+import DeleteUsuarios from "../Screen/Usuarios/DeleteUsuarios";
 
 const Stack = createStackNavigator();
 
@@ -62,7 +66,7 @@ const Navigation = () => {
           name="Usuarios"
           component={ScreenUsuarios}
           options={{
-            title: "Registrar Usuario",
+            title: "Pagina Usuario",
             headerStyle: {
               backgroundColor: "#f4511e",
             },
@@ -73,10 +77,24 @@ const Navigation = () => {
           }}
         />
         <Stack.Screen
-          name="Agregar Usuarios"
+          name="AltaUsuarios"
           component={AltaUsuario}
           options={{
-            title: "Alta Usuario",
+            title: "AltaUsuarios",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+         <Stack.Screen
+          name="DeleteUsuarios"
+          component={DeleteUsuarios}
+          options={{
+            title: "Baja Usuarios",
             headerStyle: {
               backgroundColor: "#f4511e",
             },

@@ -45,7 +45,7 @@ const DatabaseConnection = {
     });
   },
   
-  createZonasTable: () => {
+  createZonasTable: (type) => {
     const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {
       tx.executeSql(

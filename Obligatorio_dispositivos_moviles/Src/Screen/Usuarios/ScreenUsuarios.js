@@ -3,14 +3,9 @@ import {View, Text, SafeAreaView,ScrollView, StyleSheet, ImageBackground} from "
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 
 const ScreenUsuarios = ({navigation}) => {
-    let backgroundImageSource = "https://c4.wallpaperflare.com/wallpaper/764/505/66/baby-groot-4k-hd-superheroes-wallpaper-preview.jpg";
+   
     return ( 
-        <ImageBackground
-        source={{ uri: backgroundImageSource }}
-        style={styles.background}
-        resizeMode="cover"
-        imageStyle={styles.backgroundImage}
-      >
+     
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollViewContainer}>
                 <View style={styles.viewContainer}>
@@ -18,11 +13,11 @@ const ScreenUsuarios = ({navigation}) => {
                         <BotonPrincipal
                         title="Alta Usuarios"
                         btnIcon="user-plus"
-                        onPress={() => navigation.navigate("AddUsuarios")}
+                        onPress={() => navigation.navigate("AltaUsuarios")}
                         />
                         <BotonPrincipal
                         title="Borrar Usuarios"
-                        btnIcon="user-minus"
+                        btnIcon="user"
                         onPress={() => navigation.navigate("DeleteUsuarios")}
                         />
                         <View style={styles.viewContainerSecondColumn}>
@@ -42,7 +37,7 @@ const ScreenUsuarios = ({navigation}) => {
                 </View>
             </ScrollView>
         </SafeAreaView>
-        </ImageBackground>
+     
      );
 }
  
