@@ -13,6 +13,7 @@ import MyText from "../../Componentes/MyText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection"
+import MyInputOpciones from "../../Componentes/MyInputOpcionMultiple";
 
 const AltaZona = () => {
   const [Lugar, setLugar] = useState("");
@@ -134,6 +135,8 @@ const AltaZona = () => {
   //   {
   //     cancelable: false
   //   }
+
+  const Deciciones = ["Op1","Op2","Op3"]
   const clearData = () => {
     setLugar("");
     setDepartamento("");
@@ -147,12 +150,7 @@ const AltaZona = () => {
         <View>
           <ScrollView>
             <KeyboardAvoidingView>
-              <MyInputText
-                styles={styles.inputUser}
-                placeholder="Lugar"
-                onChangeText={handleLugar}
-                value={Lugar}
-              />
+              <MyInputOpciones opciones={Deciciones}/>
 
               <MyInputText
                 styles={styles.inputPassword}
