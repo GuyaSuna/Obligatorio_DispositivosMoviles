@@ -140,7 +140,7 @@ const AltaZona = () => {
   //     cancelable: false
   //   }
 
-  const Deciciones = ["Op1","Op2","Op3"]
+
   const clearData = () => {
     setLugar("");
     setDepartamento("");

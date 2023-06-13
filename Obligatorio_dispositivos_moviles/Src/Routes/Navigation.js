@@ -18,6 +18,8 @@ import Zonas from "../Screen/Zonas/Zonas";
 import AltaZona from "../Screen/Zonas/AltaZona";
 import BajaZona from "../Screen/Zonas/BajaZona";
 import ModificarZona from "../Screen/Zonas/ModificarZona";
+import TodasLasZonas from "../Screen/Zonas/TodasLasZonas";
+import UnaZona from "../Screen/Zonas/UnaZona";
 
 import ScreenInsumos from "../Screen/Insumos/ScreenInsumos";
 import AddInsumo from "../Screen/Insumos/AddInsumo";
@@ -229,6 +231,39 @@ const Navigation = () => {
           component={ModificarZona}
           options={{
             headerTitle: "Modificar Zonas",
+            headerStyle: {
+              backgroundColor: "#95C117",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            headerTitleAlign: "center",
+            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
+          }}
+        />
+
+<Stack.Screen
+          name="TodasLasZonas"
+          component={TodasLasZonas}
+          options={{
+            headerTitle: "Ver Todas Las Zonas",
+            headerStyle: {
+              backgroundColor: "#95C117",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            headerTitleAlign: "center",
+            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
+          }}
+        />
+        <Stack.Screen
+          name="UnaZona"
+          component={UnaZona}
+          options={{
+            headerTitle: "Ver Una Zona",
             headerStyle: {
               backgroundColor: "#95C117",
             },

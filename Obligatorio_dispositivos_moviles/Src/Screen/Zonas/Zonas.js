@@ -1,7 +1,13 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { View , Text, scrollViewContainer, SafeAreaView , StyleSheet, ScrollView} from 'react-native'
 import BotonPrincipal from '../../Componentes/BotonPrincipal'
+import DatabaseConnection from '../../DataBase/dbConnection'
 const Zonas = ({navigation}) => {
+
+  useEffect(() => {
+    DatabaseConnection.createZonasTable();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
@@ -20,6 +26,12 @@ const Zonas = ({navigation}) => {
      btnIcon="money"
      title='Modificar Zona'
      /> 
+
+    <BotonPrincipal   onPress={() => navigation.navigate("TodasLasZonas")}
+        btnIcon="money"
+        title='Todas Las Zonas'
+        /> 
+
     </View>
     </View>
     </View>

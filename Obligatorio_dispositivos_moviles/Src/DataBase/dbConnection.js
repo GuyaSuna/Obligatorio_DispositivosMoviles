@@ -45,7 +45,7 @@ const DatabaseConnection = {
     });
   },
   
-  createZonasTable: (type) => {
+  createZonasTable: () => {
     const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {
       tx.executeSql(
@@ -68,7 +68,35 @@ const DatabaseConnection = {
         (tx, error) => console.log('Error al verificar la existencia de la tabla Zonas:', error)
       );
     });
-  }
+  },
+  BuscarZonas: (setZonas) => {
+    return new Promise((resolve, reject) => {
+      const db = DatabaseConnection.getConnection();
+      db.transaction((tx) => {
+        tx.executeSql(`SELECT * FROM Zonas`, [], (tx, results) => {
+          console.log("results", results);
+          if (results.rows.length > 0) {
+            setZonas(results.rows._array); // Actualizar el estado Zonas con los resultados
+            resolve(results.rows._array); // Resolver la promesa con los resultados
+          } else {
+            Alert.alert(
+              "Mensaje",
+              "No hay Zonas!!!",
+              [
+                {
+                  text: "Ok",
+                  onPress: () => navigation.navigate("HomeScreen"),
+                },
+              ],
+              { cancelable: false }
+            );
+            reject(new Error("No hay zonas")); // Rechazar la promesa con un error
+          }
+        });
+      });
+    });
+  },
+  
   
 };
 
