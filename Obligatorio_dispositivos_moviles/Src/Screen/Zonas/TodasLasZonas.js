@@ -14,16 +14,42 @@ const TodasLasZonas = () => {
   useEffect(() => {
     DatabaseConnection.BuscarZonas(setZonas); // Llamada a BuscarZonas con setZonas como argumento
   }, []);
-  const handleButtonPress = (item) => {
+  const handleObservar = (item) => {
 
     navigation.navigate('UnaZona', { 
         Lugar : item.Lugar,
         Departamento: item.Departamento,
         Cantidad: item.Cantidad,
         Latitud: item.Latitud,
-        Longitud: item.Longitud
-        
+        Longitud: item.Longitud        
      });
+  };
+  const handleBorrar = (item) => {
+
+   let comprobante = DatabaseConnection.DeleteZona(item.Latitud, item.Longitud, item.Lugar);
+   if(comprobante = true){
+    Alert.alert("Exito", "Zona borrada correctamente", [
+        {
+          text: "Ok",
+          onPress: () => navigation.navigate("PaginaPrincipal"),
+        }
+      ],
+      {
+        cancelable: false
+      }
+      );
+   }else {
+    Alert.alert("Error", "Fallo en Delete", [
+      {
+        text: "Ok",
+        onPress: () => navigation.navigate("PaginaPrincipal"),
+      }
+    ],
+    {
+      cancelable: false
+    }
+    )
+  }
 
 
   };
@@ -36,7 +62,8 @@ const TodasLasZonas = () => {
         <MyText textValue="Cantidad" textStyle={styles.textStyle} />
         <MyText textValue={item.Cantidad} textStyle={styles.textStyle} />
   
-        <BotonPrincipal title="Observar" onPress={() => handleButtonPress(item)} />
+        <BotonPrincipal title="Observar" onPress={() => handleObservar(item)} />
+        <BotonPrincipal title="Borrar" onPress={()=> handleBorrar(item)}/>
       </View>
     );
   };

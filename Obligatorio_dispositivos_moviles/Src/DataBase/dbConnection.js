@@ -69,6 +69,23 @@ const DatabaseConnection = {
       );
     });
   },
+  DeleteZona:(Latitud , Longitud,Lugar )=>{
+    const db = DatabaseConnection.getConnection();
+  db.transaction((tx) => {
+    tx.executeSql(
+      'DELETE FROM Zonas WHERE Latitud = ? AND Longitud = ? AND Lugar = ?',
+      [Latitud , Longitud , Lugar],
+      (tx, results) => {
+        console.log("Results", results.rowsAffected);
+        if(results.rowsAffected > 0){
+         return true;
+        } else {
+         return false;
+        }
+      }
+    );
+  })
+},
   BuscarZonas: (setZonas) => {
     return new Promise((resolve, reject) => {
       const db = DatabaseConnection.getConnection();

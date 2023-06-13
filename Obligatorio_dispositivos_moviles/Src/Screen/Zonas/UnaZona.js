@@ -7,7 +7,10 @@ const UnaZona = ({ route }) => {
   return (
     <View>
       <Text>Lugar: {item.Lugar}</Text>
+      <Text>Departamento: {item.Departamento}</Text>
       <Text>Cantidad: {item.Cantidad}</Text>
+      <Text>Latitud: {item.Latitud} </Text> 
+      <Text>Longitud: {item.Longitud}</Text>
       {/* Mostrar otros datos de la zona si es necesario */}
     </View>
   );
