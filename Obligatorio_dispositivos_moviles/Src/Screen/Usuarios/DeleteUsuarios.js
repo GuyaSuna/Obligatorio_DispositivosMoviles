@@ -1,5 +1,5 @@
 import React from 'react';
-import { KeyboardAvoidingView, SafeAreaView, StyleSheet, } from "react-native";
+import { KeyboardAvoidingView, SafeAreaView, StyleSheet, useState } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import MyText from "../../Componentes/MyText";
 import MyInputText from '../../Componentes/MyInputText';

@@ -2,12 +2,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-
 import PaginaPrincipal from "../Screen/PaginaPrincipal";
-
-
-
-
 
 import Observaciones from "../Screen/Observaciones/Observaciones";
 import Tratamientos from "../Screen/Tratamientos/Tratamientos";
@@ -16,6 +11,8 @@ import Zonas from "../Screen/Zonas/Zonas";
 import AltaZona from "../Screen/Zonas/AltaZona";
 import BajaZona from "../Screen/Zonas/BajaZona";
 import ModificarZona from "../Screen/Zonas/ModificarZona";
+import TodasLasZonas from "../Screen/Zonas/TodasLasZonas";
+import UnaZona from "../Screen/Zonas/UnaZona";
 
 import ScreenInsumos from "../Screen/Insumos/ScreenInsumos";
 import AddInsumo from "../Screen/Insumos/AddInsumo";
@@ -24,10 +21,9 @@ import EditInsumo from "../Screen/Insumos/EditInsumo";
 import ViewAllInsumos from "../Screen/Insumos/ViewAllInsumos";
 
 import ScreenUsuarios from "../Screen/Usuarios/ScreenUsuarios";
-import AltaUsuario from "../Screen/Usuarios/AltaUsuarios";
-import DeleteUser from "../Screen/Usuarios/DeleteUsuarios";
-import EditUser from "../Screen/Usuarios/EditUsuarios";
 
+import AltaUsuario from "../Screen/Usuarios/AltaUsuarios";
+import DeleteUsuarios from "../Screen/Usuarios/DeleteUsuarios";
 
 const Stack = createStackNavigator();
 
@@ -66,7 +62,7 @@ const Navigation = () => {
           name="ScreenUsuarios"
           component={ScreenUsuarios}
           options={{
-            title: "Usuarios",
+            title: "Pagina Usuario",
             headerStyle: {
               backgroundColor: "#f4511e",
             },
@@ -80,7 +76,21 @@ const Navigation = () => {
           name="AltaUsuarios"
           component={AltaUsuario}
           options={{
-            title: "Alta Usuario",
+            title: "AltaUsuarios",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="DeleteUsuarios"
+          component={DeleteUsuarios}
+          options={{
+            title: "Baja Usuarios",
             headerStyle: {
               backgroundColor: "#f4511e",
             },
@@ -254,6 +264,38 @@ const Navigation = () => {
           }}
         />
         <Stack.Screen
+          name="TodasLasZonas"
+          component={TodasLasZonas}
+          options={{
+            headerTitle: "Ver Todas Las Zonas",
+            headerStyle: {
+              backgroundColor: "#95C117",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            headerTitleAlign: "center",
+            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
+          }}
+        />
+        <Stack.Screen
+          name="UnaZona"
+          component={UnaZona}
+          options={{
+            headerTitle: "Ver Una Zona",
+            headerStyle: {
+              backgroundColor: "#95C117",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            headerTitleAlign: "center",
+            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
+          }}
+        />
+        <Stack.Screen
           name="Observaciones"
           component={Observaciones}
           options={{
@@ -284,6 +326,6 @@ const Navigation = () => {
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 export default Navigation;

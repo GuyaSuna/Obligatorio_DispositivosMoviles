@@ -8,7 +8,7 @@ const DatabaseConnection = {
 
   // a modo de ejemplo
   inserUser: (userName, password, email) => {
-    const db = getConnection();
+    const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {
       tx.executeSql(
         "INSERT INTO users (userName, password, email) VALUES (?, ?, ?)",
@@ -22,48 +22,29 @@ const DatabaseConnection = {
       );
     });
   },
-  insertInsumo: (Nombre, Cantidad) => {
-    const db = DatabaseConnection.getConnection();
-    db.transaction((tx) => {
-      tx.executeSql(
-        "INSERT INTO Insumos(Nombre, Cantidad) VALUES (?,?)",
-        [Nombre, Cantidad],
-        (tx, results) => {
-          if (results.rowsAffected > 0) {
-            return results.rowsAffected;
-          }
-          return 0;
-        }
-      );
-    });
-  },
-  // createInsumosTable: () => {
-  //   const db = DatabaseConnection.getConnection();
-  //   db.transaction((tx) => {
-  //     tx.executeSql(
-  //       'SELECT name FROM sqlite_master WHERE type = "table" AND name="Insumos"',
-  //       [],
-  //       (tx, results) = {
-  //         if(results)
-  //       }
-  //     )
-  //   })
-  // }
+
   inserZona: (Lugar, Departamento, Cantidad, Latitud, Longitud) => {
-    const db = DatabaseConnection.getConnection();
-    db.transaction((tx) => {
-      tx.executeSql(
-        "INSERT INTO Zonas (Lugar, Departamento, Cantidad, Latitud, Longitud) VALUES (?, ?, ?, ?, ?)",
-        [Lugar, Departamento, Cantidad, Latitud, Longitud],
-        (tx, results) => {
-          if (results.rowsAffected > 0) {
-            return results.rowsAffected;
+    return new Promise((resolve, reject) => {
+      const db = DatabaseConnection.getConnection();
+      db.transaction((tx) => {
+        tx.executeSql(
+          "INSERT INTO Zonas (Lugar, Departamento, Cantidad, Latitud, Longitud) VALUES (?, ?, ?, ?, ?)",
+          [Lugar, Departamento, Cantidad, Latitud, Longitud],
+          (tx, results) => {
+            if (results.rowsAffected > 0) {
+              resolve(results.rowsAffected);
+            } else {
+              reject(new Error("Error al insertar la zona"));
+            }
+          },
+          (tx, error) => {
+            reject(error);
           }
-          return 0;
-        }
-      );
+        );
+      });
     });
   },
+
   createZonasTable: () => {
     const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {
@@ -91,6 +72,50 @@ const DatabaseConnection = {
             error
           )
       );
+    });
+  },
+  DeleteZona: (Latitud, Longitud, Lugar) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DELETE FROM Zonas WHERE Latitud = ? AND Longitud = ? AND Lugar = ?",
+        [Latitud, Longitud, Lugar],
+        (tx, results) => {
+          console.log("Results", results.rowsAffected);
+          if (results.rowsAffected > 0) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      );
+    });
+  },
+  BuscarZonas: (setZonas) => {
+    return new Promise((resolve, reject) => {
+      const db = DatabaseConnection.getConnection();
+      db.transaction((tx) => {
+        tx.executeSql(`SELECT * FROM Zonas`, [], (tx, results) => {
+          console.log("results", results);
+          if (results.rows.length > 0) {
+            setZonas(results.rows._array); // Actualizar el estado Zonas con los resultados
+            resolve(results.rows._array); // Resolver la promesa con los resultados
+          } else {
+            Alert.alert(
+              "Mensaje",
+              "No hay Zonas!!!",
+              [
+                {
+                  text: "Ok",
+                  onPress: () => navigation.navigate("HomeScreen"),
+                },
+              ],
+              { cancelable: false }
+            );
+            reject(new Error("No hay zonas")); // Rechazar la promesa con un error
+          }
+        });
+      });
     });
   },
 };

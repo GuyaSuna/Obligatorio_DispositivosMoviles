@@ -7,12 +7,14 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Alert,
+  ImageBackground,
 } from "react-native";
 import MyInputText from "../../Componentes/MyInputText";
 import MyText from "../../Componentes/MyText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection"
+import MyInputOpciones from "../../Componentes/MyInputOpcionMultiple";
 
 const AltaZona = () => {
   const [Lugar, setLugar] = useState("");
@@ -23,6 +25,9 @@ const AltaZona = () => {
 
   const navigation = useNavigation();
   const db = DatabaseConnection.getConnection(); 
+
+
+  
 
   const handleLugar = (lugar) => {
     setLugar(lugar);
@@ -73,40 +78,68 @@ const AltaZona = () => {
     return true;
   };
 
-  const addZone = () => {
-    // llamar a la validacion de datos
-    // si la validacion es correcta
-    // llamar al metodo de guardar
-    console.log("### add user ###");
-
+  const addZone = async () => {
+    console.log("### add Zona ###");
+  
     if (validateData()) {
       console.log("### save zona ###");
       DatabaseConnection.createZonasTable();
-      // llamar a la db y guarar los datos
-       db.transaction((tx) => {
-         tx.executeSql(
-           'INSERT INTO Zonas (Lugar, Departamento, Cantidad , Latitud , Longitud) VALUES (?, ?, ?, ?, ?)',
-           [Lugar, Departamento, Cantidad, Latitud, Longitud],
-           (tx, results) => {
-             if(results.rowsAffected > 0){
-               Alert.alert("Exito", "Zona registrado correctamente", [
-                 {
-                   text: "Ok",
-                   onPress: () => navigation.navigate("PaginaPrincipal"),
-                 }
-               ],
-               {
-                 cancelable: false
-               } );
-               clearData();
-             }else{
-               Alert.alert("Error", "Error al registrar la zona");
-             }
-           }
-       )
-       });
+      // llamar a la db y guardar los datos
+      try {
+        const rowsAffected = await DatabaseConnection.inserZona(
+          Lugar,
+          Departamento,
+          Cantidad,
+          Latitud,
+          Longitud
+        );
+      if (rowsAffected > 0) {
+        Alert.alert(
+          "Exito",
+          "Zona registrada correctamente",
+          [
+            {
+              text: "Ok",
+              onPress: () => navigation.navigate("PaginaPrincipal"),
+            },
+          ],
+          {
+            cancelable: false,
+          }
+        );
+      } else {
+        Alert.alert(
+          "Error",
+          "Zona no se registró correctamente",
+          [
+            {
+              text: "Ok",
+            },
+          ],
+          {
+            cancelable: false,
+          }
+        );
+      }
+    }catch(error){
+      console.log("No se pudo recibir el dato");
     }
+    }
+    
   };
+  
+
+  // if(results.rowsAffected > 0){
+  //   Alert.alert("Exito", "Zona registrado correctamente", [
+  //     {
+  //       text: "Ok",
+  //       onPress: () => navigation.navigate("PaginaPrincipal"),
+  //     }
+  //   ],
+  //   {
+  //     cancelable: false
+  //   }
+
 
   const clearData = () => {
     setLugar("");
@@ -116,17 +149,22 @@ const AltaZona = () => {
     setLongitud("");
   };
   return (
+   
     <SafeAreaView>
       <View>
         <View>
           <ScrollView>
             <KeyboardAvoidingView>
-              <MyInputText
-                styles={styles.inputUser}
+            <MyInputText
+                styles={styles.inputPassword}
                 placeholder="Lugar"
+                minLength={8}
+                maxLength={16}
+            
                 onChangeText={handleLugar}
                 value={Lugar}
               />
+
 
               <MyInputText
                 styles={styles.inputPassword}
@@ -166,6 +204,7 @@ const AltaZona = () => {
         </View>
       </View>
     </SafeAreaView>
+ 
   );
 };
 
