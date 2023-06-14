@@ -18,15 +18,6 @@ const Zonas = ({navigation}) => {
      btnIcon="plus"
      title='Alta Zona'
      />
-    <BotonPrincipal   onPress={() => navigation.navigate("BajaZona")}
-     btnIcon="heart"
-     title='Baja Zona'
-     />
-    <BotonPrincipal   onPress={() => navigation.navigate("ModificarZona")}
-     btnIcon="money"
-     title='Modificar Zona'
-     /> 
-
     <BotonPrincipal   onPress={() => navigation.navigate("TodasLasZonas")}
         btnIcon="money"
         title='Todas Las Zonas'
