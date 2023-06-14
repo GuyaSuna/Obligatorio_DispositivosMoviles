@@ -24,7 +24,7 @@ const DatabaseConnection = {
    },
 
    inserZona: (Lugar, Departamento, Cantidad, Latitud, Longitud) => {
-    return new Promise((resolve, reject) => {
+    
       const db = DatabaseConnection.getConnection();
       db.transaction((tx) => {
         tx.executeSql(
@@ -32,17 +32,16 @@ const DatabaseConnection = {
           [Lugar, Departamento, Cantidad, Latitud, Longitud],
           (tx, results) => {
             if (results.rowsAffected > 0) {
-              resolve(results.rowsAffected);
+              return true;
             } else {
-              reject(new Error("Error al insertar la zona"));
+              return false;
             }
           },
           (tx, error) => {
-            reject(error);
+            return false;
           }
         );
       });
-    });
   },
   
   createZonasTable: () => {
@@ -85,6 +84,24 @@ const DatabaseConnection = {
       }
     );
   })
+},
+ModificarZona: (Lugar, Departamento,Cantidad,Latitud,Longitud) => {
+  const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        "UPDATE Zonas set Lugar=?, Departamento=?, Cantidad=?, Latitud=?, Longitus=? WHERE Latitud=? AND Logitud=?",
+        [Lugar, Departamento, Cantidad, Latitud, Longitud,Latitud,Longitud],
+        (_, results) => {
+          if (results.rowsAffected > 0) {
+            
+           return true
+        
+          } else {
+           return false
+          }
+        }
+      )
+    })
 },
   BuscarZonas: (setZonas) => {
     return new Promise((resolve, reject) => {

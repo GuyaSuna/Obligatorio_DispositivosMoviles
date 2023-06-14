@@ -83,7 +83,7 @@ const AltaZona = () => {
   
     if (validateData()) {
       console.log("### save zona ###");
-      DatabaseConnection.createZonasTable();
+
       // llamar a la db y guardar los datos
       try {
         const rowsAffected = await DatabaseConnection.inserZona(
