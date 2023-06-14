@@ -30,6 +30,8 @@ import ScreenUsuarios from "../Screen/Usuarios/ScreenUsuarios";
 
 import AltaUsuario from "../Screen/Usuarios/AltaUsuarios";
 import DeleteUsuarios from "../Screen/Usuarios/DeleteUsuarios";
+import Usuarios from "../Screen/Usuarios/Usuarios";
+import UnUsuario from "../Screen/Usuarios/UnUsuario";
 
 const Stack = createStackNavigator();
 
@@ -65,7 +67,7 @@ const Navigation = () => {
         />
 
         <Stack.Screen
-          name="Usuarios"
+          name="Pagina Usuarios"
           component={ScreenUsuarios}
           options={{
             title: "Pagina Usuario",
@@ -106,6 +108,39 @@ const Navigation = () => {
             },
           }}
         />
+        <Stack.Screen
+          name="Usuarios"
+          component={Usuarios}
+          options={{
+            headerTitle: "Ver Todos Los Usuarios",
+            headerStyle: {
+              backgroundColor: "#95C117",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            headerTitleAlign: "center",
+            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
+          }}
+        />
+        <Stack.Screen
+          name="UnUsuario"
+          component={UnUsuario}
+          options={{
+            headerTitle: "Ver Un Usuario",
+            headerStyle: {
+              backgroundColor: "#95C117",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            headerTitleAlign: "center",
+            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
+          }}
+        />
+
         <Stack.Screen
           name="Insumos"
           component={ScreenInsumos}

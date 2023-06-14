@@ -130,7 +130,119 @@ ModificarZona: (Lugar, Departamento,Cantidad,Latitud,Longitud) => {
       });
     });
   },
-  
+
+  //Usuarios
+  createUsuariosTable: () => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT name FROM sqlite_master WHERE type="table" AND name="Usuarios"',
+        [],
+        (tx, results) => {
+          if (results.rows.length === 0) {
+            // La tabla no existe, se crea
+            tx.executeSql(
+              'CREATE TABLE Usuarios (id INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT,Password TEXT, Email TEXT, )',
+              [],
+              () => console.log('Tabla Usuarios creada correctamente'),
+              (tx, error) => console.log('Error al crear la tabla Usuarios:', error)
+            );
+          } else {
+            // La tabla ya existe, no es necesario crearla nuevamente
+            console.log('La tabla Usuarios ya existe');
+          }
+        },
+        (tx, error) => console.log('Error al verificar la existencia de la tabla Usuarios:', error)
+      );
+    });
+  },
+
+  insertUsuario: (Nombre, Password, Email) => {    
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        'INSERT INTO Usuarios (Nombre, Password, Email) VALUES (?, ?, ?)',
+        [Nombre, Password, Email],
+        (tx, results) => {
+          if (results.rowsAffected > 0) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+        (tx, error) => {
+          return false;
+        }
+      );
+    });
+},
+
+DeleteZona:(Nombre , Password , Email )=>{
+  const db = DatabaseConnection.getConnection();
+db.transaction((tx) => {
+  tx.executeSql(
+    'DELETE FROM Usuarios WHERE Nombre = ? AND Password = ? AND Email = ?',
+    [Nombre , Password, Email],
+    (tx, results) => {
+      console.log("Results", results.rowsAffected);
+      if(results.rowsAffected > 0){
+       return true;
+      } else {
+       return false;
+      }
+    }
+  );
+})
+},
+
+ModificarUsuario: (Nombre, Password, Email) => {
+  const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        "UPDATE Usuarios set Nombre=?,WHERE Password=? AND Email=?",
+        [Nombre , Password, Email],
+        (_, results) => {
+          if (results.rowsAffected > 0) {
+            
+           return true
+        
+          } else {
+           return false
+          }
+        }
+      )
+    })
+},
+
+BuscarUsuarios: (setUsuario) => {
+  return new Promise((resolve, reject) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(`SELECT * FROM Usuarios`, [], (tx, results) => {
+        console.log("results", results);
+        if (results.rows.length > 0) {
+          setUsuario(results.rows._array); // Actualizar el estado Usuarios con los resultados
+          resolve(results.rows._array); // Resolver la promesa con los resultados
+        } else {
+          Alert.alert(
+            "Mensaje",
+            "No hay Usuarios!!!",
+            [
+              {
+                text: "Ok",
+                onPress: () => navigation.navigate("HomeScreen"),
+              },
+            ],
+            { cancelable: false }
+          );
+          reject(new Error("No hay Usuarios")); // Rechazar la promesa con un error
+        }
+      });
+    });
+  });
+},
+
+
   
 };
 
