@@ -14,11 +14,10 @@ import ModificarZona from "../Screen/Zonas/ModificarZona";
 import TodasLasZonas from "../Screen/Zonas/TodasLasZonas";
 import UnaZona from "../Screen/Zonas/UnaZona";
 
-import ScreenInsumos from "../Screen/Insumos/ScreenInsumos";
-import AddInsumo from "../Screen/Insumos/AddInsumo";
-import DeleteInsumo from "../Screen/Insumos/DeleteInsumo";
-import EditInsumo from "../Screen/Insumos/EditInsumo";
-import ViewAllInsumos from "../Screen/Insumos/ViewAllInsumos";
+import Insumos from "../Screen/Insumos/Insumos";
+import AltaInsumo from "../Screen/Insumos/AltaInsumo";
+import BajaInsumo from "../Screen/Insumos/BajaInsumo";
+import ModificarInsumo from "../Screen/Insumos/ModificarInsumo";
 
 import ScreenUsuarios from "../Screen/Usuarios/ScreenUsuarios";
 import EditUser from "../Screen/Usuarios/EditUsuarios";
@@ -131,7 +130,7 @@ const Navigation = () => {
 
         <Stack.Screen
           name="Insumos"
-          component={ScreenInsumos}
+          component={Insumos}
           options={{
             title: "Insumos",
             headerStyle: {
@@ -144,8 +143,8 @@ const Navigation = () => {
           }}
         />
         <Stack.Screen
-          name="AddInsumo"
-          component={AddInsumo}
+          name="AltaInsumo"
+          component={AltaInsumo}
           options={{
             title: "INGRESO DE INSUMOS",
             headerStyle: {
@@ -158,8 +157,8 @@ const Navigation = () => {
           }}
         />
         <Stack.Screen
-          name="DeleteInsumo"
-          component={DeleteInsumo}
+          name="BajaInsumo"
+          component={BajaInsumo}
           options={{
             title: "ELIMINAR INSUMOS",
             headerStyle: {
@@ -172,24 +171,10 @@ const Navigation = () => {
           }}
         />
         <Stack.Screen
-          name="EditInsumo"
-          component={EditInsumo}
+          name="ModificarInsumo"
+          component={ModificarInsumo}
           options={{
             title: "EDITAR INSUMOS",
-            headerStyle: {
-              backgroundColor: "#f4511e",
-            },
-            headerTintColor: "#fff",
-            headerTitleStyle: {
-              fontWeight: "bold",
-            },
-          }}
-        />
-        <Stack.Screen
-          name="ViewAllInsumos"
-          component={ViewAllInsumos}
-          options={{
-            title: "INSUMOS",
             headerStyle: {
               backgroundColor: "#f4511e",
             },

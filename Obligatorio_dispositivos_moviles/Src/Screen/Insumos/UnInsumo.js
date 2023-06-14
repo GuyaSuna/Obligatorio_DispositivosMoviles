@@ -18,7 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection";
 const db = DatabaseConnection.getConnection();
 
-const ViewInsumo = () => {
+const UnInsumo = () => {
   const [insumoName, setInsumoName] = useState("");
   const [insumo, setInsumo] = useState(null);
   const navigation = useNavigation();
@@ -120,7 +120,8 @@ const ViewInsumo = () => {
   );
 };
 
-export default ViewUser;
+export default UnInsumo;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

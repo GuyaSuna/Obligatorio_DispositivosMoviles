@@ -13,7 +13,7 @@ import MyInputText from "../../Componentes/MyInputText";
 import MyText from "../../Componentes/MyText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
-import DatabaseConnection from "../../DataBase/dbConnection"
+import DatabaseConnection from "../../DataBase/dbConnection";
 import MyInputOpciones from "../../Componentes/MyInputOpcionMultiple";
 
 const AltaZona = () => {
@@ -24,16 +24,13 @@ const AltaZona = () => {
   const [Longitud, setLongitud] = useState("");
 
   const navigation = useNavigation();
-  const db = DatabaseConnection.getConnection(); 
-
-
-  
+  const db = DatabaseConnection.getConnection();
 
   const handleLugar = (lugar) => {
     setLugar(lugar);
   };
 
-  const handleDepartamento= (departamento) => {
+  const handleDepartamento = (departamento) => {
     setDepartamento(departamento);
   };
 
@@ -64,12 +61,12 @@ const AltaZona = () => {
       Alert.alert("Error", "La cantidad debe ser un número válido");
       return false;
     }
-  
+
     if (isNaN(Latitud)) {
       Alert.alert("Error", "La latitud debe ser un número válido");
       return false;
     }
-  
+
     if (isNaN(Longitud)) {
       Alert.alert("Error", "La longitud debe ser un número válido");
       return false;
@@ -80,54 +77,52 @@ const AltaZona = () => {
 
   const addZone = async () => {
     console.log("### add Zona ###");
-  
+
     if (validateData()) {
       console.log("### save zona ###");
 
       // llamar a la db y guardar los datos
       try {
-        const rowsAffected = await DatabaseConnection.inserZona(
+        const rowsAffected = await DatabaseConnection.InsertZona(
           Lugar,
           Departamento,
           Cantidad,
           Latitud,
           Longitud
         );
-      if (rowsAffected > 0) {
-        Alert.alert(
-          "Exito",
-          "Zona registrada correctamente",
-          [
+        if (rowsAffected > 0) {
+          Alert.alert(
+            "Exito",
+            "Zona registrada correctamente",
+            [
+              {
+                text: "Ok",
+                onPress: () => navigation.navigate("PaginaPrincipal"),
+              },
+            ],
             {
-              text: "Ok",
-              onPress: () => navigation.navigate("PaginaPrincipal"),
-            },
-          ],
-          {
-            cancelable: false,
-          }
-        );
-      } else {
-        Alert.alert(
-          "Error",
-          "Zona no se registró correctamente",
-          [
+              cancelable: false,
+            }
+          );
+        } else {
+          Alert.alert(
+            "Error",
+            "Zona no se registró correctamente",
+            [
+              {
+                text: "Ok",
+              },
+            ],
             {
-              text: "Ok",
-            },
-          ],
-          {
-            cancelable: false,
-          }
-        );
+              cancelable: false,
+            }
+          );
+        }
+      } catch (error) {
+        console.log("No se pudo recibir el dato");
       }
-    }catch(error){
-      console.log("No se pudo recibir el dato");
     }
-    }
-    
   };
-  
 
   // if(results.rowsAffected > 0){
   //   Alert.alert("Exito", "Zona registrado correctamente", [
@@ -140,7 +135,6 @@ const AltaZona = () => {
   //     cancelable: false
   //   }
 
-
   const clearData = () => {
     setLugar("");
     setDepartamento("");
@@ -149,29 +143,25 @@ const AltaZona = () => {
     setLongitud("");
   };
   return (
-   
     <SafeAreaView>
       <View>
         <View>
           <ScrollView>
             <KeyboardAvoidingView>
-            <MyInputText
+              <MyInputText
                 styles={styles.inputPassword}
                 placeholder="Lugar"
                 minLength={8}
                 maxLength={16}
-            
                 onChangeText={handleLugar}
                 value={Lugar}
               />
-
 
               <MyInputText
                 styles={styles.inputPassword}
                 placeholder="Departamento"
                 minLength={8}
                 maxLength={16}
-            
                 onChangeText={handleDepartamento}
                 value={Departamento}
               />
@@ -179,21 +169,18 @@ const AltaZona = () => {
               <MyInputText
                 styles={styles.inputEmail}
                 placeholder="Cantidad"
-             
                 onChangeText={handleCantidad}
                 value={Cantidad}
               />
-                <MyInputText
+              <MyInputText
                 styles={styles.inputEmail}
                 placeholder="Latutid"
-               
                 onChangeText={handleLatitud}
                 value={Latitud}
               />
-                <MyInputText
+              <MyInputText
                 styles={styles.inputEmail}
                 placeholder="Longitud"
-               
                 onChangeText={handleLongitud}
                 value={Longitud}
               />
@@ -204,7 +191,6 @@ const AltaZona = () => {
         </View>
       </View>
     </SafeAreaView>
- 
   );
 };
 
