@@ -16,7 +16,7 @@ import Tratamientos from "../Screen/Tratamientos/Tratamientos";
 
 import Zonas from "../Screen/Zonas/Zonas";
 import AltaZona from "../Screen/Zonas/AltaZona";
-import BajaZona from "../Screen/Zonas/BajaZona";
+
 import ModificarZona from "../Screen/Zonas/ModificarZona";
 import TodasLasZonas from "../Screen/Zonas/TodasLasZonas";
 import UnaZona from "../Screen/Zonas/UnaZona";
@@ -210,22 +210,7 @@ const Navigation = () => {
             headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
           }}
         />
-         <Stack.Screen
-          name="BajaZona"
-          component={BajaZona}
-          options={{
-            headerTitle: "Baja Zonas",
-            headerStyle: {
-              backgroundColor: "#95C117",
-            },
-            headerTintColor: "#fff",
-            headerTitleStyle: {
-              fontWeight: "bold",
-            },
-            headerTitleAlign: "center",
-            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
-          }}
-        />
+        
          <Stack.Screen
           name="ModificarZona"
           component={ModificarZona}

@@ -16,14 +16,14 @@ import { useNavigation } from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection"
 import MyInputOpciones from "../../Componentes/MyInputOpcionMultiple";
 
-const ModificarZona = () => {
+const ModificarZona = ({route}) => {
+  const item = route.params;
 
-  const [Lugar, setLugar] = useState("");
-  const [Departamento, setDepartamento] = useState("");
-  const [Cantidad, setCantidad] = useState("");
-  const [Latitud, setLatitud] = useState("");
-  const [Longitud, setLongitud] = useState("");
-
+  const [Lugar, setLugar] = useState(item.Lugar || "");
+  const [Departamento, setDepartamento] = useState(item.Departamento || "");
+  const [Cantidad, setCantidad] = useState(item.Cantidad ? String(item.Cantidad) : "");
+  const [Latitud, setLatitud] = useState(item.Latitud ? String(item.Latitud) : "");
+  const [Longitud, setLongitud] = useState(item.Longitud ? String(item.Longitud) : "");
   const navigation = useNavigation();
   const db = DatabaseConnection.getConnection(); 
 
@@ -86,40 +86,45 @@ const ModificarZona = () => {
       console.log("### save zona ###");
 
       // llamar a la db y guardar los datos  
-        let comprobante =  DatabaseConnection.ModificarZona(
+       DatabaseConnection.ModificarZona(
           Lugar,
           Departamento,
           Cantidad,
           Latitud,
-          Longitud
-        );
-      if (comprobante) {
-        Alert.alert(
-          "Exito",
-          "Zona modificada correctamente",
-          [
-            {
-              text: "Ok",
-              onPress: () => navigation.navigate("PaginaPrincipal"),
-            },
-          ],
-          {
-            cancelable: false,
+          Longitud,
+          item.Latitud,
+          item.Longitud
+        ).then((comprobante) => {
+       
+          if (comprobante) {
+            Alert.alert(
+              "Exito",
+              "Zona modificada correctamente",
+              [
+                {
+                  text: "Ok",
+                  onPress: () => navigation.navigate("PaginaPrincipal"),
+                },
+              ],
+              {
+                cancelable: false,
+              }
+            );
+          } else {
+            Alert.alert(
+              "Error",
+              "Zona no se modificó correctamente",
+              [
+                {
+                  text: "Ok",
+                },
+              ],
+              {
+                cancelable: false,
+              }
+            );
           }
-        );
-      } else 
-        Alert.alert(
-          "Error",
-          "Zona no se Modifico correctamente",
-          [
-            {
-              text: "Ok",
-            },
-          ],
-          {
-            cancelable: false,
-          }
-        );
+        });
     }   
   };
   
@@ -148,7 +153,7 @@ const ModificarZona = () => {
                 placeholder="Lugar"
                 minLength={8}
                 maxLength={16}
-            
+
                 onChangeText={handleLugar}
                 value={Lugar}
               />

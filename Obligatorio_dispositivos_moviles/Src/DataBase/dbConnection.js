@@ -24,25 +24,23 @@ const DatabaseConnection = {
    },
 
    inserZona: (Lugar, Departamento, Cantidad, Latitud, Longitud) => {
-    
+    return new Promise((resolve, reject) => {
       const db = DatabaseConnection.getConnection();
       db.transaction((tx) => {
         tx.executeSql(
-          'INSERT INTO Zonas (Lugar, Departamento, Cantidad, Latitud, Longitud) VALUES (?, ?, ?, ?, ?)',
+          "INSERT INTO Zonas (Lugar, Departamento, Cantidad, Latitud, Longitud) VALUES (?, ?, ?, ?, ?)",
           [Lugar, Departamento, Cantidad, Latitud, Longitud],
-          (tx, results) => {
-            if (results.rowsAffected > 0) {
-              return true;
-            } else {
-              return false;
-            }
+          (_, results) => {
+            resolve(results.rowsAffected);
           },
-          (tx, error) => {
-            return false;
+          (_, error) => {
+            reject(error);
           }
         );
       });
+    });
   },
+  
   
   createZonasTable: () => {
     const db = DatabaseConnection.getConnection();
@@ -85,23 +83,26 @@ const DatabaseConnection = {
     );
   })
 },
-ModificarZona: (Lugar, Departamento,Cantidad,Latitud,Longitud) => {
-  const db = DatabaseConnection.getConnection();
+ModificarZona: (Lugar, Departamento, Cantidad, Latitud, Longitud, Latitud2, Longitud2) => {
+  return new Promise((resolve, reject) => {
+    const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {
       tx.executeSql(
-        "UPDATE Zonas set Lugar=?, Departamento=?, Cantidad=?, Latitud=?, Longitus=? WHERE Latitud=? AND Logitud=?",
-        [Lugar, Departamento, Cantidad, Latitud, Longitud,Latitud,Longitud],
+        "UPDATE Zonas SET Lugar=?, Departamento=?, Cantidad=?, Latitud=?, Longitud=? WHERE Latitud=? AND Longitud=?",
+        [Lugar, Departamento, Cantidad, Latitud, Longitud, Latitud2, Longitud2],
         (_, results) => {
           if (results.rowsAffected > 0) {
-            
-           return true
-        
+            resolve(true); // Resuelve la promesa con true
           } else {
-           return false
+            resolve(false); // Resuelve la promesa con false
           }
+        },
+        (_, error) => {
+          reject(error); // Rechaza la promesa con el error
         }
-      )
-    })
+      );
+    });
+  });
 },
   BuscarZonas: (setZonas) => {
     return new Promise((resolve, reject) => {
