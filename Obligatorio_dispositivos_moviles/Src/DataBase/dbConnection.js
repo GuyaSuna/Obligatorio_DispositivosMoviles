@@ -24,24 +24,22 @@ const DatabaseConnection = {
   },
 
   inserZona: (Lugar, Departamento, Cantidad, Latitud, Longitud) => {
-    return new Promise((resolve, reject) => {
-      const db = DatabaseConnection.getConnection();
-      db.transaction((tx) => {
-        tx.executeSql(
-          "INSERT INTO Zonas (Lugar, Departamento, Cantidad, Latitud, Longitud) VALUES (?, ?, ?, ?, ?)",
-          [Lugar, Departamento, Cantidad, Latitud, Longitud],
-          (tx, results) => {
-            if (results.rowsAffected > 0) {
-              resolve(results.rowsAffected);
-            } else {
-              reject(new Error("Error al insertar la zona"));
-            }
-          },
-          (tx, error) => {
-            reject(error);
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO Zonas (Lugar, Departamento, Cantidad, Latitud, Longitud) VALUES (?, ?, ?, ?, ?)",
+        [Lugar, Departamento, Cantidad, Latitud, Longitud],
+        (tx, results) => {
+          if (results.rowsAffected > 0) {
+            return true;
+          } else {
+            return false;
           }
-        );
-      });
+        },
+        (tx, error) => {
+          return false;
+        }
+      );
     });
   },
 
@@ -82,6 +80,22 @@ const DatabaseConnection = {
         [Latitud, Longitud, Lugar],
         (tx, results) => {
           console.log("Results", results.rowsAffected);
+          if (results.rowsAffected > 0) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      );
+    });
+  },
+  ModificarZona: (Lugar, Departamento, Cantidad, Latitud, Longitud) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        "UPDATE Zonas set Lugar=?, Departamento=?, Cantidad=?, Latitud=?, Longitus=? WHERE Latitud=? AND Logitud=?",
+        [Lugar, Departamento, Cantidad, Latitud, Longitud, Latitud, Longitud],
+        (_, results) => {
           if (results.rowsAffected > 0) {
             return true;
           } else {

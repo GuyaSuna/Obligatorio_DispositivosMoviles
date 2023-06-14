@@ -8,133 +8,195 @@ import {
   Alert,
 } from "react-native";
 // import MyText from "../../Componentes/MyText"; Lo vamos a usar para el buscador.
+
 import MyInputText from "../../Componentes/MyInputText";
+import MyText from "../../Componentes/MyText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
-import DatabaseConnection from "../../DataBase/dbConnection";
+import DatabaseConnection from "../../DataBase/dbConnection"
+import MyInputOpciones from "../../Componentes/MyInputOpcionMultiple";
 
-const db = DatabaseConnection.getConnection();
+const ModificarZona = () => {
 
-const EditInsumo = () => {
-  // Estados
-
-  const [insumoName, setInsumoName] = useState("");
-  const [insumoCantidad, setInsumoCantidad] = useState("");
+  const [Lugar, setLugar] = useState("");
+  const [Departamento, setDepartamento] = useState("");
+  const [Cantidad, setCantidad] = useState("");
+  const [Latitud, setLatitud] = useState("");
+  const [Longitud, setLongitud] = useState("");
 
   const navigation = useNavigation();
+  const db = DatabaseConnection.getConnection(); 
 
-  // Metodo para setear los estados
 
-  const handleInsumoName = (insumoName) => {
-    setInsumoName(insumoName);
+  
+
+  const handleLugar = (lugar) => {
+    setLugar(lugar);
   };
 
-  const handleInsumoCantidad = (insumoCantidad) => {
-    setInsumoCantidad(insumoCantidad);
+  const handleDepartamento= (departamento) => {
+    setDepartamento(departamento);
   };
 
-  // Metodo con el que validamos datos.
+  const handleCantidad = (cantidad) => {
+    setCantidad(cantidad);
+  };
+
+  const handleLatitud = (latitud) => {
+    setLatitud(latitud);
+  };
+
+  const handleLongitud = (longitud) => {
+    setLongitud(longitud);
+  };
 
   const validateData = () => {
-    if (insumoName === "" && !insumoName.trim()) {
-      Alert.alert("Error", "El nombre del Insumo es obligatorio");
+    if (Lugar === "" && !Lugar.trim()) {
+      Alert.alert("Error", "El Lugar de usuario es obligatorio");
       return false;
     }
-    if (insumoCantidad === "" && !insumoCantidad.trim()) {
-      Alert.alert("La cantidad del Insumo es obligatoria");
+
+    if (Departamento === "" && !Departamento.trim()) {
+      Alert.alert("Error", "El Departamento es obligatoria");
       return false;
     }
+
+    if (isNaN(Cantidad) || Cantidad <= 0) {
+      Alert.alert("Error", "La cantidad debe ser un número válido");
+      return false;
+    }
+  
+    if (isNaN(Latitud)) {
+      Alert.alert("Error", "La latitud debe ser un número válido");
+      return false;
+    }
+  
+    if (isNaN(Longitud)) {
+      Alert.alert("Error", "La longitud debe ser un número válido");
+      return false;
+    }
+
     return true;
   };
 
-  //  Limpiar datos
-  const clearData = () => {
-    setInsumoName("");
-    setInsumoCantidad("");
-  };
+  const Modificar =() => {
+    console.log("### modificando Zona ###");
+  
+    if (validateData()) {
+      console.log("### save zona ###");
 
-  const EditZona = () => {
-    if (validateData) {
-      console.log("### Editar Insumo ###");
-      // db.transaction((tx) => {
-      //   tx.executeSql(
-      //     "UPDATE insumos set insumoName=?, insumoCantidad=? WHERE insumoName=?",
-      //     [insumoName, insumoCantidad],
-      //     (_, results) => {
-      //       if (results.rowsAffected > 0) {
-      //         clearData();
-      //         Alert.alert("Insumo actualizado satisfactoriamente.", [
-      //           {
-      //             text: "OK",
-      //             onPress: () => navigation.navigate("PaginaPrincipal"),
-      //           },
-      //           {
-      //             cancelable: false,
-      //           },
-      //         ]);
-      //       } else {
-      //         Alert.alert("Error al actualizar el Insumo.");
-      //       }
-      //     }
-      //   );
-      // });
-    }
+      // llamar a la db y guardar los datos  
+        let comprobante =  DatabaseConnection.ModificarZona(
+          Lugar,
+          Departamento,
+          Cantidad,
+          Latitud,
+          Longitud
+        );
+      if (comprobante) {
+        Alert.alert(
+          "Exito",
+          "Zona modificada correctamente",
+          [
+            {
+              text: "Ok",
+              onPress: () => navigation.navigate("PaginaPrincipal"),
+            },
+          ],
+          {
+            cancelable: false,
+          }
+        );
+      } else 
+        Alert.alert(
+          "Error",
+          "Zona no se Modifico correctamente",
+          [
+            {
+              text: "Ok",
+            },
+          ],
+          {
+            cancelable: false,
+          }
+        );
+    }   
   };
+  
+
+  // if(results.rowsAffected > 0){
+  //   Alert.alert("Exito", "Zona registrado correctamente", [
+  //     {
+  //       text: "Ok",
+  //       onPress: () => navigation.navigate("PaginaPrincipal"),
+  //     }
+  //   ],
+  //   {
+  //     cancelable: false
+  //   }
+
+
   return (
+   
     <SafeAreaView>
       <View>
         <View>
           <ScrollView>
             <KeyboardAvoidingView>
-              <MyInputText
-                styles={styles.inputInsumo}
-                placeholder="Ingrese el nombre del Insumo"
-                onChangeText={handleInsumoName}
-                value={insumoName}
-              />
-              <MyInputText
-                styles={styles.inputCantidadInsumo}
-                placeholder="Cantidad"
-                keyboardType="numberOfLines"
-                onChangeText={handleInsumoCantidad}
-                value={insumoCantidad}
+            <MyInputText
+
+                placeholder="Lugar"
+                minLength={8}
+                maxLength={16}
+            
+                onChangeText={handleLugar}
+                value={Lugar}
               />
 
-              <BotonPrincipal
-                title="Editar Insumo"
-                btnColor="green"
-                onPress={EditZona}
+
+              <MyInputText
+       
+                placeholder="Departamento"
+                minLength={8}
+                maxLength={16}
+                onChangeText={handleDepartamento}
+                value={Departamento}
               />
+
+              <MyInputText
+
+                placeholder="Cantidad"
+             
+                onChangeText={handleCantidad}
+                value={Cantidad}
+              />
+                <MyInputText
+
+                placeholder="Latutid"
+               
+                onChangeText={handleLatitud}
+                value={Latitud}
+              />
+                <MyInputText
+
+                placeholder="Longitud"
+               
+                onChangeText={handleLongitud}
+                value={Longitud}
+              />
+
+              <BotonPrincipal title="Modificar Zona" onPress={Modificar} />
             </KeyboardAvoidingView>
           </ScrollView>
         </View>
       </View>
     </SafeAreaView>
+ 
   );
+
 };
 
-export default EditInsumo;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  viewContainer: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  generalView: {
-    flex: 1,
-  },
-  textStyle: {
-    padding: 10,
-    marginLeft: 20,
-    color: "black",
-  },
-  input: {
-    padding: 15,
-  },
-  keyboardView: {
-    flex: 1,
-    justifyContent: "space-between",
-  },
-});
+
+export default ModificarZona;
+
+
