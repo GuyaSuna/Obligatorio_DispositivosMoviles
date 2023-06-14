@@ -131,7 +131,7 @@ ModificarZona: (Lugar, Departamento,Cantidad,Latitud,Longitud) => {
     });
   },
 
-  //Usuarios
+  
   createUsuariosTable: () => {
     const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {

@@ -28,10 +28,11 @@ const ScreenUsuarios = ({navigation}) => {
                             />
 
                             <BotonPrincipal
-                            title="Consultar Usuarios"
+                            title="TodosLosUsuarios"
                             btnIcon="user-circle-o"
-                            onPress={() => navigation.navigate("ConsultUsuarios")}
+                            onPress={() => navigation.navigate("TodosLosUsuarios")}
                             />
+                            
                         </View>
                     </View>
                 </View>

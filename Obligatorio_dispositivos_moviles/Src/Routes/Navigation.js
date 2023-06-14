@@ -30,7 +30,7 @@ import ScreenUsuarios from "../Screen/Usuarios/ScreenUsuarios";
 
 import AltaUsuario from "../Screen/Usuarios/AltaUsuarios";
 import DeleteUsuarios from "../Screen/Usuarios/DeleteUsuarios";
-import Usuarios from "../Screen/Usuarios/Usuarios";
+import TodosLosUsuarios from "../Screen/Usuarios/TodosLosUsuarios";
 import UnUsuario from "../Screen/Usuarios/UnUsuario";
 
 const Stack = createStackNavigator();
@@ -109,8 +109,8 @@ const Navigation = () => {
           }}
         />
         <Stack.Screen
-          name="Usuarios"
-          component={Usuarios}
+          name="TodosLosUsuarios"
+          component={TodosLosUsuarios}
           options={{
             headerTitle: "Ver Todos Los Usuarios",
             headerStyle: {

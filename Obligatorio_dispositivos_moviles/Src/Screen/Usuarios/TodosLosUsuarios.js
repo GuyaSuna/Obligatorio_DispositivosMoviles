@@ -3,8 +3,9 @@ import {View, Text, scrollViewContainer, SafeAreaView, StyleSheet, ScrollView} f
 import BotonPrincipal from '../../Componentes/BotonPrincipal';
 import DatabaseConnection from '../../DataBase/dbConnection';
 import MyText from '../../Componentes/MyText';
+import { useNavigation } from "@react-navigation/native";
 
-const TodosLosUsuarios = ({navigation}) => {
+const TodosLosUsuarios = () => {
     const [usuarios, setUsuarios] = React.useState([]);
     const navigation = useNavigation();
 
