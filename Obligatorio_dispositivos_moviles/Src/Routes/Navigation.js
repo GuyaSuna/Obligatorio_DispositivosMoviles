@@ -102,7 +102,7 @@ const Navigation = () => {
         />
         <Stack.Screen
           name="DeleteUser"
-          component={DeleteUser}
+          component={DeleteUsuarios}
           options={{
             title: "ELIMINAR USUARIOS",
             headerStyle: {
