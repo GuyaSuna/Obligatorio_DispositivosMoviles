@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import {View, Text, scrollViewContainer, SafeAreaView, StyleSheet, ScrollView} from 'react-native'
+import {View, Text,FlatList, scrollViewContainer, SafeAreaView, StyleSheet, ScrollView} from 'react-native'
 import BotonPrincipal from '../../Componentes/BotonPrincipal';
 import DatabaseConnection from '../../DataBase/dbConnection';
 import MyText from '../../Componentes/MyText';
