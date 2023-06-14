@@ -5,24 +5,19 @@ import {
   View,
   ScrollView,
   KeyboardAvoidingView,
+  Alert,
 } from "react-native";
 import MyInputText from "../../Componentes/MyInputText";
-
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import DatabaseConnection from "../../DataBase/dbConnection";
 import { useNavigation } from "@react-navigation/native";
 
 const db = DatabaseConnection.getConnection();
 
-const AddInsumo = () => {
-  // Estados para los campos del forumulario
-
+const AltaInsumo = () => {
   const [insumoName, setInsumoName] = useState("");
   const [insumoCantidad, setInsumoCantidad] = useState("");
-
   const navigation = useNavigation();
-
-  // Metodo para setear los estados
 
   const handleInsumoName = (insumoName) => {
     setInsumoName(insumoName);
@@ -32,62 +27,63 @@ const AddInsumo = () => {
     setInsumoCantidad(insumoCantidad);
   };
 
-  // Metodo para guardar el formulario
-
-  const addInsumo = () => {
-    // console.log("### ADD INSUMO ###");
-
-    if (validateData()) {
-      // console.log("### Guardar Insumo ###");
-
-      db.transaction((tx) => {
-        tx.executeSql(
-          "INSERT INTO insumos (insumoName, insumoCantidad) VALUES (?,?)",
-          [insumoName, insumoCantidad],
-          (tx, results) => {
-            if (results.rowsAffected > 0) {
-              Alert.alert(
-                "Insumo agregado correctamente",
-                [
-                  {
-                    text: "OK",
-                    onPress: () => navigation.navigate("HomeScreen"),
-                  },
-                ],
-                {
-                  cancelable: false,
-                }
-              );
-              clearData();
-            } else {
-              Alert.alert("Error al agregar el Insumo.");
-            }
-          }
-        );
-      });
-    }
-  };
-  // Metodo para validar los datos
-
   const validateData = () => {
-    if (insumoName === "" && !insumoName.trim()) {
+    if (insumoName.trim() === "") {
       Alert.alert("Error", "El nombre del Insumo es obligatorio");
       return false;
     }
-    if (insumoCantidad === "" && !insumoCantidad.trim()) {
-      Alert.alert("La cantidad del Insumo es obligatoria");
+    if (insumoCantidad.trim() === "") {
+      Alert.alert("Error", "La cantidad del Insumo es obligatoria");
       return false;
     }
     return true;
   };
 
-  //  Limpiar datos
+  const addInsumo = async () => {
+    if (validateData()) {
+      try {
+        const rowsAffected = await DatabaseConnection.InsertInsumo(
+          insumoName,
+          insumoCantidad
+        );
+        if (rowsAffected > 0) {
+          Alert.alert(
+            "Exito",
+            "Insumo registrado correctamente",
+            [
+              {
+                text: "Ok",
+                onPress: () => navigation.navigate("PaginaPrincipal"),
+              },
+            ],
+            {
+              cancelable: false,
+            }
+          );
+        } else {
+          Alert.alert(
+            "Error",
+            "Insumo no se registró correctamente",
+            [
+              {
+                text: "Ok",
+              },
+            ],
+            {
+              cancelable: false,
+            }
+          );
+        }
+      } catch (error) {
+        console.log("No se pudo recibir el dato");
+      }
+    }
+  };
+
   const clearData = () => {
     setInsumoName("");
     setInsumoCantidad("");
   };
-
-  // Formulario de registro de insumos.
 
   return (
     <SafeAreaView>
@@ -96,19 +92,18 @@ const AddInsumo = () => {
           <ScrollView>
             <KeyboardAvoidingView>
               <MyInputText
-                styles={styles.inputInsumo}
+                style={styles.inputInsumo}
                 placeholder="Ingrese el nombre del Insumo"
                 onChangeText={handleInsumoName}
                 value={insumoName}
               />
               <MyInputText
-                styles={styles.inputCantidadInsumo}
+                style={styles.inputCantidadInsumo}
                 placeholder="Cantidad"
-                keyboardType="numberOfLines"
+                keyboardType="numeric"
                 onChangeText={handleInsumoCantidad}
                 value={insumoCantidad}
               />
-
               <BotonPrincipal
                 title="Ingresar"
                 btnColor="green"
@@ -123,19 +118,12 @@ const AddInsumo = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center" },
-  button: {
-    flex: 1,
-    alignContent: "center",
-    alignItems: "center",
-    backgroundColor: "black",
-    color: "white",
-    padding: 10,
-    marginTop: 10,
-    marginLeft: 35,
-    marginRight: 35,
-    borderRadius: 5,
+  inputInsumo: {
+    // Estilos para el input de insumo
+  },
+  inputCantidadInsumo: {
+    // Estilos para el input de cantidad de insumo
   },
 });
 
-export default AddInsumo;
+export default AltaInsumo;

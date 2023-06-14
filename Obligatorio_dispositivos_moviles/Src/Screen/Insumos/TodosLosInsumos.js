@@ -7,7 +7,7 @@ const db = DatabaseConnection.getConnection();
 
 import { useNavigation } from "@react-navigation/native";
 
-const ViewAllInsumos = () => {
+const TodosLosInusmos = () => {
   //Definimos un estado local para guardar los datos de Insumos
 
   const [insumos, setInsumos] = useState([]);
@@ -64,7 +64,7 @@ const ViewAllInsumos = () => {
     </SafeAreaView>
   );
 };
-export default ViewAllInsumos;
+export default TodosLosInusmos;
 
 const styles = StyleSheet.create({
   container: {

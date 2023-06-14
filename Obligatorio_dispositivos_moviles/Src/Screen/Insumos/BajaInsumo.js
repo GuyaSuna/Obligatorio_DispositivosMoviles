@@ -16,13 +16,13 @@ import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import DatabaseConnection from "../../DataBase/dbConnection";
 const db = DatabaseConnection.getConnection();
 
-const DeleteInsumo = () => {
+const BajaInsumo = () => {
   //Definimos un estado local para guardar los datos de Insumos
 
   const [insumoName, setInsumoName] = useState("");
   const navigation = useNavigation();
 
-  const deleteInsumo = () => {
+  const bajaInsumo = () => {
     if (!insumoName && !insumoName.length && insumoName === "") {
       Alert.alert("El nombre del usuario es obligatorio.");
       return false;
@@ -81,7 +81,7 @@ const DeleteInsumo = () => {
                 value={insumoName}
                 styles={styles.inputStyle}
               />
-              <BotonPrincipal title="Borrar" onPress={deleteInsumo} />
+              <BotonPrincipal title="Borrar" onPress={bajaInsumo} />
             </KeyboardAvoidingView>
           </ScrollView>
         </View>
@@ -90,7 +90,7 @@ const DeleteInsumo = () => {
   );
 };
 
-export default DeleteInsumo;
+export default BajaInsumo;
 
 const styles = StyleSheet.create({
   container: {

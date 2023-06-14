@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 
-const ScreenInsumos = ({ navigation }) => {
+const Insumos = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
@@ -12,7 +12,7 @@ const ScreenInsumos = ({ navigation }) => {
               <BotonPrincipal
                 title="Alta Insumos"
                 btnIcon="user-plus"
-                onPress={() => navigation.navigate("AddInsumo")}
+                onPress={() => navigation.navigate("AltaInsumo")}
               />
               <BotonPrincipal
                 title="Borrar Insumos"
@@ -24,7 +24,7 @@ const ScreenInsumos = ({ navigation }) => {
               <BotonPrincipal
                 title="Editar Insumos"
                 btnIcon="user-circle-o"
-                onPress={() => navigation.navigate("EditInsumo")}
+                onPress={() => navigation.navigate("ModificarInsumos")}
               />
 
               <BotonPrincipal
@@ -70,4 +70,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ScreenInsumos;
+export default Insumos;

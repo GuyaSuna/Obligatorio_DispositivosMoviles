@@ -8,22 +8,24 @@ const DatabaseConnection = {
 
   //INSUMO
   InsertInsumo: (Nombre, Cantidad) => {
-    const db = DatabaseConnection.getConnection();
-    db.transaction((tx) => {
-      tx.executeSql(
-        "INSERT INTO Insumos (Nombre, Cantidad) VALUES (?,?)",
-        [Nombre, Cantidad],
-        (tx, results) => {
-          if (results.rowsAffected > 0) {
-            return true;
-          } else {
-            return false;
+    return new Promise((resolve, reject) => {
+      const db = DatabaseConnection.getConnection();
+      db.transaction((tx) => {
+        tx.executeSql(
+          "INSERT INTO  Insumos (id INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT, Cantidad INTEGER) VALUES (?,?)",
+          [Nombre, Cantidad],
+          (tx, results) => {
+            if (results.rowsAffected > 0) {
+              resolve(true);
+            } else {
+              resolve(false);
+            }
+          },
+          (tx, error) => {
+            reject(error);
           }
-        },
-        (tx, error) => {
-          return false;
-        }
-      );
+        );
+      });
     });
   },
 

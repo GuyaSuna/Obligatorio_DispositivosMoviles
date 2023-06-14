@@ -15,7 +15,7 @@ import DatabaseConnection from "../../DataBase/dbConnection";
 
 const db = DatabaseConnection.getConnection();
 
-const EditInsumo = () => {
+const ModificarInsumos = () => {
   //Definimos un estado local para guardar los datos de Insumos
 
   const [insumoName, setInsumoName] = useState("");
@@ -53,7 +53,7 @@ const EditInsumo = () => {
     setInsumoCantidad("");
   };
 
-  const editUser = () => {
+  const ModificarInsumos = () => {
     if (validateData) {
       db.transaction((tx) => {
         tx.executeSql(
@@ -102,7 +102,7 @@ const EditInsumo = () => {
               <BotonPrincipal
                 title="Editar Insumo"
                 btnColor="green"
-                onPress={EditInsumo}
+                onPress={ModificarInsumos}
               />
             </KeyboardAvoidingView>
           </ScrollView>
@@ -112,7 +112,7 @@ const EditInsumo = () => {
   );
 };
 
-export default EditInsumo;
+export default ModificarInsumos;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
