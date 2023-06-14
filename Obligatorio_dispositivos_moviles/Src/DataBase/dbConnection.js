@@ -59,90 +59,25 @@ const DatabaseConnection = {
     });
   },
 
-  DeleteInsumo: (Nombre, Cantidad) => {
-    const db = DatabaseConnection.getConnection();
-    db.transaction((tx) => {
-      tx.executeSql(
-        "DELETE FROM Insumos WHERE Nombre = ? AND Cantidad = ?",
-        [Nombre, Cantidad],
-        (tx, results) => {
-          console.log("Results", results.rowsAffected);
-          if (results.rowsAffected > 0) {
-            return true;
-          } else {
-            return false;
-          }
-        }
-      );
-    });
-  },
-  //VER QUE NO ANDA
-  ModificarInsumo: () => {
-    const db = DatabaseConnection.getConnection();
-    db.transaction((tx) => {
-      tx.executeSql(
-        "UPDATE Insumos set Nombre=?, Cantidad=?",
-        [Nombre, Cantidad],
-        (_, results) => {
-          if (results.rowsAffected > 0) {
-            return true;
-          } else {
-            return false;
-          }
-        }
-      );
-    });
-  },
-
-  BuscarInsumos: () => {
+  inserZona: (Lugar, Departamento, Cantidad, Latitud, Longitud) => {
     return new Promise((resolve, reject) => {
       const db = DatabaseConnection.getConnection();
       db.transaction((tx) => {
-        tx.executeSql(`SELECT * FROM Insumos`, [], (tx, results) => {
-          console.log("results", results);
-          if (results.rows.length > 0) {
-            setInsumos(results.rows._array); // Actualizar el estado, con los resultados
-            resolve(results.rows._array); // Resolver la promesa con los resultados
-          } else {
-            Alert.alert(
-              "Mensaje",
-              "No hay Insumos!",
-              [
-                {
-                  text: "Ok",
-                  onPress: () => navigation.navigate("PaginaPrincipal"),
-                },
-              ],
-              { cancelable: false }
-            );
-            reject(new Error("No hay zonas")); // Rechazar la promesa con un error
+        tx.executeSql(
+          "INSERT INTO Zonas (Lugar, Departamento, Cantidad, Latitud, Longitud) VALUES (?, ?, ?, ?, ?)",
+          [Lugar, Departamento, Cantidad, Latitud, Longitud],
+          (_, results) => {
+            resolve(results.rowsAffected);
+          },
+          (_, error) => {
+            reject(error);
           }
-        });
+        );
       });
     });
   },
-  //ZONA
-  InsertZona: (Lugar, Departamento, Cantidad, Latitud, Longitud) => {
-    const db = DatabaseConnection.getConnection();
-    db.transaction((tx) => {
-      tx.executeSql(
-        "INSERT INTO Zonas (Lugar, Departamento, Cantidad, Latitud, Longitud) VALUES (?, ?, ?, ?, ?)",
-        [Lugar, Departamento, Cantidad, Latitud, Longitud],
-        (tx, results) => {
-          if (results.rowsAffected > 0) {
-            return true;
-          } else {
-            return false;
-          }
-        },
-        (tx, error) => {
-          return false;
-        }
-      );
-    });
-  },
 
-  CreateZonasTable: () => {
+  createZonasTable: () => {
     const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {
       tx.executeSql(
@@ -189,24 +124,43 @@ const DatabaseConnection = {
       );
     });
   },
-
-  ModificarZona: (Lugar, Departamento, Cantidad, Latitud, Longitud) => {
-    const db = DatabaseConnection.getConnection();
-    db.transaction((tx) => {
-      tx.executeSql(
-        "UPDATE Zonas set Lugar=?, Departamento=?, Cantidad=?, Latitud=?, Longitus=? WHERE Latitud=? AND Logitud=?",
-        [Lugar, Departamento, Cantidad, Latitud, Longitud, Latitud, Longitud],
-        (_, results) => {
-          if (results.rowsAffected > 0) {
-            return true;
-          } else {
-            return false;
+  ModificarZona: (
+    Lugar,
+    Departamento,
+    Cantidad,
+    Latitud,
+    Longitud,
+    Latitud2,
+    Longitud2
+  ) => {
+    return new Promise((resolve, reject) => {
+      const db = DatabaseConnection.getConnection();
+      db.transaction((tx) => {
+        tx.executeSql(
+          "UPDATE Zonas SET Lugar=?, Departamento=?, Cantidad=?, Latitud=?, Longitud=? WHERE Latitud=? AND Longitud=?",
+          [
+            Lugar,
+            Departamento,
+            Cantidad,
+            Latitud,
+            Longitud,
+            Latitud2,
+            Longitud2,
+          ],
+          (_, results) => {
+            if (results.rowsAffected > 0) {
+              resolve(true); // Resuelve la promesa con true
+            } else {
+              resolve(false); // Resuelve la promesa con false
+            }
+          },
+          (_, error) => {
+            reject(error); // Rechaza la promesa con el error
           }
-        }
-      );
+        );
+      });
     });
   },
-
   BuscarZonas: (setZonas) => {
     return new Promise((resolve, reject) => {
       const db = DatabaseConnection.getConnection();
