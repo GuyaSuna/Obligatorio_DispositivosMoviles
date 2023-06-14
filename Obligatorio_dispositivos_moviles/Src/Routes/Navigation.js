@@ -21,7 +21,7 @@ import EditInsumo from "../Screen/Insumos/EditInsumo";
 import ViewAllInsumos from "../Screen/Insumos/ViewAllInsumos";
 
 import ScreenUsuarios from "../Screen/Usuarios/ScreenUsuarios";
-
+import EditUser from "../Screen/Usuarios/EditUsuarios";
 import AltaUsuario from "../Screen/Usuarios/AltaUsuarios";
 import DeleteUsuarios from "../Screen/Usuarios/DeleteUsuarios";
 
@@ -57,7 +57,7 @@ const Navigation = () => {
             headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
           }}
         />
-        //Usuario
+
         <Stack.Screen
           name="ScreenUsuarios"
           component={ScreenUsuarios}
@@ -128,7 +128,7 @@ const Navigation = () => {
             },
           }}
         />
-        //Insumos
+
         <Stack.Screen
           name="Insumos"
           component={ScreenInsumos}
