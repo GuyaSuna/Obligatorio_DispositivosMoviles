@@ -63,7 +63,7 @@ const Navigation = () => {
         />
 
         <Stack.Screen
-          name="Pagina Usuarios"
+          name="ScreenUsuarios"
           component={ScreenUsuarios}
           options={{
             title: "Pagina Usuario",

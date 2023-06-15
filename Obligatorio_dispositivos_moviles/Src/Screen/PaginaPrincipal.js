@@ -31,7 +31,7 @@ const MainScreen = ({ navigation }) => {
                 <MyBotonPrincipal
                   title="Usuarios"
                   btnIcon="user-circle"
-                  onPress={() => navigation.navigate("Pagina Usuarios")}
+                  onPress={() => navigation.navigate("ScreenUsuarios")}
                 />
 
                 <MyBotonPrincipal
