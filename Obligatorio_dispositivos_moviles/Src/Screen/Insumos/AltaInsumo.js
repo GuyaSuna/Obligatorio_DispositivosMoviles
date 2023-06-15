@@ -118,13 +118,4 @@ const AltaInsumo = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  inputInsumo: {
-    // Estilos para el input de insumo
-  },
-  inputCantidadInsumo: {
-    // Estilos para el input de cantidad de insumo
-  },
-});
-
 export default AltaInsumo;
