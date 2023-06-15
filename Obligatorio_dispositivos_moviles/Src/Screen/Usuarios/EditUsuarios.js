@@ -1,7 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import React, {useState,}  from 'react';
-import { StyleSheet, View } from 'react-native';
+import { MyText,StyleSheet, View, SafeAreaView, ScrollView, KeyboardAvoidingView } from 'react-native';
 import DatabaseConnection from '../../DataBase/dbConnection';
+import BotonPrincipal from '../../Componentes/BotonPrincipal';
+import MyInputText from '../../Componentes/MyInputText';
 
  const db = DatabaseConnection.getConnection();
 const EditUsuario = () => {
@@ -62,7 +64,7 @@ const EditUsuario = () => {
                         Alert.alert("Success", "Usuario editado correctamente",[
                             {
                                 text: "OK",
-                                onPress: () => navigation.navigate("HomeScreen"),                                                              
+                                onPress: () => navigation.navigate("PaginaPrincipal"),                                                              
                             },
                             {
                                 cancelable: false,
@@ -115,7 +117,7 @@ const EditUsuario = () => {
                 styles={styles.input}
                 value={userNameSearch}
               />
-              <MySingleButton 
+              <BotonPrincipal 
                 title="Buscar" 
                 onPress={searchUser} 
                 btnColor='green'

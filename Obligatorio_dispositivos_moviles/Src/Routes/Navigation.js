@@ -32,7 +32,7 @@ import AltaUsuario from "../Screen/Usuarios/AltaUsuarios";
 import DeleteUsuarios from "../Screen/Usuarios/DeleteUsuarios";
 import TodosLosUsuarios from "../Screen/Usuarios/TodosLosUsuarios";
 import UnUsuario from "../Screen/Usuarios/UnUsuario";
-import EditUsuario from "../Screen/Usuarios/EditUsuario";
+import EditUsuario from "../Screen/Usuarios/EditUsuarios";
 
 const Stack = createStackNavigator();
 
