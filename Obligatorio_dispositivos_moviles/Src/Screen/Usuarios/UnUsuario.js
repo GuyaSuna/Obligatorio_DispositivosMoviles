@@ -9,8 +9,8 @@ const navigation = useNavigation();
 
 const HandleModificar = () => {
   navigation.navigate("EditUsuario",  { 
-    Nombre: item.Nombre,
-        Passwords: item.Passwords,
+       Nombre: item.Nombre,
+        Password: item.Password,
         Email : item.Email       
  });
 }
@@ -20,7 +20,7 @@ const HandleModificar = () => {
       <Text style={styles.label}>Nombre: {item?.Nombre}</Text>
 
 
-      <Text style={styles.label}>Contraseña: {item?.Passwords}</Text>
+      <Text style={styles.label}>Contraseña: {item?.Password}</Text>
     
 
       <Text style={styles.label}>Email: {item?.Email}</Text>
