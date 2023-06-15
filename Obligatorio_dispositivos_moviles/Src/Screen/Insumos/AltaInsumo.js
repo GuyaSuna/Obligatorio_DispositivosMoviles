@@ -44,7 +44,7 @@ const AltaInsumo = () => {
     if (validateData()) {
       console.log("*** DATOS ***", insumoName, insumoCantidad);
       try {
-        const rowsAffected = await DatabaseConnection.insertInsumo(
+        const rowsAffected = await DatabaseConnection.InsertInsumo(
           insumoName,
           insumoCantidad
         );
