@@ -57,6 +57,36 @@ const DatabaseConnection = {
     });
   },
 
+  CreateInsumosTable: () => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT name FROM sqlite_master WHERE type="table" AND name="Insumos"',
+        [],
+        (tx, results) => {
+          if (results.rows.length === 0) {
+            tx.executeSql(
+              //Creamos la tabla
+              "CREATE TABLE Insumos (id INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT, Cantidad INTEGER)",
+              [],
+              () => console.log("Tabla Insumos creada correctamente"),
+              (tx, error) =>
+                console.log("Error al crear la tabla Insumos", error)
+            );
+          } else {
+            // La tabla ya existe, no es necesario crearla nuevamente
+            console.log("La tabla Insumos ya existe");
+          }
+        },
+        (tx, error) =>
+          console.log(
+            "Error al verificar la existencia de la tabla Zonas:",
+            error
+          )
+      );
+    });
+  },
+
   DeleteZona: (Latitud, Longitud, Lugar) => {
     const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {
