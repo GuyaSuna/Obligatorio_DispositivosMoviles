@@ -28,82 +28,54 @@ const handleEmail = (email) =>{
     setEmail(email);
 }
 
-// const addUser = ()=>{
-//     console.log("Agregar Usuario");
 
-//     if(validateDate()){
-//         console.log("Usuario gurdado");
-//         db.transaction((tx)=>{
-//             tx.executeSql(
-//                 'INSERT INTO Usuarios(userName, password, email) VALUES(?,?,?)',
-//                 [userName, password, email],
-//                 (tx, results) => {
-//                     if(results.rowAffected > 0){
-//                         Alert.alert("Exito" , "usuario registrado con exito",[
-//                             {
-//                                 text: "Ok",
-//                                 onPress:()=> navigation.navigate("HomeScreen"),
-//                             }
-//                         ],
-//                         {
-//                             cancelable: false
-//                         } );
-//                         clearData();
-//                     }else{
-//                         Alert.alert("Error","Error al registrar usuario");
-//                     }           
-//                 }
-//             )
-//         } ); 
-//     }
-// }
 const addUser = async () => {
-    console.log("### add Usuario ###");
-  
-    if (validateData()) {
-      console.log("### save Usuario ###", userName,password, email);
+  console.log("### add User ###");
 
-      // llamar a la db y guardar los datos
-      try {
-        const rowsAffected = await DatabaseConnection.insertUsuario(
-          userName,
-          password,
-          email
-        );
-      if (rowsAffected > 0) {
-        Alert.alert(
-          "Exito",
-          "Usuario registrada correctamente",
-          [
-            {
-              text: "Ok",
-              onPress: () => navigation.navigate("PaginaPrincipal"),
-            },
-          ],
+  if (validateData()) {
+    console.log("### save User ###");
+
+    // llamar a la db y guardar los datos
+    try {
+      const rowsAffected = await DatabaseConnection.inserZona(
+        userName,
+        password,
+        email
+      );
+    if (rowsAffected > 0) {
+      Alert.alert(
+        "Exito",
+        "User registrada correctamente",
+        [
           {
-            cancelable: false,
-          }
-        );
-      } else {
-        Alert.alert(
-          "Error",
-          "Usuario no se registró correctamente",
-          [
-            {
-              text: "Ok",
-            },
-          ],
+            text: "Ok",
+            onPress: () => navigation.navigate("PaginaPrincipal"),
+          },
+        ],
+        {
+          cancelable: false,
+        }
+      );
+    } else {
+      Alert.alert(
+        "Error",
+        "User no se registró correctamente",
+        [
           {
-            cancelable: false,
-          }
-        );
-      }
-    }catch(error){
-      console.log("No se pudo recibir el dato");
+            text: "Ok",
+          },
+        ],
+        {
+          cancelable: false,
+        }
+      );
     }
-    }
-    
-  };
+  }catch(error){
+    console.log("No se pudo recibir el dato");
+  }
+  }
+  
+};
 
 const validateData =()=>{
     if(userName === "" && !userName.trim()){

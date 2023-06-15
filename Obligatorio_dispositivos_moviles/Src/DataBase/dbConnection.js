@@ -1,5 +1,6 @@
 import * as SQLite from "expo-sqlite";
 
+
 const DBName = "database.db";
 
 const DatabaseConnection = {
@@ -209,18 +210,7 @@ BuscarUsuarios: (setUsuario) => {
         if (results.rows.length > 0) {
           setUsuario(results.rows._array); // Actualizar el estado Usuarios con los resultados
           resolve(results.rows._array); // Resolver la promesa con los resultados
-        } else {
-          Alert.alert(
-            "Mensaje",
-            "No hay Usuarios!!!",
-            [
-              {
-                text: "Ok",
-                onPress: () => navigation.navigate("HomeScreen"),
-              },
-            ],
-            { cancelable: false }
-          );
+        } else {       
           reject(new Error("No hay Usuarios")); // Rechazar la promesa con un error
         }
       });
