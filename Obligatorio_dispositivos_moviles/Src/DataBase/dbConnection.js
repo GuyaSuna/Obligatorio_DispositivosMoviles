@@ -195,27 +195,25 @@ const DatabaseConnection = {
     });
   },
 
-  insertUsuario: (Nombre, Password, Email) => {
-    return new Promise((resolve, reject) => {
-      const db = DatabaseConnection.getConnection();
-      db.transaction((tx) => {
-        tx.executeSql(
-          'INSERT INTO Usuarios (Nombre, Password, Email) VALUES (?, ?, ?)',
-          [Nombre, Password, Email],
-          (tx, results) => {
-            if (results.rowsAffected > 0) {
-              resolve(true);
-            } else {
-              resolve(false);
-            }
-          },
-          (tx, error) => {
-            reject(error);
+  insertUsuario: (Nombre, Password, Email) => {    
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        'INSERT INTO Usuarios (Nombre, Password, Email) VALUES (?, ?, ?)',
+        [Nombre, Password, Email],
+        (tx, results) => {
+          if (results.rowsAffected > 0) {
+            return true;
+          } else {
+            return false;
           }
-        );
-      });
+        },
+        (tx, error) => {
+          return false;
+        }
+      );
     });
-  },
+},
 
 DeleteUsuario:(Nombre , Password , Email )=>{
   const db = DatabaseConnection.getConnection();
@@ -263,18 +261,7 @@ BuscarUsuarios: (setUsuario) => {
         if (results.rows.length > 0) {
           setUsuario(results.rows._array); // Actualizar el estado Usuarios con los resultados
           resolve(results.rows._array); // Resolver la promesa con los resultados
-        } else {  
-          Alert.alert(
-            "Mensaje",
-            "No hay Zonas!!!",
-            [
-              {
-                text: "Ok",
-                onPress: () => navigation.navigate("HomeScreen"),
-              },
-            ],
-            { cancelable: false }
-          );     
+        } else {       
           reject(new Error("No hay Usuarios")); // Rechazar la promesa con un error
         }
       });

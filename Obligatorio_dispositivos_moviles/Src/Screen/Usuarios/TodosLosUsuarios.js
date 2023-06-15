@@ -17,7 +17,7 @@ const TodosLosUsuarios = () => {
     const handleObservar = (item) => {
       navigation.navigate('UnUsuario', {
         Nombre: item.Nombre,
-        Password: item.Password,
+        Passwords: item.Passwords,
         Email : item.Email
       });
     };
