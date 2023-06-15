@@ -8,7 +8,7 @@ const UnUsuario = ({ route }) => {
 const navigation = useNavigation();
 
 const HandleModificar = () => {
-  navigation.navigate("EditUsuario",  { 
+  navigation.navigate("EditUsuarios",  { 
        Nombre: item.Nombre,
         Password: item.Password,
         Email : item.Email       

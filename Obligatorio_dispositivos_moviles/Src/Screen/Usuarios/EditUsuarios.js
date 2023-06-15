@@ -1,17 +1,28 @@
-import { useNavigation } from '@react-navigation/native';
-import React, {useState,}  from 'react';
-import { MyText,StyleSheet, View, SafeAreaView, ScrollView, KeyboardAvoidingView } from 'react-native';
-import DatabaseConnection from '../../DataBase/dbConnection';
-import BotonPrincipal from '../../Componentes/BotonPrincipal';
-import MyInputText from '../../Componentes/MyInputText';
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  SafeAreaView,
+  ScrollView,
+  KeyboardAvoidingView,
+  Alert,
+} from "react-native";
+// import MyText from "../../Componentes/MyText"; Lo vamos a usar para el buscador.
+
+import MyInputText from "../../Componentes/MyInputText";
+import MyText from "../../Componentes/MyText";
+import BotonPrincipal from "../../Componentes/BotonPrincipal";
+import { useNavigation } from "@react-navigation/native";
+import DatabaseConnection from "../../DataBase/dbConnection"
+
 
  const db = DatabaseConnection.getConnection();
-const EditUsuario = ({route}) => {
+const EditUsuarios = ({route}) => {
   const item = route.params;
 
-    const [userName, setUser] = useState(item.Nombre ? String(item.Cantidad) : "");
-    const [password, setPassword] = useState(item.Password ? String(item.Cantidad) : "");
-    const [email, setEmail] = useState(item.Email ? String(item.Cantidad) : "");
+    const [userName, setUser] = useState(item?.Nombre ? String(item.Nombre) : "");
+    const [password, setPassword] = useState(item?.Password ? String(item.Password) : "");
+    const [email, setEmail] = useState(item?.Email ? String(item.Email) : "");
     const navigation = useNavigation();
 
    
@@ -46,13 +57,14 @@ const EditUsuario = ({route}) => {
     };
 
     const editUsuario = () => {
+      console.log("Dejo de andar jeje")
         if(validateDate()){
             db.transaction((tx) => {
                 tx.executeSql(
                  "UPDATE users SET name =?, password =?, email =? WHERE name =?",
-                 [userName, password, email, userNameSearch],
+                 [userName, password, email],
                  (_, results) => {
-                    if(results.RowAffected > 0){
+                    if(results.rowsAffected > 0){
                         clearData();
                         Alert.alert("Success", "Usuario editado correctamente",[
                             {
@@ -69,33 +81,13 @@ const EditUsuario = ({route}) => {
                  }    
                 )
             })
+        }else{
+          Alert.alert("Error", "No se pudo Recibir el usuario");
         }
     };
     
     
-    const searchUser = () => {
-        if(!userNameSearch.trim() && userNameSearch === ""){
-            Alert.alert("Error", "El nombre de ususario es requerido");
-            return;
-        }
-        db.transaction((tx) => {
-            tx.executeSql(
-                            "SELECT * FROM users WHERE userName =?",
-                            [userNameSearch],
-                            (_, results) => {
-                                if(results.rows.length > 0){
-                                    const user = results.rows.item(0);
-                                    setUserName(user.userName);
-                                    setPassword(user.password);
-                                    setEmail(user.email);
-                                }else{
-                                    Alert.alert("Error", "Usuario no encontrado");
-                                    clearUsernameSearch();
-                                }
-                            }
-                        )
-                    });
-        };                    
+  
 
     return ( 
         <SafeAreaView style={styles.container}>
@@ -139,7 +131,7 @@ const EditUsuario = ({route}) => {
      );
 }
  
-export default EditUsuario;
+
 
 const styles = StyleSheet.create({
     container: {
@@ -165,4 +157,4 @@ const styles = StyleSheet.create({
       justifyContent: "space-between",
     }
   });
-  
+  export default EditUsuarios;

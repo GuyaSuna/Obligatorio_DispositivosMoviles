@@ -22,12 +22,12 @@ import TodosLosInusmos from "../Screen/Insumos/TodosLosInsumos";
 import UnInsumo from "../Screen/Insumos/UnInsumo";
 
 import ScreenUsuarios from "../Screen/Usuarios/ScreenUsuarios";
-import EditUser from "../Screen/Usuarios/EditUsuarios";
+import EditUsuario from "../Screen/Usuarios/EditUsuarios";
 import AltaUsuario from "../Screen/Usuarios/AltaUsuarios";
 import DeleteUsuarios from "../Screen/Usuarios/DeleteUsuarios";
 import TodosLosUsuarios from "../Screen/Usuarios/TodosLosUsuarios";
 import UnUsuario from "../Screen/Usuarios/UnUsuario";
-import EditUsuario from "../Screen/Usuarios/EditUsuarios";
+
 
 const Stack = createStackNavigator();
 
@@ -124,7 +124,7 @@ const Navigation = () => {
           }}
         />
         <Stack.Screen
-          name="EditUsuario"
+          name="EditUsuarios"
           component={EditUsuario}
           options={{
             headerTitle: "Editar Usuario",
