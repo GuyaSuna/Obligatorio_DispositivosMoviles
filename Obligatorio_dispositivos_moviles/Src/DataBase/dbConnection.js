@@ -236,12 +236,12 @@ db.transaction((tx) => {
 })
 },
 
-ModificarUsuario: (Nombre, Password, Email) => {
+ModificarUsuario: (Nombre, Password, Email , NombreViejo , PaswordViejo) => {
   const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {
       tx.executeSql(
-        "UPDATE Usuarios set Nombre=?,WHERE Password=? AND Email=?",
-        [Nombre , Password, Email],
+        "UPDATE Usuarios set Nombre=? AND Password = ? AND Email =? WHERE Password=? AND Email=?",
+        [Nombre , Password, Email , NombreViejo , PaswordViejo],
         (_, results) => {
           if (results.rowsAffected > 0) {
             

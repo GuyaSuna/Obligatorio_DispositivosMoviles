@@ -129,16 +129,7 @@ const ModificarZona = ({route}) => {
   };
   
 
-  // if(results.rowsAffected > 0){
-  //   Alert.alert("Exito", "Zona registrado correctamente", [
-  //     {
-  //       text: "Ok",
-  //       onPress: () => navigation.navigate("PaginaPrincipal"),
-  //     }
-  //   ],
-  //   {
-  //     cancelable: false
-  //   }
+  
 
 
   return (

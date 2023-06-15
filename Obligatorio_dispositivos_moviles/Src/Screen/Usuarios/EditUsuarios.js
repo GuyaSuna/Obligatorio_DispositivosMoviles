@@ -58,29 +58,40 @@ const EditUsuarios = ({route}) => {
 
     const editUsuario = () => {
       console.log("Dejo de andar jeje")
+      console.log(item.Nombre, item.Password)
         if(validateDate()){
-            db.transaction((tx) => {
-                tx.executeSql(
-                 "UPDATE users SET name =?, password =?, email =? WHERE name =?",
-                 [userName, password, email],
-                 (_, results) => {
-                    if(results.rowsAffected > 0){
-                        clearData();
-                        Alert.alert("Success", "Usuario editado correctamente",[
-                            {
-                                text: "OK",
-                                onPress: () => navigation.navigate("PaginaPrincipal"),                                                              
-                            },
-                            {
-                                cancelable: false,
-                            }
-                        ]);
-                    }else{
-                        Alert.alert("Error", "No se pudo editar el usuario");
-                    }
-                 }    
-                )
-            })
+            DatabaseConnection.EditUsuarios(userName,password,email,item.Nombre, item.Password).then((comprobante) => {
+       
+              if (comprobante) {
+                Alert.alert(
+                  "Exito",
+                  "User modificada correctamente",
+                  [
+                    {
+                      text: "Ok",
+                      onPress: () => navigation.navigate("PaginaPrincipal"),
+                    },
+                  ],
+                  {
+                    cancelable: false,
+                  }
+                );
+              } else {
+                Alert.alert(
+                  "Error",
+                  "User no se modificó correctamente",
+                  [
+                    {
+                      text: "Ok",
+                    },
+                  ],
+                  {
+                    cancelable: false,
+                  }
+                );
+                }
+        })
+            
         }else{
           Alert.alert("Error", "No se pudo Recibir el usuario");
         }
