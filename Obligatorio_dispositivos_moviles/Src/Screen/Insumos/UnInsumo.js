@@ -8,7 +8,7 @@ const UnInsumo = ({ route }) => {
   const navigation = useNavigation();
 
   const HandleModificar = () => {
-    navigation.navigate("ModificarZona", {
+    navigation.navigate("ModificarInsumo", {
       Nombre: item.Nombre,
       Cantidad: item.Cantidad,
     });

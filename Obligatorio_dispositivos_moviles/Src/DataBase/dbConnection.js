@@ -102,14 +102,14 @@ const DatabaseConnection = {
     });
   },
 
-  ModificarInsumo: (Id, Nombre, Cantidad) => {
+  ModificarInsumo: (Nombre, Cantidad) => {
     return new Promise((resolve, reject) => {
       const db = DatabaseConnection.getConnection();
 
       db.transaction((tx) => {
         tx.executeSql(
-          "UPDATE Insumos SET Nombre=?, Cantidad=? WHERE id=?",
-          [Nombre, Cantidad, Id],
+          "UPDATE Insumos SET Nombre=?, Cantidad=? WHERE Nombre = ?",
+          [Nombre, Cantidad, Nombre],
           (_, results) => {
             if (results.rowsAffected > 0) {
               resolve(true); // Resuelve la promesa con true

@@ -7,7 +7,6 @@ import {
   KeyboardAvoidingView,
   Alert,
 } from "react-native";
-// import MyText from "../../Componentes/MyText"; Lo vamos a usar para el buscador.
 import MyInputText from "../../Componentes/MyInputText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
@@ -16,17 +15,12 @@ import DatabaseConnection from "../../DataBase/dbConnection";
 const db = DatabaseConnection.getConnection();
 
 const ModificarInsumos = ({ route }) => {
-  //Definimos un estado local para guardar los datos de Insumos
   const item = route.params;
-
   const [insumoName, setInsumoName] = useState(item.Nombre || "");
   const [insumoCantidad, setInsumoCantidad] = useState(
     item.Cantidad ? String(item.Cantidad) : ""
   );
-
   const navigation = useNavigation();
-
-  // Metodo para setear los estados
 
   const handleInsumoName = (insumoName) => {
     setInsumoName(insumoName);
@@ -36,62 +30,58 @@ const ModificarInsumos = ({ route }) => {
     setInsumoCantidad(insumoCantidad);
   };
 
-  // Metodo con el que validamos datos.
-
   const validateData = () => {
-    if (insumoName === "" && !insumoName.trim()) {
+    if (insumoName === "" || !insumoName.trim()) {
       Alert.alert("Error", "El nombre del Insumo es obligatorio");
       return false;
     }
-    if (insumoCantidad === "" && !insumoCantidad.trim()) {
-      Alert.alert("La cantidad del Insumo es obligatoria");
+    if (insumoCantidad === "" || !insumoCantidad.trim()) {
+      Alert.alert("Error", "La cantidad del Insumo es obligatoria");
       return false;
     }
     return true;
   };
 
-  //  Limpiar datos
-  const clearData = () => {
-    setInsumoName("");
-    setInsumoCantidad("");
+  const modificarInsumo = () => {
+    console.log("*** Modificar ***", insumoName, insumoCantidad);
+    if (validateData()) {
+      DatabaseConnection.ModificarInsumo(insumoName, insumoCantidad)
+        .then((comprobante) => {
+          if (comprobante) {
+            Alert.alert(
+              "Exito",
+              "Insumo modificado correctamente",
+              [
+                {
+                  text: "Ok",
+                  onPress: () => navigation.navigate("PaginaPrincipal"),
+                },
+              ],
+              {
+                cancelable: false,
+              }
+            );
+          } else {
+            Alert.alert(
+              "Error",
+              "Insumo no se modificó correctamente",
+              [
+                {
+                  text: "Ok",
+                },
+              ],
+              {
+                cancelable: false,
+              }
+            );
+          }
+        })
+        .catch((error) => {
+          Alert.alert("Error", "Ocurrió un error al modificar el Insumo");
+        });
+    }
   };
 
-  const ModificarInsumos = () => {
-    if (validateData()) {
-      DatabaseConnection.ModificarInsumo(
-        item.id,
-        item.Nombre,
-        item.Cantidad
-      ).then((comprobante) => { if (comprobante) {
-        Alert.alert(
-          "Exito",
-          "Zona modificada correctamente",
-          [
-            {
-              text: "Ok",
-              onPress: () => navigation.navigate("PaginaPrincipal"),
-            },
-          ],
-          {
-            cancelable: false,
-          }
-        );
-      } else {
-        Alert.alert(
-          "Error",
-          "Zona no se modificó correctamente",
-          [
-            {
-              text: "Ok",
-            },
-          ],
-          {
-            cancelable: false,
-          }
-        );
-      }}
-    )}
-  };
   return (
     <SafeAreaView>
       <View>
@@ -107,7 +97,7 @@ const ModificarInsumos = ({ route }) => {
               <MyInputText
                 styles={styles.inputCantidadInsumo}
                 placeholder="Cantidad"
-                keyboardType="numberOfLines"
+                keyboardType="numeric"
                 onChangeText={handleInsumoCantidad}
                 value={insumoCantidad}
               />
@@ -115,7 +105,7 @@ const ModificarInsumos = ({ route }) => {
               <BotonPrincipal
                 title="Editar Insumo"
                 btnColor="green"
-                onPress={ModificarInsumos}
+                onPress={modificarInsumo}
               />
             </KeyboardAvoidingView>
           </ScrollView>
@@ -126,6 +116,7 @@ const ModificarInsumos = ({ route }) => {
 };
 
 export default ModificarInsumos;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

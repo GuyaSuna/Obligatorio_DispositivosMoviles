@@ -19,6 +19,7 @@ import AltaInsumo from "../Screen/Insumos/AltaInsumo";
 import BajaInsumo from "../Screen/Insumos/BajaInsumo";
 import ModificarInsumo from "../Screen/Insumos/ModificarInsumo";
 import TodosLosInusmos from "../Screen/Insumos/TodosLosInsumos";
+import UnInsumo from "../Screen/Insumos/UnInsumo";
 
 import ScreenUsuarios from "../Screen/Usuarios/ScreenUsuarios";
 import EditUser from "../Screen/Usuarios/EditUsuarios";
@@ -201,7 +202,22 @@ const Navigation = () => {
             headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
           }}
         />
-
+        <Stack.Screen
+          name="UnInsumo"
+          component={UnInsumo}
+          options={{
+            headerTitle: "Ver un Insumo",
+            headerStyle: {
+              backgroundColor: "#95C117",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            headerTitleAlign: "center",
+            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
+          }}
+        />
         <Stack.Screen
           name="Zonas"
           component={Zonas}

@@ -26,12 +26,6 @@ const Insumos = ({ navigation }) => {
             </View>
             <View style={styles.viewContainerSecondColumn}>
               <BotonPrincipal
-                title="Editar Insumos"
-                btnIcon="user-circle-o"
-                onPress={() => navigation.navigate("ModificarInsumos")}
-              />
-
-              <BotonPrincipal
                 title="Lista Insumos"
                 btnIcon="bell"
                 onPress={() => navigation.navigate("TodosLosInsumos")}
