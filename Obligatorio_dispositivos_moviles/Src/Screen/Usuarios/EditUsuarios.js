@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, {useState,}  from 'react';
 import { StyleSheet, View } from 'react-native';
 import DatabaseConnection from '../../DataBase/dbConnection';
+import BotonPrincipal from '../../Componentes/BotonPrincipal';
 
  const db = DatabaseConnection.getConnection();
 const EditUser = () => {
@@ -115,7 +116,7 @@ const EditUser = () => {
                 styles={styles.input}
                 value={userNameSearch}
               />
-              <MySingleButton 
+              <BotonPrincipal 
                 title="Buscar" 
                 onPress={searchUser} 
                 btnColor='green'
@@ -139,7 +140,7 @@ const EditUser = () => {
               onChangeText={handleEmail}
             />
 
-            <MySingleButton 
+            <BotonPrincipal  
               title="Editar" onPress={() => editUser()} 
               btnColor='orange'
               />

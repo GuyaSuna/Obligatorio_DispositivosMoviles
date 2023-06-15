@@ -2,17 +2,10 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-
 import PaginaPrincipal from "../Screen/PaginaPrincipal";
-
-
-
-
 
 import Observaciones from "../Screen/Observaciones/Observaciones";
 import Tratamientos from "../Screen/Tratamientos/Tratamientos";
-
-
 
 import Zonas from "../Screen/Zonas/Zonas";
 import AltaZona from "../Screen/Zonas/AltaZona";
@@ -21,13 +14,15 @@ import ModificarZona from "../Screen/Zonas/ModificarZona";
 import TodasLasZonas from "../Screen/Zonas/TodasLasZonas";
 import UnaZona from "../Screen/Zonas/UnaZona";
 
-import ScreenInsumos from "../Screen/Insumos/ScreenInsumos";
-import AddInsumo from "../Screen/Insumos/AddInsumo";
-import DeleteInsumo from "../Screen/Insumos/DeleteInsumo";
-import EditInsumo from "../Screen/Insumos/EditInsumo";
-import ViewAllInsumos from "../Screen/Insumos/ViewAllInsumos";
-import ScreenUsuarios from "../Screen/Usuarios/ScreenUsuarios";
+import Insumos from "../Screen/Insumos/Insumos";
+import AltaInsumo from "../Screen/Insumos/AltaInsumo";
+import BajaInsumo from "../Screen/Insumos/BajaInsumo";
+import ModificarInsumo from "../Screen/Insumos/ModificarInsumo";
+import TodosLosInusmos from "../Screen/Insumos/TodosLosInsumos";
+import UnInsumo from "../Screen/Insumos/UnInsumo";
 
+import ScreenUsuarios from "../Screen/Usuarios/ScreenUsuarios";
+import EditUser from "../Screen/Usuarios/EditUsuarios";
 import AltaUsuario from "../Screen/Usuarios/AltaUsuarios";
 import DeleteUsuarios from "../Screen/Usuarios/DeleteUsuarios";
 
@@ -65,7 +60,7 @@ const Navigation = () => {
         />
 
         <Stack.Screen
-          name="Usuarios"
+          name="ScreenUsuarios"
           component={ScreenUsuarios}
           options={{
             title: "Pagina Usuario",
@@ -92,7 +87,7 @@ const Navigation = () => {
             },
           }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="DeleteUsuarios"
           component={DeleteUsuarios}
           options={{
@@ -107,8 +102,37 @@ const Navigation = () => {
           }}
         />
         <Stack.Screen
+          name="DeleteUser"
+          component={DeleteUsuarios}
+          options={{
+            title: "ELIMINAR USUARIOS",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="EditUser"
+          component={EditUser}
+          options={{
+            title: "EDITAR USUARIOS",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+
+        <Stack.Screen
           name="Insumos"
-          component={ScreenInsumos}
+          component={Insumos}
           options={{
             title: "Insumos",
             headerStyle: {
@@ -121,8 +145,8 @@ const Navigation = () => {
           }}
         />
         <Stack.Screen
-          name="AddInsumo"
-          component={AddInsumo}
+          name="AltaInsumo"
+          component={AltaInsumo}
           options={{
             title: "INGRESO DE INSUMOS",
             headerStyle: {
@@ -135,8 +159,8 @@ const Navigation = () => {
           }}
         />
         <Stack.Screen
-          name="DeleteInsumo"
-          component={DeleteInsumo}
+          name="BajaInsumo"
+          component={BajaInsumo}
           options={{
             title: "ELIMINAR INSUMOS",
             headerStyle: {
@@ -148,10 +172,9 @@ const Navigation = () => {
             },
           }}
         />
-
         <Stack.Screen
-          name="EditInsumo"
-          component={EditInsumo}
+          name="ModificarInsumo"
+          component={ModificarInsumo}
           options={{
             title: "EDITAR INSUMOS",
             headerStyle: {
@@ -163,19 +186,36 @@ const Navigation = () => {
             },
           }}
         />
-         
         <Stack.Screen
-          name="ViewAllInsumos"
-          component={ViewAllInsumos}
+          name="TodosLosInsumos"
+          component={TodosLosInusmos}
           options={{
-            title: "INSUMOS",
+            headerTitle: "Ver todos los Insumos",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
               fontWeight: "bold",
             },
+            headerTitleAlign: "center",
+            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
+          }}
+        />
+        <Stack.Screen
+          name="UnInsumo"
+          component={UnInsumo}
+          options={{
+            headerTitle: "Ver un Insumo",
+            headerStyle: {
+              backgroundColor: "#95C117",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            headerTitleAlign: "center",
+            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
           }}
         />
         <Stack.Screen
@@ -194,7 +234,7 @@ const Navigation = () => {
             headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
           }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="AltaZona"
           component={AltaZona}
           options={{
@@ -210,8 +250,8 @@ const Navigation = () => {
             headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
           }}
         />
-        
-         <Stack.Screen
+
+        <Stack.Screen
           name="ModificarZona"
           component={ModificarZona}
           options={{
@@ -227,8 +267,7 @@ const Navigation = () => {
             headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
           }}
         />
-
-<Stack.Screen
+        <Stack.Screen
           name="TodasLasZonas"
           component={TodasLasZonas}
           options={{
@@ -288,12 +327,9 @@ const Navigation = () => {
             },
           }}
         />
-           
-       
-
-           </Stack.Navigator>
-    </NavigationContainer>                
-  )
-}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
 
 export default Navigation;

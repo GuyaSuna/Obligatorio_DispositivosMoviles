@@ -10,6 +10,7 @@ import DatabaseConnection from "../../DataBase/dbConnection";
 const db = DatabaseConnection.getConnection();
 
 const DeleteUser = () => {
+    //Aca definimos los estados de los campos del form
     const {userName, setUserName} = useState("");
     const navigation = useNavigation();
 
@@ -53,7 +54,7 @@ const DeleteUser = () => {
         );
     });
 }
-    
+    //Este es el metodo que setea los estados
     const handelUserName = (username) => {
         setUserName(username);
     }

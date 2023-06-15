@@ -1,51 +1,78 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, SafeAreaView, FlatList, Alert } from "react-native";
 import MyText from "../../Componentes/MyText";
+import BotonPrincipal from "../../Componentes/BotonPrincipal";
 
 import DatabaseConnection from "../../DataBase/dbConnection";
 const db = DatabaseConnection.getConnection();
 
 import { useNavigation } from "@react-navigation/native";
 
-const ViewAllInsumos = () => {
+const TodosLosInusmos = () => {
   //Definimos un estado local para guardar los datos de Insumos
 
-  const [insumos, setInsumos] = useState([]);
+  const [Insumos, setInsumos] = useState([]);
   const navigation = useNavigation();
 
   //Con el useEffect cargamos los insumos.
 
   useEffect(() => {
-    db.transaction((tx) => {
-      tx.executeSql(`SELECT * FROM  insumos`, [], (tx, results) => {
-        console.log("results", results);
-        if (results.rows.length > 0) {
-          setInsumos(results.rows._array);
-        } else {
-          Alert.alert(
-            "Mensaje",
-            "No hay Insumos",
-            [
-              {
-                text: "OK",
-                onPress: () => navigation.navigate("PaginaPrincipal"),
-              },
-            ],
-            { cancelable: false }
-          );
-        }
-      });
-    });
+    DatabaseConnection.BuscarInsumo(setInsumos);
   }, []);
+  const handleObservar = (item) => {
+    navigation.navigate("UnInsumo", {
+      Nombre: item.Nombre,
+      Cantidad: item.Cantidad,
+    });
+  };
+  const handleBorrar = (item) => {
+    let comprobante = DatabaseConnection.DeleteInsumo(
+      item.id,
+      item.Nombre,
+      item.Cantidad
+    );
+    if ((comprobante = true)) {
+      Alert.alert(
+        "Exito",
+        "Insumo eliminado correctamente",
+        [
+          {
+            text: "Ok",
+            onPress: () => navigation.navigate("PaginaPrincipal"),
+          },
+        ],
+        {
+          cancelable: false,
+        }
+      );
+    } else {
+      Alert.alert(
+        "Error",
+        "Fallo en Delete",
+        [
+          {
+            text: "Ok",
+            onPress: () => navigation.navigate("PaginaPrincipal"),
+          },
+        ],
+        {
+          cancelable: false,
+        }
+      );
+    }
+  };
   //LISTA DE INSUMOS
   const listItemView = (item) => {
     return (
       <View key={item.id} style={styles.listItemView}>
         <MyText textValue="INSUMO: " textStyle={styles.textStyle} />
-        <MyText textValue={item.insumoName} textStyle={styles.textStyle} />
+        <MyText textValue={item.Nombre} textStyle={styles.textStyle} />
 
         <MyText textValue="CANT. EN LITROS: " textStyle={styles.textStyle} />
-        <MyText textValue={item.insumoCantidad} textStyle={styles.textStyle} />
+        <MyText textValue={item.Cantidad} textStyle={styles.textStyle} />
+
+        <BotonPrincipal title="Observar" onPress={() => handleObservar(item)} />
+        <BotonPrincipal title="Borrar" onPress={() => handleBorrar(item)} />
       </View>
     );
   };
@@ -54,7 +81,7 @@ const ViewAllInsumos = () => {
       <View>
         <View>
           <FlatList
-            data={users}
+            data={Insumos}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => listItemView(item)}
             contentContainerStyle={{ paddingHorizontal: 15 }}
@@ -64,7 +91,7 @@ const ViewAllInsumos = () => {
     </SafeAreaView>
   );
 };
-export default ViewAllInsumos;
+export default TodosLosInusmos;
 
 const styles = StyleSheet.create({
   container: {
