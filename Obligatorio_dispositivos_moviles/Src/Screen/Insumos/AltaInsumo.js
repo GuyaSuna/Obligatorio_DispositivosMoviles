@@ -6,6 +6,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Alert,
+
 } from "react-native";
 import MyInputText from "../../Componentes/MyInputText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
@@ -93,13 +94,13 @@ const AltaInsumo = () => {
           <ScrollView>
             <KeyboardAvoidingView>
               <MyInputText
-                style={styles.inputInsumo}
+             
                 placeholder="Ingrese el nombre del Insumo"
                 onChangeText={handleInsumoName}
                 value={insumoName}
               />
               <MyInputText
-                style={styles.inputCantidadInsumo}
+               
                 placeholder="Cantidad"
                 keyboardType="numeric"
                 onChangeText={handleInsumoCantidad}
@@ -118,4 +119,6 @@ const AltaInsumo = () => {
   );
 };
 
+
 export default AltaInsumo;
+

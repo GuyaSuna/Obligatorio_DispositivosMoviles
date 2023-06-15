@@ -13,10 +13,7 @@ const AltaUsuario = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
-//Aca definimos los estados de los campos del form
-const [userName, setUserName] = useState("");
-const [password, setPassword] = useState("");
-const [email, setEmail] = useState("");
+
 
 const navigation = useNavigation();
 const db = DatabaseConnection.getConnection();
@@ -147,45 +144,9 @@ const clearData = () =>{
   );
 };
 
-    return ( 
-        <SafeAreaView style={styles.container}>
-            <View>
-                <View>
-                    <ScrollView>
-                        <KeyboardAvoidingView behavior="padding" style={styles.container}>
-                            <MyInputText
-                            styles={styles.inputUser}
-                            placeholder="Nombre de usuario"
-                            value={userName}
-                            onChangeText={handleUserName}
-                            />
-                            <MyInputText 
-                            styles={styles.inputPassword}
-                            placeholder="Contraseña"
-                            value={password}
-                            onChangeText={handlePassword}
-                            minLength={8}
-                            maxLength={16}
-                            />
-                            <MyInputText
-                            styles={styles.inputEmail}
-                            placeholder="Correo"
-                            value={email}
-                            onChangeText={handleEmail}
-                            keyboardType="email-address"
-                            />
-                            <BotonPrincipal
-                            title="Registrar Usuario"
-                            btnColor="green"
-                            onPress={addUser}
-                            />
-                        </KeyboardAvoidingView>
-                    </ScrollView>
-                </View>
-            </View>
-        </SafeAreaView>
-     );
-}
+   
+    
+
  
 export default AltaUsuario;
 
