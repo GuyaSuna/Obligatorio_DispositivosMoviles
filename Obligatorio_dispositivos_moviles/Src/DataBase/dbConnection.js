@@ -58,35 +58,7 @@ const DatabaseConnection = {
     });
   },
 
-  CreateInsumosTable: () => {
-    const db = DatabaseConnection.getConnection();
-    db.transaction((tx) => {
-      tx.executeSql(
-        'SELECT name FROM sqlite_master WHERE type="table" AND name="Insumos"',
-        [],
-        (tx, results) => {
-          if (results.rows.length === 0) {
-            tx.executeSql(
-              //Creamos la tabla
-              "CREATE TABLE Insumos (id INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT, Cantidad INTEGER)",
-              [],
-              () => console.log("Tabla Insumos creada correctamente"),
-              (tx, error) =>
-                console.log("Error al crear la tabla Insumos", error)
-            );
-          } else {
-            // La tabla ya existe, no es necesario crearla nuevamente
-            console.log("La tabla Insumos ya existe");
-          }
-        },
-        (tx, error) =>
-          console.log(
-            "Error al verificar la existencia de la tabla Zonas:",
-            error
-          )
-      );
-    });
-  },
+  
 
   DeleteZona: (Latitud, Longitud, Lugar) => {
     const db = DatabaseConnection.getConnection();
@@ -237,22 +209,24 @@ db.transaction((tx) => {
 },
 
 ModificarUsuario: (Nombre, Password, Email , NombreViejo , PaswordViejo) => {
+  return new Promise((resolve,reject ) => {
   const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {
       tx.executeSql(
-        "UPDATE Usuarios set Nombre=? AND Password = ? AND Email =? WHERE Password=? AND Email=?",
+        "UPDATE Usuarios SET Nombre=?, Password=?, Email=? WHERE Nombre=? AND Password=?",
         [Nombre , Password, Email , NombreViejo , PaswordViejo],
         (_, results) => {
           if (results.rowsAffected > 0) {
-            
-           return true
-        
+            resolve(true);
           } else {
-           return false
+            resolve(false);
           }
+        }, (tx, error) => {
+          reject(error);
         }
       )
     })
+  })
 },
 
 BuscarUsuarios: (setUsuario) => {
@@ -268,6 +242,56 @@ BuscarUsuarios: (setUsuario) => {
           reject(new Error("No hay Usuarios")); // Rechazar la promesa con un error
         }
       });
+    });
+  });
+},
+CreateInsumosTable: () => {
+  const db = DatabaseConnection.getConnection();
+  db.transaction((tx) => {
+    tx.executeSql(
+      'SELECT name FROM sqlite_master WHERE type="table" AND name="Insumos"',
+      [],
+      (tx, results) => {
+        if (results.rows.length === 0) {
+          tx.executeSql(
+            //Creamos la tabla
+            "CREATE TABLE Insumos (id INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT, Cantidad INTEGER)",
+            [],
+            () => console.log("Tabla Insumos creada correctamente"),
+            (tx, error) =>
+              console.log("Error al crear la tabla Insumos", error)
+          );
+        } else {
+          // La tabla ya existe, no es necesario crearla nuevamente
+          console.log("La tabla Insumos ya existe");
+        }
+      },
+      (tx, error) =>
+        console.log(
+          "Error al verificar la existencia de la tabla Zonas:",
+          error
+        )
+    );
+  });
+},
+insertInsumo: (Nombre, Cantidad) => {
+  return new Promise((resolve, reject) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        'INSERT INTO Insumos (Nombre, Cantidad) VALUES (?, ?)',
+        [Nombre, Cantidad],
+        (tx, results) => {
+          if (results.rowsAffected > 0) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        },
+        (tx, error) => {
+          reject(error);
+        }
+      );
     });
   });
 },

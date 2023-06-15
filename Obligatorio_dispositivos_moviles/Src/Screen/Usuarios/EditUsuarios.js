@@ -37,6 +37,7 @@ const EditUsuarios = ({route}) => {
     };
 
     const validateDate = () => {
+      console.log("Validacion")
         if(userName === "" && !userName.trim()){
             Alert.alert("Error", "El nombre es obligatorio");
             return false;
@@ -53,14 +54,15 @@ const EditUsuarios = ({route}) => {
             Alert.alert("Error", "El email no es valido");
             return false;
         }
+        console.log("True")
         return true;
     };
 
     const editUsuario = () => {
       console.log("Dejo de andar jeje")
-      console.log(item.Nombre, item.Password)
+      console.log(userName,password,email,item.Nombre, item.Password)
         if(validateDate()){
-            DatabaseConnection.EditUsuarios(userName,password,email,item.Nombre, item.Password).then((comprobante) => {
+            DatabaseConnection.ModificarUsuario(userName,password,email,item.Nombre, item.Password).then((comprobante) => {
        
               if (comprobante) {
                 Alert.alert(
@@ -128,10 +130,7 @@ const EditUsuarios = ({route}) => {
               onChangeText={handleEmail}
             />
 
-            <BotonPrincipal 
-              title="Editar" onPress={() => editUsuario()} 
-              btnColor='orange'
-              />
+<BotonPrincipal title="Modificar" onPress={editUsuario} />
 
             </KeyboardAvoidingView>
           </ScrollView>
