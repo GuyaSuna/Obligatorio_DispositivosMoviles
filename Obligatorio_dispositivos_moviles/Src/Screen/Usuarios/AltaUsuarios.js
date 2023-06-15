@@ -5,7 +5,7 @@ import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import {useNavigation} from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection";
 
-const db = DatabaseConnection.getConnection();
+
 
 const AltaUsuario = () => {
 
@@ -15,6 +15,7 @@ const [password, setPassword] = useState("");
 const [email, setEmail] = useState("");
 
 const navigation = useNavigation();
+const db = DatabaseConnection.getConnection();
 
 //Este es el metodo que setea los estados
 const handleUserName= (userName) =>{
@@ -27,37 +28,84 @@ const handleEmail = (email) =>{
     setEmail(email);
 }
 
-const addUser = ()=>{
-    console.log("Agregar Usuario");
+// const addUser = ()=>{
+//     console.log("Agregar Usuario");
 
-    if(validateDate()){
-        console.log("Usuario gurdado");
-        db.transaction((tx)=>{
-            tx.executeSql(
-                'INSERT INTO users (userName, password, email) VALUES(?,?,?)',
-                [userName, password, email],
-                (tx, results) => {
-                    if(results.rowAffected > 0){
-                        Alert.alert("Exito" , "usuario registrado con exito",[
-                            {
-                                text: "Ok",
-                                onPress:()=> navigation.navigate("HomeScreen"),
-                            }
-                        ],
-                        {
-                            cancelable: false
-                        } );
-                        clearData();
-                    }else{
-                        Alert.alert("Error","Error al registrar usuario");
-                    }           
-                }
-            )
-        } ); 
+//     if(validateDate()){
+//         console.log("Usuario gurdado");
+//         db.transaction((tx)=>{
+//             tx.executeSql(
+//                 'INSERT INTO Usuarios(userName, password, email) VALUES(?,?,?)',
+//                 [userName, password, email],
+//                 (tx, results) => {
+//                     if(results.rowAffected > 0){
+//                         Alert.alert("Exito" , "usuario registrado con exito",[
+//                             {
+//                                 text: "Ok",
+//                                 onPress:()=> navigation.navigate("HomeScreen"),
+//                             }
+//                         ],
+//                         {
+//                             cancelable: false
+//                         } );
+//                         clearData();
+//                     }else{
+//                         Alert.alert("Error","Error al registrar usuario");
+//                     }           
+//                 }
+//             )
+//         } ); 
+//     }
+// }
+const addUser = async () => {
+    console.log("### add Usuario ###");
+  
+    if (validateData()) {
+      console.log("### save Usuario ###", userName,password, email);
+
+      // llamar a la db y guardar los datos
+      try {
+        const rowsAffected = await DatabaseConnection.insertUsuario(
+          userName,
+          password,
+          email
+        );
+      if (rowsAffected > 0) {
+        Alert.alert(
+          "Exito",
+          "Usuario registrada correctamente",
+          [
+            {
+              text: "Ok",
+              onPress: () => navigation.navigate("PaginaPrincipal"),
+            },
+          ],
+          {
+            cancelable: false,
+          }
+        );
+      } else {
+        Alert.alert(
+          "Error",
+          "Usuario no se registró correctamente",
+          [
+            {
+              text: "Ok",
+            },
+          ],
+          {
+            cancelable: false,
+          }
+        );
+      }
+    }catch(error){
+      console.log("No se pudo recibir el dato");
     }
-}
+    }
+    
+  };
 
-const validateDate =()=>{
+const validateData =()=>{
     if(userName === "" && !userName.trim()){
         Alert.alert("Error","El nombre de usuario es obligatorio");
         return false;

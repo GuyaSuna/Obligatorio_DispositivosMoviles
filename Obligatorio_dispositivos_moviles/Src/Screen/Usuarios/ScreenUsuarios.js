@@ -1,9 +1,14 @@
 import React from "react";
 import {View, Text, SafeAreaView,ScrollView, StyleSheet, ImageBackground} from "react-native";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
+import { useEffect } from "react";
+import DatabaseConnection from "../../DataBase/dbConnection";
 
 const ScreenUsuarios = ({navigation}) => {
-   
+  
+  useEffect(() =>{
+    DatabaseConnection.createUsuariosTable();
+ },[]);
     return ( 
      
         <SafeAreaView style={styles.container}>
@@ -15,24 +20,15 @@ const ScreenUsuarios = ({navigation}) => {
                         btnIcon="user-plus"
                         onPress={() => navigation.navigate("AltaUsuarios")}
                         />
-                        <BotonPrincipal
-                        title="Borrar Usuarios"
-                        btnIcon="user"
-                        onPress={() => navigation.navigate("DeleteUsuarios")}
-                        />
+                        
                         <View style={styles.viewContainerSecondColumn}>
-                            <BotonPrincipal
-                            title="Editar Usuarios"
-                            btnIcon="user-circle-o"
-                            onPress={() => navigation.navigate("EditUsuarios")}
-                            />
+                            
 
                             <BotonPrincipal
-                            title="TodosLosUsuarios"
+                            title="Ver Usuarios"
                             btnIcon="user-circle-o"
                             onPress={() => navigation.navigate("TodosLosUsuarios")}
                             />
-                            
                         </View>
                     </View>
                 </View>

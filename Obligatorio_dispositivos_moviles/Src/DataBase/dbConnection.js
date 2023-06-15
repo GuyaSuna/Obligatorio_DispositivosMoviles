@@ -128,7 +128,7 @@ ModificarZona: (Lugar, Departamento, Cantidad, Latitud, Longitud, Latitud2, Long
           if (results.rows.length === 0) {
             // La tabla no existe, se crea
             tx.executeSql(
-              'CREATE TABLE Usuarios (id INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT,Password TEXT, Email TEXT, )',
+              'CREATE TABLE Usuarios (id INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT,Password TEXT, Email TEXT )',
               [],
               () => console.log('Tabla Usuarios creada correctamente'),
               (tx, error) => console.log('Error al crear la tabla Usuarios:', error)
@@ -163,7 +163,7 @@ ModificarZona: (Lugar, Departamento, Cantidad, Latitud, Longitud, Latitud2, Long
     });
 },
 
-DeleteZona:(Nombre , Password , Email )=>{
+DeleteUsuario:(Nombre , Password , Email )=>{
   const db = DatabaseConnection.getConnection();
 db.transaction((tx) => {
   tx.executeSql(

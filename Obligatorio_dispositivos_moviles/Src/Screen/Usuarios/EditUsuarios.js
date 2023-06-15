@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import DatabaseConnection from '../../DataBase/dbConnection';
 
  const db = DatabaseConnection.getConnection();
-const EditUser = () => {
+const EditUsuario = () => {
     const [userNameSearch, setUserNameSearch] = useState("");
     const [userName, setUser] = useState("");
     const [password, setPassword] = useState("");
@@ -50,7 +50,7 @@ const EditUser = () => {
         setEmail("");
     };
 
-    const editUser = () => {
+    const editUsuario = () => {
         if(validateDate()){
             db.transaction((tx) => {
                 tx.executeSql(
@@ -139,7 +139,7 @@ const EditUser = () => {
               onChangeText={handleEmail}
             />
 
-            <MySingleButton 
+            <BotonPrincipal 
               title="Editar" onPress={() => editUser()} 
               btnColor='orange'
               />
@@ -153,7 +153,7 @@ const EditUser = () => {
      );
 }
  
-export default EditUser;
+export default EditUsuario;
 
 const styles = StyleSheet.create({
     container: {

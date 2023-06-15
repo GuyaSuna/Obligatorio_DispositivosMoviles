@@ -32,6 +32,7 @@ import AltaUsuario from "../Screen/Usuarios/AltaUsuarios";
 import DeleteUsuarios from "../Screen/Usuarios/DeleteUsuarios";
 import TodosLosUsuarios from "../Screen/Usuarios/TodosLosUsuarios";
 import UnUsuario from "../Screen/Usuarios/UnUsuario";
+import EditUsuario from "../Screen/Usuarios/EditUsuario";
 
 const Stack = createStackNavigator();
 
@@ -99,7 +100,7 @@ const Navigation = () => {
           name="TodosLosUsuarios"
           component={TodosLosUsuarios}
           options={{
-            headerTitle: "Ver Todos Los Usuarios",
+            headerTitle: "Todos Los Usuarios",
             headerStyle: {
               backgroundColor: "#95C117",
             },
@@ -116,6 +117,22 @@ const Navigation = () => {
           component={UnUsuario}
           options={{
             headerTitle: "Ver Un Usuario",
+            headerStyle: {
+              backgroundColor: "#95C117",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            headerTitleAlign: "center",
+            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
+          }}
+        />
+        <Stack.Screen
+          name="EditUsuario"
+          component={EditUsuario}
+          options={{
+            headerTitle: "Editar Usuario",
             headerStyle: {
               backgroundColor: "#95C117",
             },

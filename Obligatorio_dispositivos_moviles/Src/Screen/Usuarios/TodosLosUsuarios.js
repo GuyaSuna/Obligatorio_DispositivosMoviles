@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
-import {View, Text,FlatList, scrollViewContainer, SafeAreaView, StyleSheet, ScrollView} from 'react-native'
+import React, { useEffect, useState } from 'react';
+import {View, Text,FlatList, scrollViewContainer, SafeAreaView, StyleSheet, ScrollView, Alert} from 'react-native'
 import BotonPrincipal from '../../Componentes/BotonPrincipal';
 import DatabaseConnection from '../../DataBase/dbConnection';
 import MyText from '../../Componentes/MyText';
 import { useNavigation } from "@react-navigation/native";
+const db = DatabaseConnection.getConnection();
 
 const TodosLosUsuarios = () => {
-    const [usuarios, setUsuarios] = React.useState([]);
+    const [usuarios, setUsuarios] = useState([]);
     const navigation = useNavigation();
 
     useEffect(() =>{
@@ -28,7 +29,7 @@ const TodosLosUsuarios = () => {
       Alert.alert("Exito", "Usuario borrado correctamente",[
     {
       text: "OK",
-      onPress: () => console.log("PaginaPrincipal"),
+      onPress: () => navigation.navigate("PaginaPrincipal"),
     }
   ],
   {
@@ -39,7 +40,7 @@ const TodosLosUsuarios = () => {
   Alert.alert("Error", "Fallo en el delete", [
     {
       text: "OK",
-      onPress: () => console.log("PaginaPrincipal"),
+      onPress: () => navigation.navigate("PaginaPrincipal"),
     }
   ],
   {
