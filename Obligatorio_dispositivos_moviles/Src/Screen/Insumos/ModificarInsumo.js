@@ -57,30 +57,40 @@ const ModificarInsumos = ({ route }) => {
   };
 
   const ModificarInsumos = () => {
-    if (validateData) {
-      db.transaction((tx) => {
-        tx.executeSql(
-          "UPDATE insumos set insumoName=?, insumoCantidad=? WHERE insumoName=?",
-          [insumoName, insumoCantidad],
-          (_, results) => {
-            if (results.rowsAffected > 0) {
-              clearData();
-              Alert.alert("Insumo actualizado satisfactoriamente.", [
-                {
-                  text: "OK",
-                  onPress: () => navigation.navigate("PaginaPrincipal"),
-                },
-                {
-                  cancelable: false,
-                },
-              ]);
-            } else {
-              Alert.alert("Error al actualizar el Insumo.");
-            }
+    if (validateData()) {
+      DatabaseConnection.ModificarInsumo(
+        item.id,
+        item.Nombre,
+        item.Cantidad
+      ).then((comprobante) => { if (comprobante) {
+        Alert.alert(
+          "Exito",
+          "Zona modificada correctamente",
+          [
+            {
+              text: "Ok",
+              onPress: () => navigation.navigate("PaginaPrincipal"),
+            },
+          ],
+          {
+            cancelable: false,
           }
         );
-      });
-    }
+      } else {
+        Alert.alert(
+          "Error",
+          "Zona no se modificó correctamente",
+          [
+            {
+              text: "Ok",
+            },
+          ],
+          {
+            cancelable: false,
+          }
+        );
+      }}
+    )}
   };
   return (
     <SafeAreaView>
