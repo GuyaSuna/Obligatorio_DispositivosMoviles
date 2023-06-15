@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
+import DatabaseConnection from "../../DataBase/dbConnection";
 
 const Insumos = ({ navigation }) => {
+  useEffect(() => {
+    DatabaseConnection.CreateInsumosTable();
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
@@ -28,9 +32,9 @@ const Insumos = ({ navigation }) => {
               />
 
               <BotonPrincipal
-                title="Por las dudas"
+                title="Lista Insumos"
                 btnIcon="bell"
-                onPress={() => navigation.navigate("")}
+                onPress={() => navigation.navigate("TodosLosInsumos")}
               />
             </View>
           </View>

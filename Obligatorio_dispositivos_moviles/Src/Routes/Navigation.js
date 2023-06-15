@@ -18,6 +18,7 @@ import Insumos from "../Screen/Insumos/Insumos";
 import AltaInsumo from "../Screen/Insumos/AltaInsumo";
 import BajaInsumo from "../Screen/Insumos/BajaInsumo";
 import ModificarInsumo from "../Screen/Insumos/ModificarInsumo";
+import TodosLosInusmos from "../Screen/Insumos/TodosLosInsumos";
 
 import ScreenUsuarios from "../Screen/Usuarios/ScreenUsuarios";
 import EditUser from "../Screen/Usuarios/EditUsuarios";
@@ -184,6 +185,23 @@ const Navigation = () => {
             },
           }}
         />
+        <Stack.Screen
+          name="TodosLosInsumos"
+          component={TodosLosInusmos}
+          options={{
+            headerTitle: "Ver todos los Insumos",
+            headerStyle: {
+              backgroundColor: "#95C117",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            headerTitleAlign: "center",
+            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
+          }}
+        />
+
         <Stack.Screen
           name="Zonas"
           component={Zonas}

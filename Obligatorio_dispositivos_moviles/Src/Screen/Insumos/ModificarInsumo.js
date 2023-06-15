@@ -15,11 +15,14 @@ import DatabaseConnection from "../../DataBase/dbConnection";
 
 const db = DatabaseConnection.getConnection();
 
-const ModificarInsumos = () => {
+const ModificarInsumos = ({ route }) => {
   //Definimos un estado local para guardar los datos de Insumos
+  const item = route.params;
 
-  const [insumoName, setInsumoName] = useState("");
-  const [insumoCantidad, setInsumoCantidad] = useState("");
+  const [insumoName, setInsumoName] = useState(item.Nombre || "");
+  const [insumoCantidad, setInsumoCantidad] = useState(
+    item.Cantidad ? String(item.Cantidad) : ""
+  );
 
   const navigation = useNavigation();
 

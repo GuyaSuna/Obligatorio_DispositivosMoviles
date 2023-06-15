@@ -83,7 +83,7 @@ const AltaZona = () => {
 
       // llamar a la db y guardar los datos
       try {
-        const rowsAffected = await DatabaseConnection.InsertZona(
+        const rowsAffected = await DatabaseConnection.inserZona(
           Lugar,
           Departamento,
           Cantidad,

@@ -12,7 +12,7 @@ const DatabaseConnection = {
       const db = DatabaseConnection.getConnection();
       db.transaction((tx) => {
         tx.executeSql(
-          "INSERT INTO  Insumos (id INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT, Cantidad INTEGER) VALUES (?,?)",
+          "INSERT INTO Insumos (Nombre, Cantidad) VALUES (?, ?)",
           [Nombre, Cantidad],
           (tx, results) => {
             if (results.rowsAffected > 0) {
@@ -28,7 +28,23 @@ const DatabaseConnection = {
       });
     });
   },
-
+  DeleteInsumo: (Id, Nombre, Cantidad) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DELETE FROM Insumos WHERE id = ? AND Nombre = ? AND Cantidad = ?",
+        [Id, Nombre, Cantidad],
+        (tx, results) => {
+          console.log("Results", results.rowsAffected);
+          if (results.rowsAffected > 0) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      );
+    });
+  },
   CreateInsumosTable: () => {
     const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {
@@ -58,7 +74,56 @@ const DatabaseConnection = {
       );
     });
   },
+  BuscarInsumo: (setInsumos) => {
+    return new Promise((resolve, reject) => {
+      const db = DatabaseConnection.getConnection();
 
+      db.transaction((tx) => {
+        tx.executeSql(`SELECT * FROM  insumos`, [], (tx, results) => {
+          console.log("results", results);
+          if (results.rows.length > 0) {
+            setInsumos(results.rows._array); // Actualizar el estado Zonas con los resultados
+            resolve(results.rows._array); // Resolver la promesa con los resultados
+          } else {
+            Alert.alert(
+              "Mensaje",
+              "No hay Insumos",
+              [
+                {
+                  text: "OK",
+                  onPress: () => navigation.navigate("PaginaPrincipal"),
+                },
+              ],
+              { cancelable: false }
+            );
+          }
+        });
+      });
+    });
+  },
+
+  ModificarInsumo: (Id, Nombre, Cantidad) => {
+    return new Promise((resolve, reject) => {
+      const db = DatabaseConnection.getConnection();
+
+      db.transaction((tx) => {
+        tx.executeSql(
+          "UPDATE Insumos SET Nombre=?, Cantidad=? WHERE id=?",
+          [Nombre, Cantidad, Id],
+          (_, results) => {
+            if (results.rowsAffected > 0) {
+              resolve(true); // Resuelve la promesa con true
+            } else {
+              resolve(false); // Resuelve la promesa con false
+            }
+          },
+          (_, error) => {
+            reject(error); // Rechaza la promesa con el error
+          }
+        );
+      });
+    });
+  },
   inserZona: (Lugar, Departamento, Cantidad, Latitud, Longitud) => {
     return new Promise((resolve, reject) => {
       const db = DatabaseConnection.getConnection();
