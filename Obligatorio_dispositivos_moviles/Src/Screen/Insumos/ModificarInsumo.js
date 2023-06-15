@@ -42,11 +42,11 @@ const ModificarInsumos = ({ route }) => {
     return true;
   };
 
-  const modificarInsumo = () => {
-    console.log("*** Modificar ***", insumoName, insumoCantidad);
+  const modificar = () => {
+    console.log(" Modificar ", insumoName, insumoCantidad);
     if (validateData()) {
-      DatabaseConnection.ModificarInsumo(insumoName, insumoCantidad)
-        .then((comprobante) => {
+      DatabaseConnection.ModificarInsumo(insumoName, insumoCantidad).then(
+        (comprobante) => {
           if (comprobante) {
             Alert.alert(
               "Exito",
@@ -75,10 +75,8 @@ const ModificarInsumos = ({ route }) => {
               }
             );
           }
-        })
-        .catch((error) => {
-          Alert.alert("Error", "Ocurrió un error al modificar el Insumo");
-        });
+        }
+      );
     }
   };
 
@@ -105,7 +103,7 @@ const ModificarInsumos = ({ route }) => {
               <BotonPrincipal
                 title="Editar Insumo"
                 btnColor="green"
-                onPress={modificarInsumo}
+                onPress={modificar}
               />
             </KeyboardAvoidingView>
           </ScrollView>

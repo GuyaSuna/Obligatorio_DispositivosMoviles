@@ -108,13 +108,13 @@ const DatabaseConnection = {
 
       db.transaction((tx) => {
         tx.executeSql(
-          "UPDATE Insumos SET Nombre=?, Cantidad=? WHERE Nombre = ?",
-          [Nombre, Cantidad, Nombre],
+          "UPDATE Insumos SET Cantidad=? WHERE Nombre = ?",
+          [Cantidad, Nombre],
           (_, results) => {
             if (results.rowsAffected > 0) {
-              resolve(true); // Resuelve la promesa con true
+              resolve(true); // Resuelve la promesa con true si se modificó al menos un registro
             } else {
-              resolve(false); // Resuelve la promesa con false
+              resolve(false); // Resuelve la promesa con false si no se modificó ningún registro
             }
           },
           (_, error) => {
@@ -124,6 +124,7 @@ const DatabaseConnection = {
       });
     });
   },
+
   inserZona: (Lugar, Departamento, Cantidad, Latitud, Longitud) => {
     return new Promise((resolve, reject) => {
       const db = DatabaseConnection.getConnection();
