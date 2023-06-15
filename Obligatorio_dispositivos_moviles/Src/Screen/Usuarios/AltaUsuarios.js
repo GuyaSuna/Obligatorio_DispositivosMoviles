@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {StyleSheet, Text, View, SafeAreaView, ScrollView, KeyboardAvoidingView,Alert} from "react-native";
+import {StyleSheet, Text, View, SafeAreaView, ScrollView, KeyboardAvoidingView,Alert, Easing} from "react-native";
 import MyInputText from "../../Componentes/MyInputText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import {useNavigation} from "@react-navigation/native";
@@ -10,9 +10,9 @@ import DatabaseConnection from "../../DataBase/dbConnection";
 const AltaUsuario = () => {
 
 //Aca definimos los estados de los campos del form
-const [userName, setUserName] = useState("");
-const [password, setPassword] = useState("");
-const [email, setEmail] = useState("");
+const [UserName, setUserName] = useState("");
+const [Password, setPassword] = useState("");
+const [Email, setEmail] = useState("");
 
 const navigation = useNavigation();
 const db = DatabaseConnection.getConnection();
@@ -33,19 +33,14 @@ const addUser = async () => {
   console.log("### add User ###");
 
   if (validateData()) {
-    console.log("### save User ###");
+    console.log("### save User ###" , UserName, Password, Email);
 
     // llamar a la db y guardar los datos
-    try {
-      const rowsAffected = await DatabaseConnection.inserZona(
-        userName,
-        password,
-        email
-      );
-    if (rowsAffected > 0) {
+    DatabaseConnection.insertUsuario(UserName, Password, Email)
+    .then((result) => {
       Alert.alert(
         "Exito",
-        "User registrada correctamente",
+        "Zona registrada correctamente",
         [
           {
             text: "Ok",
@@ -56,51 +51,33 @@ const addUser = async () => {
           cancelable: false,
         }
       );
-    } else {
-      Alert.alert(
-        "Error",
-        "User no se registró correctamente",
-        [
-          {
-            text: "Ok",
-          },
-        ],
-        {
-          cancelable: false,
-        }
-      );
-    }
-  }catch(error){
-    console.log("No se pudo recibir el dato");
-  }
+    })
+    .catch((error) => {
+      console.log('Error al insertar usuario:', error);
+    });
   }
   
 };
 
 const validateData =()=>{
-    if(userName === "" && !userName.trim()){
+    if(UserName === "" && !UserName.trim()){
         Alert.alert("Error","El nombre de usuario es obligatorio");
         return false;
     }
-    if(password ==="" && !password.trim()){
+    if(Password ==="" && !Password.trim()){
         Alert.alert("Error", "La contraseña es obligatoria");
         return false;
     }
-    if(!email.trim()){
+    if(!Email.trim()){
         Alert.alert("Error","El correo es ovbligatorio");
         return false;
     }
-    if(!email.trim("@")){
+    if(!Email.trim("@")){
         Alert.alert("Error", "El correo no es valido")
         return false;
     }
 
     return true;
-}
-const clearData = () =>{
-    setUserName("");
-    setPassword("");
-    setEmail("");
 }
 
 
@@ -113,13 +90,13 @@ const clearData = () =>{
                             <MyInputText
                             styles={styles.inputUser}
                             placeholder="Nombre de usuario"
-                            value={userName}
+                            value={UserName}
                             onChangeText={handleUserName}
                             />
                             <MyInputText 
                             styles={styles.inputPassword}
                             placeholder="Contraseña"
-                            value={password}
+                            value={Password}
                             onChangeText={handlePassword}
                             minLength={8}
                             maxLength={16}
@@ -127,7 +104,7 @@ const clearData = () =>{
                             <MyInputText
                             styles={styles.inputEmail}
                             placeholder="Correo"
-                            value={email}
+                            value={Email}
                             onChangeText={handleEmail}
                             keyboardType="email-address"
                             />

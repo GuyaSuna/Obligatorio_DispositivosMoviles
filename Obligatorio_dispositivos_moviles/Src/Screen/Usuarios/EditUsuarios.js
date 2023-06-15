@@ -6,16 +6,15 @@ import BotonPrincipal from '../../Componentes/BotonPrincipal';
 import MyInputText from '../../Componentes/MyInputText';
 
  const db = DatabaseConnection.getConnection();
-const EditUsuario = () => {
-    const [userNameSearch, setUserNameSearch] = useState("");
-    const [userName, setUser] = useState("");
-    const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
+const EditUsuario = ({route}) => {
+  const item = route.params;
+
+    const [userName, setUser] = useState(item.Nombre ? String(item.Cantidad) : "");
+    const [password, setPassword] = useState(item.Password ? String(item.Cantidad) : "");
+    const [email, setEmail] = useState(item.Email ? String(item.Cantidad) : "");
     const navigation = useNavigation();
 
-    const handleUserNameSearch = (username) => {
-        setUserNameSearch(username);
-    };
+   
     const handleUserName = (username) => {
         setUser(username);
     };
@@ -44,12 +43,6 @@ const EditUsuario = () => {
             return false;
         }
         return true;
-    };
-
-    const clearData = () => {
-        setUserName("");
-        setPassword("");
-        setEmail("");
     };
 
     const editUsuario = () => {
@@ -111,17 +104,8 @@ const EditUsuario = () => {
           <ScrollView>
             <KeyboardAvoidingView style={styles.keyboardView}>
               <MyText textValue="Buscar usuario" textStyle={styles.textStyle} />
-              <MyInputText
-                placeholder="Ingrese el nombre de usuario"
-                onChangeText={handleUserNameSearch}
-                styles={styles.input}
-                value={userNameSearch}
-              />
-              <BotonPrincipal 
-                title="Buscar" 
-                onPress={searchUser} 
-                btnColor='green'
-              />
+             
+            
 
             <MyInputText 
               placeholder="Nombre de usuario"
@@ -142,7 +126,7 @@ const EditUsuario = () => {
             />
 
             <BotonPrincipal 
-              title="Editar" onPress={() => editUser()} 
+              title="Editar" onPress={() => editUsuario()} 
               btnColor='orange'
               />
 
