@@ -1,20 +1,20 @@
 import { useNavigation } from '@react-navigation/native';
 import React, {useState,}  from 'react';
-import { StyleSheet, View } from 'react-native';
+import { MyText,StyleSheet, View, SafeAreaView, ScrollView, KeyboardAvoidingView } from 'react-native';
 import DatabaseConnection from '../../DataBase/dbConnection';
 import BotonPrincipal from '../../Componentes/BotonPrincipal';
+import MyInputText from '../../Componentes/MyInputText';
 
  const db = DatabaseConnection.getConnection();
-const EditUser = () => {
-    const [userNameSearch, setUserNameSearch] = useState("");
-    const [userName, setUser] = useState("");
-    const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
+const EditUsuario = ({route}) => {
+  const item = route.params;
+
+    const [userName, setUser] = useState(item.Nombre ? String(item.Cantidad) : "");
+    const [password, setPassword] = useState(item.Password ? String(item.Cantidad) : "");
+    const [email, setEmail] = useState(item.Email ? String(item.Cantidad) : "");
     const navigation = useNavigation();
 
-    const handleUserNameSearch = (username) => {
-        setUserNameSearch(username);
-    };
+   
     const handleUserName = (username) => {
         setUser(username);
     };
@@ -45,13 +45,7 @@ const EditUser = () => {
         return true;
     };
 
-    const clearData = () => {
-        setUserName("");
-        setPassword("");
-        setEmail("");
-    };
-
-    const editUser = () => {
+    const editUsuario = () => {
         if(validateDate()){
             db.transaction((tx) => {
                 tx.executeSql(
@@ -63,7 +57,7 @@ const EditUser = () => {
                         Alert.alert("Success", "Usuario editado correctamente",[
                             {
                                 text: "OK",
-                                onPress: () => navigation.navigate("HomeScreen"),                                                              
+                                onPress: () => navigation.navigate("PaginaPrincipal"),                                                              
                             },
                             {
                                 cancelable: false,
@@ -110,17 +104,8 @@ const EditUser = () => {
           <ScrollView>
             <KeyboardAvoidingView style={styles.keyboardView}>
               <MyText textValue="Buscar usuario" textStyle={styles.textStyle} />
-              <MyInputText
-                placeholder="Ingrese el nombre de usuario"
-                onChangeText={handleUserNameSearch}
-                styles={styles.input}
-                value={userNameSearch}
-              />
-              <BotonPrincipal 
-                title="Buscar" 
-                onPress={searchUser} 
-                btnColor='green'
-              />
+             
+            
 
             <MyInputText 
               placeholder="Nombre de usuario"
@@ -140,8 +125,8 @@ const EditUser = () => {
               onChangeText={handleEmail}
             />
 
-            <BotonPrincipal  
-              title="Editar" onPress={() => editUser()} 
+            <BotonPrincipal 
+              title="Editar" onPress={() => editUsuario()} 
               btnColor='orange'
               />
 
@@ -154,7 +139,7 @@ const EditUser = () => {
      );
 }
  
-export default EditUser;
+export default EditUsuario;
 
 const styles = StyleSheet.create({
     container: {

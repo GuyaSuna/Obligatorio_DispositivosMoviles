@@ -25,6 +25,9 @@ import ScreenUsuarios from "../Screen/Usuarios/ScreenUsuarios";
 import EditUser from "../Screen/Usuarios/EditUsuarios";
 import AltaUsuario from "../Screen/Usuarios/AltaUsuarios";
 import DeleteUsuarios from "../Screen/Usuarios/DeleteUsuarios";
+import TodosLosUsuarios from "../Screen/Usuarios/TodosLosUsuarios";
+import UnUsuario from "../Screen/Usuarios/UnUsuario";
+import EditUsuario from "../Screen/Usuarios/EditUsuarios";
 
 const Stack = createStackNavigator();
 
@@ -60,7 +63,7 @@ const Navigation = () => {
         />
 
         <Stack.Screen
-          name="ScreenUsuarios"
+          name="Pagina Usuarios"
           component={ScreenUsuarios}
           options={{
             title: "Pagina Usuario",
@@ -87,46 +90,53 @@ const Navigation = () => {
             },
           }}
         />
+       
         <Stack.Screen
-          name="DeleteUsuarios"
-          component={DeleteUsuarios}
+          name="TodosLosUsuarios"
+          component={TodosLosUsuarios}
           options={{
-            title: "Baja Usuarios",
+            headerTitle: "Todos Los Usuarios",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
               fontWeight: "bold",
             },
+            headerTitleAlign: "center",
+            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
           }}
         />
         <Stack.Screen
-          name="DeleteUser"
-          component={DeleteUsuarios}
+          name="UnUsuario"
+          component={UnUsuario}
           options={{
-            title: "ELIMINAR USUARIOS",
+            headerTitle: "Ver Un Usuario",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
               fontWeight: "bold",
             },
+            headerTitleAlign: "center",
+            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
           }}
         />
         <Stack.Screen
-          name="EditUser"
-          component={EditUser}
+          name="EditUsuario"
+          component={EditUsuario}
           options={{
-            title: "EDITAR USUARIOS",
+            headerTitle: "Editar Usuario",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
               fontWeight: "bold",
             },
+            headerTitleAlign: "center",
+            headerBackTitleVisible: false, // Oculta el título de retroceso en iOS
           }}
         />
 
