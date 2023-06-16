@@ -15,6 +15,7 @@ import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection";
 import MyInputOpciones from "../../Componentes/MyInputOpcionMultiple";
+import {Picker} from '@react-native-picker/picker';
 
 const AltaZona = () => {
   const [Lugar, setLugar] = useState("");
@@ -135,36 +136,26 @@ const AltaZona = () => {
   //     cancelable: false
   //   }
 
-  const clearData = () => {
-    setLugar("");
-    setDepartamento("");
-    setCantidad("");
-    setLatitud("");
-    setLongitud("");
-  };
+
+    
   return (
     <SafeAreaView>
       <View>
         <View>
           <ScrollView>
             <KeyboardAvoidingView>
-              <MyInputText
-                styles={styles.inputPassword}
-                placeholder="Lugar"
-                minLength={8}
-                maxLength={16}
-                onChangeText={handleLugar}
-                value={Lugar}
-              />
-
-              <MyInputText
-                styles={styles.inputPassword}
-                placeholder="Departamento"
-                minLength={8}
-                maxLength={16}
-                onChangeText={handleDepartamento}
-                value={Departamento}
-              />
+             
+              <Picker 
+                selectedValue={Lugar}
+                onValueChange={handleLugar}
+                style={styles.inputEmail}
+              >
+                <Picker.Item label="Lugar" value="" />
+                <Picker.Item label="Estancia" value="Estancia" />
+                <Picker.Item label="Quinta" value="Quinta" />
+                <Picker.Item label="Plantacion" value="Plantacion" />
+              </Picker>
+       
 
               <MyInputText
                 styles={styles.inputEmail}
@@ -200,4 +191,5 @@ const styles = StyleSheet.create({
   container: {},
   inputUser: {},
   inputPassword: {},
+  
 });
