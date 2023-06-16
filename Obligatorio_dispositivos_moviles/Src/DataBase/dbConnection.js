@@ -342,25 +342,27 @@ BuscarInsumo: (setInsumos) => {
 ModificarInsumo: (Nombre, Cantidad, NombreViejo) => {
   return new Promise((resolve, reject) => {
     const db = DatabaseConnection.getConnection();
-
+    console.log(Nombre, Cantidad, NombreViejo);
     db.transaction((tx) => {
       tx.executeSql(
-        "UPDATE Insumos SET Nombre =? , Cantidad=? WHERE Nombre = ?",
-        [Nombre, Cantidad,NombreViejo],
+        "UPDATE Insumos SET Nombre = ?, Cantidad = ? WHERE Nombre = ?",
+        [Nombre, Cantidad, NombreViejo],
         (tx, results) => {
           if (results.rowsAffected > 0) {
-            resolve(true); // Resuelve la promesa con true si se modificó al menos un registro
+            resolve(true);
           } else {
-            resolve(false); // Resuelve la promesa con false si no se modificó ningún registro
+            resolve(false);
           }
         },
         (tx, error) => {
-          reject(error); // Rechaza la promesa con el error
+          reject(error);
         }
       );
     });
   });
 },
+
+
 
 
 

@@ -43,7 +43,7 @@ const ModificarInsumos = ({ route }) => {
   };
 
   const modificar = () => {
-    console.log(" Modificar ", insumoName, insumoCantidad);
+    console.log(" Modificar ", insumoName, insumoCantidad , item.Nombre);
     if (validateData()) {
       DatabaseConnection.ModificarInsumo(insumoName, insumoCantidad , item.Nombre).then(
         (comprobante) => {

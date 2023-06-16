@@ -42,7 +42,7 @@ const addUser = async () => {
     .then((result) => {
       Alert.alert(
         "Exito",
-        "Zona registrada correctamente",
+        "Usuario registrado correctamente",
         [
           {
             text: "Ok",
