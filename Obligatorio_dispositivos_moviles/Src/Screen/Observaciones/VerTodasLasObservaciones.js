@@ -21,15 +21,80 @@ const TodasLasObservaciones = () => {
             Latitud : item.Latitud,
             Longitud : item.Longitud
         });
-    }
-    
+    };
 
+    const handleBorrar = (item) => {
 
-    use
+        let comprobante = DatabaseConnection.DeleteObservaciones(item.Titulo, item.Foto, item.Latitud,item.Longitud);
+        if(comprobante = true) {
+            Alert.alert("Exito", "Observacion borrada con exito",[
+                {
+                    text: "Ok",
+                    onPress: () => NavigationPreloadManager.navigate("PaginaPricipal"),
+                }
+            ],
+            {
+                cancelable: false
+            }
+            );
+            }else{
+                Alert.alert("Error","Fallo en el delete",[
+                    {
+                        text: "Ok",
+                        onPress: () => navigation.navigate("PaginaPricipal"),
+                    }
+                ],
+                {
+                    cancelable: false
+                }
+                )
+            }
+    };
+
+    const listItemView =(item) => {
+        return(
+             <View key={item.id} style={StyleSheet.listItemView}>
+                <MyText textValue="Observaciones" textStyle={StyleSheet.textStyle}/>
+                <MyText textValue={item.Observaciones} textStyle={StyleSheet.textStyle}/>
+
+                <BotonPrincipal title='Observar' onPress={() => handleObservar(item)}/>
+                <BotonPrincipal title='Borrar' onPress={() => handleBorrar(item)}/>
+             </View>
+        );
+    };
+
     return (
-        
+    <SafeAreaView style={style.container}>
+        <View>
+            <View>
+                <FlatList
+                data={Observaciones}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({item}) => listItemView(item)} 
+                contentContainerStyle={{ paddingHorizontal: 15}}
+                />
+            </View>
+        </View>
+    </SafeAreaView> 
     )
 }
 
 export default TodasLasObservaciones
 
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    textStyle: {
+      padding: 5,
+      color: "black",
+      alignContent: "center",
+      justifyContent: "center",
+    },
+    listItemView: {
+      backgroundColor: "white",
+      margin: 5,
+      padding: 10,
+      borderRadius: 10,
+    },
+  });
