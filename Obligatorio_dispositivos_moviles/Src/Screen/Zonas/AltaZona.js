@@ -155,7 +155,12 @@ const AltaZona = () => {
                 <Picker.Item label="Quinta" value="Quinta" />
                 <Picker.Item label="Plantacion" value="Plantacion" />
               </Picker>
-       
+              <MyInputText
+                styles={styles.inputEmail}
+                placeholder="Departamento"
+                onChangeText={handleDepartamento}
+                value={Departamento}
+              />
 
               <MyInputText
                 styles={styles.inputEmail}

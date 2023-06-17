@@ -14,7 +14,7 @@ const Observaciones = ({navigation}) => {
       <View style={styles.viewContainer}>
         <View style={styles.generalContainer}>
           <View style={styles.viewContainerFirstColumn}>
-     <BotonPrincipal   onPress={() => navigation.navigate("AltaObservacion")}
+     <BotonPrincipal   onPress={() => navigation.navigate("AltaObservaciones")}
      btnIcon="plus"
      title='Alta Observacion'
      />

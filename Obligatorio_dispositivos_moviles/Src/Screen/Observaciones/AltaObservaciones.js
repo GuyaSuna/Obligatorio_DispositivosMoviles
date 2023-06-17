@@ -1,180 +1,31 @@
-import React from 'react'
-import { View  , SafeAreaView,KeyboardAvoidingView,ScrollView} from 'react-native'
-import DatabaseConnection from '../../DataBase/dbConnection'
-import MyInputText from '../../Componentes/MyInputText'
-import { Picker } from '@react-native-picker/picker'
-import BotonPrincipal from '../../Componentes/BotonPrincipal'
+import React, { useState } from 'react';
+import { View, Button, Image } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 
+const MyComponent = () => {
+  const [imageUri, setImageUri] = useState(null);
 
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
 
-const AltaObservaciones = () => {
+    if (!result.canceled && result.assets.length > 0) {
+      setImageUri(result.assets[0].uri);
+    }
+  };
 
-    const db = DatabaseConnection.getConnection();
+  return (
+    <View>
+      {imageUri && <Image source={{ uri: imageUri.uri }} style={{ width: 200, height: 200 }} />}
+      <Button title="Seleccionar imagen" onPress={pickImage} />
+    </View>
+  );
+};
 
-    const [Titulo, setTitulo] = useState("");
-    const [Foto, setFoto] = useState("");
-    const [Latitud, setLatitud] = useState("");
-    const [Longitud, setLongitud] = useState("");
+export default MyComponent;
 
-    const handleTitulo = (titulo) => {
-        setObservaciones(titulo);
-    };
-
-    const handleFoto = (foto) => {
-        setFoto(foto);
-    };
-
-    const handleLatitud = (latitud) => {
-        setLatitud(latitud);
-    };
-
-    const handleLongitud = (longitud) => {
-        setLongitud(longitud);
-    };
-
-    const validateData = () => {
-
-        if (Titulo === "" && !Titulo.trim()) {
-            Alert.alert("Error", "El titulo es obligatorias");
-            return false;
-        }
-
-        if (Foto === "" && !Foto.trim()) {
-            Alert.alert("Error", "La Foto es obligatoria");
-            return false;
-        }
-
-        if (Latitud === "" && !Latitud.trim()) {
-            Alert.alert("Error", "La Latitud es obligatoria");
-            return false;
-        }
-
-        if (Longitud === "" && !Longitud.trim()) {
-            Alert.alert("Error", "La Longitud es obligatoria");
-            return false;
-        }
-
-        return true;
-    };
-
-    const alta = () => {
-        console.log(" Alta ", Titulo,Foto, Latitud, Longitud);
-
-        if (validateData()) {
-            DatabaseConnection.AltaObservaciones(Titulo, Foto, Latitud, Longitud).then(
-                (comprobante) => {
-                    if (comprobante) {
-                        Alert.alert(
-                            "Exito",
-                            "Observacion agregada correctamente",
-                            [
-                                {
-                                    text: "Ok",
-                                    onPress: () => navigation.navigate("PaginaPrincipal"),
-                                },
-                            ],
-                            {
-                                cancelable: false,
-                            }
-                        );
-                    } else {
-                        Alert.alert(
-                            "Error",
-                            "Observacion no se agrego correctamente",
-                            [
-                                {
-                                    text: "Ok",
-                                },
-                            ],
-                            {
-                                cancelable: false,
-                            }
-                        );
-                    }
-                }
-            );
-        }
-    };
-
-
-
-
-
-    
-    return (
-        <SafeAreaView>
-          <View>
-            <View>
-              <ScrollView>
-                <KeyboardAvoidingView>
-                 
-                  <Picker 
-                    selectedValue={Titulo}
-                    onValueChange={handleTitulo}
-                    style={styles.inputEmail}
-                  >
-                    <Picker.Item label="Lugar" value="" />
-                    <Picker.Item label="Plaga Detectada" value="Plaga Detectada" />
-                    <Picker.Item label="Planta en mal estado" value="Planta en mal estado" />
-                    <Picker.Item label="Falta de riego" value="Falta de riego" />
-                  </Picker>
-           
-    
-                  <MyInputText
-                    styles={styles.inputEmail}
-                    placeholder="foto"
-                    onChangeText={handleFoto}
-                    value={Foto}
-                  />
-                  <MyInputText
-                    styles={styles.inputEmail}
-                    placeholder="Latutid"
-                    onChangeText={handleLatitud}
-                    value={Latitud}
-                  />
-                  <MyInputText
-                    styles={styles.inputEmail}
-                    placeholder="Longitud"
-                    onChangeText={handleLongitud}
-                    value={Longitud}
-                  />
-    
-                  <BotonPrincipal title="Alta Observacion" onPress={alta} />
-                </KeyboardAvoidingView>
-              </ScrollView>
-            </View>
-          </View>
-        </SafeAreaView>
-      );
-    
-
-}
-
-export default AltaObservaciones
-
-// crea los estilos
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#fff",
-    },
-    inputEmail: {
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-    },
-    inputPassword: {
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-    },
-    boton: {
-        margin: 12,
-    },
-    botonText: {
-        color: "#fff",
-        fontSize: 20,
-    },
-});

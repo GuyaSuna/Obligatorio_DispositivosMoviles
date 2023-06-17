@@ -5,6 +5,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import PaginaPrincipal from "../Screen/PaginaPrincipal";
 
 import Observaciones from "../Screen/Observaciones/Observaciones";
+import AltaObservaciones from "../Screen/Observaciones/AltaObservaciones";
+
+
+
+
 import Tratamientos from "../Screen/Tratamientos/Tratamientos";
 
 import Zonas from "../Screen/Zonas/Zonas";
@@ -314,6 +319,20 @@ const Navigation = () => {
           component={Observaciones}
           options={{
             title: "Registrar Usuario",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+                <Stack.Screen
+          name="AltaObservaciones"
+          component={AltaObservaciones}
+          options={{
+            title: "Alta Observaciones",
             headerStyle: {
               backgroundColor: "#f4511e",
             },

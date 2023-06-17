@@ -1,5 +1,14 @@
 {
   "expo": {
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+          
+        }
+      ]
+    ]  ,
     "name": "Obligatorio_dispositivos_moviles",
     "slug": "Obligatorio_dispositivos_moviles",
     "version": "1.0.0",
@@ -24,8 +33,12 @@
           "READ_EXTERNAL_STORAGE"
         ],          
         "backgroundColor": "#ffffff"
-      }
+      },
+       "permissions": [
+      "READ_EXTERNAL_STORAGE"
+    ]
     },
+   
     "web": {
       "favicon": "./assets/favicon.png"
     }

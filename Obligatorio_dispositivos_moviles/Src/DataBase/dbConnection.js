@@ -364,6 +364,122 @@ ModificarInsumo: (Nombre, Cantidad, NombreViejo) => {
 
 
 
+createObservacionesTable: () => {
+  const db = DatabaseConnection.getConnection();
+  db.transaction((tx) => {
+    tx.executeSql(
+      'SELECT name FROM sqlite_master WHERE type="table" AND name="Observaciones"',
+      [],
+      (tx, results) => {
+        if (results.rows.length === 0) {
+          // La tabla no existe, se crea
+          tx.executeSql(
+            "CREATE TABLE Observaciones (id INTEGER PRIMARY KEY AUTOINCREMENT, Titulo TEXT, Foto TEXT, Latitud REAL, Longitud REAL)",
+            [],
+            () => console.log("Tabla Observaciones creada correctamente"),
+            (tx, error) =>
+              console.log("Error al crear la tabla Observaciones:", error)
+          );
+        } else {
+          // La tabla ya existe, no es necesario crearla nuevamente
+          console.log("La tabla Observaciones ya existe");
+        }
+      },
+      (tx, error) =>
+        console.log(
+          "Error al verificar la existencia de la tabla Observaciones:",
+          error
+        )
+    );
+  });
+},
+
+
+
+DeleteObservaciones: (Latitud, Longitud, Lugar) => {
+  const db = DatabaseConnection.getConnection();
+  db.transaction((tx) => {
+    tx.executeSql(
+      "DELETE FROM Zonas WHERE Latitud = ? AND Longitud = ? AND Lugar = ?",
+      [Latitud, Longitud, Lugar],
+      (tx, results) => {
+        console.log("Results", results.rowsAffected);
+        if (results.rowsAffected > 0) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    );
+  });
+},
+ModificarObservaciones: (
+  Lugar,
+  Departamento,
+  Cantidad,
+  Latitud,
+  Longitud,
+  Latitud2,
+  Longitud2
+) => {
+  return new Promise((resolve, reject) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        "UPDATE Zonas SET Lugar=?, Departamento=?, Cantidad=?, Latitud=?, Longitud=? WHERE Latitud=? AND Longitud=?",
+        [
+          Lugar,
+          Departamento,
+          Cantidad,
+          Latitud,
+          Longitud,
+          Latitud2,
+          Longitud2,
+        ],
+        (_, results) => {
+          if (results.rowsAffected > 0) {
+            resolve(true); // Resuelve la promesa con true
+          } else {
+            resolve(false); // Resuelve la promesa con false
+          }
+        },
+        (_, error) => {
+          reject(error); // Rechaza la promesa con el error
+        }
+      );
+    });
+  });
+},
+BuscarObservacion: (setZonas) => {
+  return new Promise((resolve, reject) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(`SELECT * FROM Zonas`, [], (tx, results) => {
+        console.log("results", results);
+        if (results.rows.length > 0) {
+          setZonas(results.rows._array); // Actualizar el estado Zonas con los resultados
+          resolve(results.rows._array); // Resolver la promesa con los resultados
+        } else {
+          Alert.alert(
+            "Mensaje",
+            "No hay Zonas!!!",
+            [
+              {
+                text: "Ok",
+                onPress: () => navigation.navigate("PaginaPrincipal"),
+              },
+            ],
+            { cancelable: false }
+          );
+          reject(new Error("No hay zonas")); // Rechazar la promesa con un error
+        }
+      });
+    });
+  });
+},
+
+
+
 
 
   
