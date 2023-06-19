@@ -412,12 +412,12 @@ insertObservaciones: async (title, imageUri, latitude, longitude) => {
 
 
 
-DeleteObservaciones: (Latitud, Longitud, Lugar) => {
+DeleteObservaciones: (Titulo,Foto,Latitud, Longitud) => {
   const db = DatabaseConnection.getConnection();
   db.transaction((tx) => {
     tx.executeSql(
-      "DELETE FROM Zonas WHERE Latitud = ? AND Longitud = ? AND Lugar = ?",
-      [Latitud, Longitud, Lugar],
+      "DELETE FROM Observaciones WHERE Titulo = ?AND Foto = ? AND Latitud = ? AND Longitud = ?",
+      [Titulo,Foto ,Latitud, Longitud],
       (tx, results) => {
         console.log("Results", results.rowsAffected);
         if (results.rowsAffected > 0) {

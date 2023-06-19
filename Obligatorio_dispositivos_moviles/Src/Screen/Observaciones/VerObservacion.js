@@ -43,6 +43,7 @@ const VerObservacion = ({ route }) => {
       </MapView>
 
       <BotonPrincipal title="Modificar" onPress={() => HandleModificar()} />
+      
     </View>
   );
 };
