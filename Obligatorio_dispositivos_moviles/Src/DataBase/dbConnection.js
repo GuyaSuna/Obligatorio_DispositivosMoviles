@@ -413,35 +413,31 @@ insertObservaciones: async (title, imageUri, latitude, longitude) => {
 
 
 DeleteObservaciones: (Titulo, Foto, Latitud, Longitud) => {
-  return new Promise((resolve, reject) => {
-    const db = DatabaseConnection.getConnection();
-    db.transaction((tx) => {
-      tx.executeSql(
-        "DELETE FROM Observaciones WHERE Titulo = ? AND Foto = ? AND Latitud = ? AND Longitud = ?",
-        [Titulo, Foto, Latitud, Longitud],
-        (tx, results) => {
-          console.log("Results", results.rowsAffected);
-          if (results.rowsAffected > 0) {
-            resolve(); // Resuelve la promesa si se eliminaron filas
-          } else {
-            reject(new Error("No se pudo eliminar la observación")); // Rechaza la promesa si no se eliminaron filas
-          }
-        },
-        (error) => {
-          reject(error); // Rechaza la promesa en caso de error
+  const db = DatabaseConnection.getConnection();
+  db.transaction((tx) => {
+    tx.executeSql(
+      "DELETE FROM Observacion WHERE Titulo = ? AND Foto = ? AND Latitud = ? AND Longitud= ?",
+      [Titulo, Foto, Latitud, Longitud],
+      (tx, results) => {
+        console.log("Results", results.rowsAffected);
+        if (results.rowsAffected > 0) {
+          return true;
+        } else {
+          return false;
         }
-      );
-    });
+      }
+    );
   });
 },
 
 
 ModificarObservaciones: (
-  Lugar,
-  Departamento,
-  Cantidad,
+  Titulo,
+  Foto,
   Latitud,
   Longitud,
+  Titulo2,
+  Foto2,
   Latitud2,
   Longitud2
 ) => {
@@ -449,15 +445,16 @@ ModificarObservaciones: (
     const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {
       tx.executeSql(
-        "UPDATE Zonas SET Lugar=?, Departamento=?, Cantidad=?, Latitud=?, Longitud=? WHERE Latitud=? AND Longitud=?",
+        "UPDATE Observaciones SET Titulo=?, Foto=?, Latitud=?, Longitud=? WHERE Titulo=? AND Foto = ? AND Latitud=? AND Longitud=?",
         [
-          Lugar,
-          Departamento,
-          Cantidad,
+          Titulo,
+          Foto,
           Latitud,
           Longitud,
+          Titulo2,
+          Foto2,
           Latitud2,
-          Longitud2,
+          Longitud2
         ],
         (_, results) => {
           if (results.rowsAffected > 0) {

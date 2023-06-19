@@ -5,7 +5,7 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
 import { Picker } from '@react-native-picker/picker';
-import { add } from 'lodash';
+
 import DatabaseConnection from '../../DataBase/dbConnection';
 import { useNavigation } from "@react-navigation/native";
 
