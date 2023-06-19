@@ -15,6 +15,10 @@ const MyComponent = () => {
     checkLocationPermission();
   }, []);
 
+  useEffect(() => {
+    handleGetLocation();
+  }, []);
+
   const checkLocationPermission = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     setLocationPermission(status === 'granted');
