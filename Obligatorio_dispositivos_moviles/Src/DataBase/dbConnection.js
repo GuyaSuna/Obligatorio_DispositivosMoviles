@@ -1,7 +1,5 @@
 import * as SQLite from "expo-sqlite";
 
-
-
 const DBName = "database.db";
 
 const DatabaseConnection = {
@@ -394,6 +392,24 @@ createObservacionesTable: () => {
   });
 },
 
+insertObservaciones: async (title, imageUri, latitude, longitude) => {
+  return new Promise((resolve, reject) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        'INSERT INTO Observaciones (Titulo, Foto, Latitud, Longitud) VALUES (?, ?, ?, ?)',
+        [title, imageUri, latitude, longitude],
+        (tx, results) => {
+          resolve(results.rowsAffected);
+        },
+        (tx, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+},
+
 
 
 DeleteObservaciones: (Latitud, Longitud, Lugar) => {
@@ -450,11 +466,11 @@ ModificarObservaciones: (
     });
   });
 },
-BuscarObservacion: (setZonas) => {
+BuscarObservaciones: (setZonas) => {
   return new Promise((resolve, reject) => {
     const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {
-      tx.executeSql(`SELECT * FROM Zonas`, [], (tx, results) => {
+      tx.executeSql(`SELECT * FROM Observaciones`, [], (tx, results) => {
         console.log("results", results);
         if (results.rows.length > 0) {
           setZonas(results.rows._array); // Actualizar el estado Zonas con los resultados

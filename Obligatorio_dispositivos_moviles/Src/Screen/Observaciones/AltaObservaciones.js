@@ -1,23 +1,104 @@
 import React, { useState, useEffect } from 'react';
-import { View, Button, Image, Text } from 'react-native';
+import { View, Button, Image, Text, StyleSheet, SafeAreaView, ScrollView, Alert } from 'react-native';
+
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
+import { Picker } from '@react-native-picker/picker';
+import { add } from 'lodash';
+import DatabaseConnection from '../../DataBase/dbConnection';
+import { useNavigation } from "@react-navigation/native";
+
 
 const MyComponent = () => {
+  const [title, setTitle] = useState("");
   const [imageUri, setImageUri] = useState(null);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [locationPermission, setLocationPermission] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
 
+const navigation = useNavigation();
+
   useEffect(() => {
     checkLocationPermission();
   }, []);
 
-  useEffect(() => {
-    handleGetLocation();
-  }, []);
+  const handleTitle = (title) => {
+    setTitle(title);
+  };
+
+  const validateData = () => {
+    if (title === "" && !title.trim()) {
+      Alert.alert("Error", "El titulo  es obligatorio");
+      return false;
+    }
+
+    if (imageUri === "" && !imageUri.trim()) {
+      Alert.alert("Error", "La imagen es obligatoria");
+      return false;
+    }
+
+    if (isNaN(longitude)) {
+      Alert.alert("Error", "La longitud debe ser un número válido");
+      return false;
+    }
+
+    if (isNaN(latitude)) {
+      Alert.alert("Error", "La latitud debe ser un número válido");
+      return false;
+    }
+
+    return true;
+  };
+
+  const addObs = async () => {
+    console.log("### add Obs ###" , title, imageUri,latitude,longitude);
+
+    if (validateData()) {
+      console.log("### save Observacion ###");
+
+      // llamar a la db y guardar los datos
+      try {
+        const rowsAffected = await DatabaseConnection.insertObservaciones(
+          title,
+          imageUri,
+          latitude,
+          longitude
+        );
+        if (rowsAffected > 0) {
+          Alert.alert(
+            "Exito",
+            "Observacion registrada correctamente",
+            [
+              {
+                text: "Ok",
+                onPress: () => navigation.navigate("PaginaPrincipal"),
+              },
+            ],
+            {
+              cancelable: false,
+            }
+          );
+        } else {
+          Alert.alert(
+            "Error",
+            "Observacion no se registró correctamente",
+            [
+              {
+                text: "Ok",
+              },
+            ],
+            {
+              cancelable: false,
+            }
+          );
+        }
+      } catch (error) {
+        console.log("No se pudo recibir el dato");
+      }
+    }
+  };
 
   const checkLocationPermission = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
@@ -58,9 +139,24 @@ const MyComponent = () => {
   };
 
   return (
+    <SafeAreaView>
     <View>
+      <View>
+        <ScrollView>
+    <View style={styles.container}>
+      <Picker
+        selectedValue={title}
+        onValueChange={handleTitle}
+        style={styles.picker}
+      >
+        <Picker.Item label="Titulo" value="" />
+        <Picker.Item label="Plaga Detectada" value="Plaga Detectada" />
+        <Picker.Item label="Planta en mal estado" value="Planta en mal estado" />
+        <Picker.Item label="Falta de Riego" value="Falta de Riego" />
+      </Picker>
+
       <MapView
-        style={{ width: '100%', height: 300 }}
+        style={styles.map}
         initialRegion={{
           latitude: latitude || 0,
           longitude: longitude || 0,
@@ -69,20 +165,56 @@ const MyComponent = () => {
         }}
         onPress={handleMapPress}
       >
-        {selectedLocation && (
-          <Marker coordinate={selectedLocation} />
-        )}
+        {selectedLocation && <Marker coordinate={selectedLocation} />}
       </MapView>
-      {imageUri && <Image source={{ uri: imageUri }} style={{ width: 200, height: 200 }} />}
-      <Button title="Seleccionar imagen" onPress={pickImage} />
-      <Button title="Obtener ubicación" onPress={handleGetLocation} />
+      {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
+      <View style={styles.buttonContainer}>
+        <Button title="Seleccionar imagen" onPress={pickImage} />
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button title="Obtener ubicación" onPress={handleGetLocation} />
+      </View>
       {latitude && longitude && (
-        <Text>
+        <Text style={styles.locationText}>
           Latitude: {latitude}, Longitude: {longitude}
         </Text>
       )}
+       <View style={styles.buttonContainer}>
+        <Button title="Alta" onPress={addObs} />
+      </View>
     </View>
+    </ScrollView>
+    </View>
+    </View>
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  picker: {
+    marginBottom: 5,
+  },
+  map: {
+    width: '100%',
+    height: 250,
+    marginBottom: 10,
+  },
+  image: {
+    width: 200,
+    height: 200,
+    marginBottom: 20,
+  },
+  locationText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  buttonContainer: {
+    marginBottom: 10,
+  },
+});
 
 export default MyComponent;

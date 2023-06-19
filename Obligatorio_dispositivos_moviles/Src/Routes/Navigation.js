@@ -6,7 +6,8 @@ import PaginaPrincipal from "../Screen/PaginaPrincipal";
 
 import Observaciones from "../Screen/Observaciones/Observaciones";
 import AltaObservaciones from "../Screen/Observaciones/AltaObservaciones";
-
+import TodasLasObservaciones from "../Screen/Observaciones/VerTodasLasObservaciones";
+import VerObservacion from "../Screen/Observaciones/VerObservacion";
 
 
 
@@ -32,6 +33,7 @@ import AltaUsuario from "../Screen/Usuarios/AltaUsuarios";
 import DeleteUsuarios from "../Screen/Usuarios/DeleteUsuarios";
 import TodosLosUsuarios from "../Screen/Usuarios/TodosLosUsuarios";
 import UnUsuario from "../Screen/Usuarios/UnUsuario";
+
 
 
 const Stack = createStackNavigator();
@@ -333,6 +335,36 @@ const Navigation = () => {
           component={AltaObservaciones}
           options={{
             title: "Alta Observaciones",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+
+        <Stack.Screen
+          name="TodasLasObservaciones"
+          component={TodasLasObservaciones}
+          options={{
+            title: "Todas las Observaciones",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+
+        <Stack.Screen
+          name="VerObservaciones"
+          component={VerObservacion}
+          options={{
+            title: "Una Observacion",
             headerStyle: {
               backgroundColor: "#f4511e",
             },
