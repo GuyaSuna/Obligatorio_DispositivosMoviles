@@ -1,38 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { View, Button, Image, Text } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import Geolocation from 'react-native-geolocation-service';
+import * as Location from 'expo-location';
+import MapView, { Marker } from 'react-native-maps';
 
 const MyComponent = () => {
   const [imageUri, setImageUri] = useState(null);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [locationPermission, setLocationPermission] = useState(false);
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState(null);
 
   useEffect(() => {
-    (async () => {
-      
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-    })();
+    checkLocationPermission();
   }, []);
 
-  let text = 'Waiting..';
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
-  }
-
-
+  const checkLocationPermission = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    setLocationPermission(status === 'granted');
+  };
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -47,14 +33,50 @@ const MyComponent = () => {
     }
   };
 
+  const handleGetLocation = async () => {
+    if (locationPermission) {
+      try {
+        const location = await Location.getCurrentPositionAsync();
+        setLatitude(location.coords.latitude);
+        setLongitude(location.coords.longitude);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.log('Location permission denied');
+    }
+  };
+
+  const handleMapPress = (event) => {
+    setSelectedLocation(event.nativeEvent.coordinate);
+    setLatitude(event.nativeEvent.coordinate.latitude);
+    setLongitude(event.nativeEvent.coordinate.longitude);
+  };
 
   return (
     <View>
+      <MapView
+        style={{ width: '100%', height: 300 }}
+        initialRegion={{
+          latitude: latitude || 0,
+          longitude: longitude || 0,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+        onPress={handleMapPress}
+      >
+        {selectedLocation && (
+          <Marker coordinate={selectedLocation} />
+        )}
+      </MapView>
       {imageUri && <Image source={{ uri: imageUri }} style={{ width: 200, height: 200 }} />}
       <Button title="Seleccionar imagen" onPress={pickImage} />
-      <View >
-      <Text>{text}</Text>
-    </View>
+      <Button title="Obtener ubicación" onPress={handleGetLocation} />
+      {latitude && longitude && (
+        <Text>
+          Latitude: {latitude}, Longitude: {longitude}
+        </Text>
+      )}
     </View>
   );
 };
