@@ -23,35 +23,34 @@ const TodasLasObservaciones = () => {
         Longitud: item.Longitud        
      });
   };
-//   const handleBorrar = (item) => {
 
-//    let comprobante = DatabaseConnection.DeleteZona(item.Latitud, item.Longitud, item.Lugar);
-//    if(comprobante = true){
-//     Alert.alert("Exito", "Zona borrada correctamente", [
-//         {
-//           text: "Ok",
-//           onPress: () => navigation.navigate("PaginaPrincipal"),
-//         }
-//       ],
-//       {
-//         cancelable: false
-//       }
-//       );
-//    }else {
-//     Alert.alert("Error", "Fallo en Delete", [
-//       {
-//         text: "Ok",
-//         onPress: () => navigation.navigate("PaginaPrincipal"),
-//       }
-//     ],
-//     {
-//       cancelable: false
-//     }
-//     )
-//   }
-
-
-//   };
+  const handleBorrar = (item) => {
+   let comprobante =  DatabaseConnection.DeleteObservaciones(item.Titulo, item.Foto, item.Latitud, item.Longitud)
+      if(comprobante){
+        Alert.alert("Éxito", "Observación borrada correctamente", [
+          {
+            text: "Ok",
+            onPress: () => navigation.navigate("PaginaPrincipal"),
+          }
+        ],
+        {
+          cancelable: false
+        });
+      }
+      else {
+        Alert.alert("Error", error.message, [
+          {
+            text: "Ok",
+          }
+        ],
+        {
+          cancelable: false
+        });    
+  };
+}
+  
+  
+  
   const listItemView = (item) => {
     return (
       <View key={item.id} style={styles.listItemView}>

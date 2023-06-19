@@ -412,23 +412,30 @@ insertObservaciones: async (title, imageUri, latitude, longitude) => {
 
 
 
-DeleteObservaciones: (Titulo,Foto,Latitud, Longitud) => {
-  const db = DatabaseConnection.getConnection();
-  db.transaction((tx) => {
-    tx.executeSql(
-      "DELETE FROM Observaciones WHERE Titulo = ?AND Foto = ? AND Latitud = ? AND Longitud = ?",
-      [Titulo,Foto ,Latitud, Longitud],
-      (tx, results) => {
-        console.log("Results", results.rowsAffected);
-        if (results.rowsAffected > 0) {
-          return true;
-        } else {
-          return false;
+DeleteObservaciones: (Titulo, Foto, Latitud, Longitud) => {
+  return new Promise((resolve, reject) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DELETE FROM Observaciones WHERE Titulo = ? AND Foto = ? AND Latitud = ? AND Longitud = ?",
+        [Titulo, Foto, Latitud, Longitud],
+        (tx, results) => {
+          console.log("Results", results.rowsAffected);
+          if (results.rowsAffected > 0) {
+            resolve(); // Resuelve la promesa si se eliminaron filas
+          } else {
+            reject(new Error("No se pudo eliminar la observación")); // Rechaza la promesa si no se eliminaron filas
+          }
+        },
+        (error) => {
+          reject(error); // Rechaza la promesa en caso de error
         }
-      }
-    );
+      );
+    });
   });
 },
+
+
 ModificarObservaciones: (
   Lugar,
   Departamento,
@@ -466,14 +473,14 @@ ModificarObservaciones: (
     });
   });
 },
-BuscarObservaciones: (setZonas) => {
+BuscarObservaciones: (setObservaciones) => {
   return new Promise((resolve, reject) => {
     const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {
       tx.executeSql(`SELECT * FROM Observaciones`, [], (tx, results) => {
         console.log("results", results);
         if (results.rows.length > 0) {
-          setZonas(results.rows._array); // Actualizar el estado Zonas con los resultados
+          setObservaciones(results.rows._array); // Actualizar el estado Zonas con los resultados
           resolve(results.rows._array); // Resolver la promesa con los resultados
         } else {
           Alert.alert(

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image , ScrollView, SafeAreaView} from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
@@ -18,6 +18,8 @@ const VerObservacion = ({ route }) => {
   };
 
   return (
+    <SafeAreaView>
+    <ScrollView>
     <View style={styles.container}>
       <Text style={styles.label}>Titulo: {item?.Titulo}</Text>
 
@@ -44,7 +46,7 @@ const VerObservacion = ({ route }) => {
 
       <BotonPrincipal title="Modificar" onPress={() => HandleModificar()} />
       
-    </View>
+    </View></ScrollView></SafeAreaView>
   );
 };
 
