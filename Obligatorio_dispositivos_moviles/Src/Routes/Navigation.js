@@ -8,10 +8,13 @@ import Observaciones from "../Screen/Observaciones/Observaciones";
 import AltaObservaciones from "../Screen/Observaciones/AltaObservaciones";
 import TodasLasObservaciones from "../Screen/Observaciones/VerTodasLasObservaciones";
 import VerObservacion from "../Screen/Observaciones/VerObservacion";
+import ModificarObservacion from "../Screen/Observaciones/ModificarObservaiones";
 
 
 
 import Tratamientos from "../Screen/Tratamientos/Tratamientos";
+import AltaTratamiento from "../Screen/Tratamientos/AltaTratamiento";
+import VerTodosLosTratamientos from "../Screen/Tratamientos/VerTodosLosTratamientos";
 
 import Zonas from "../Screen/Zonas/Zonas";
 import AltaZona from "../Screen/Zonas/AltaZona";
@@ -374,9 +377,51 @@ const Navigation = () => {
             },
           }}
         />
+         <Stack.Screen
+          name="ModificarObservacion"
+          component={ModificarObservacion}
+          options={{
+            title: "Modificar Observacion",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
         <Stack.Screen
           name="Tratamientos"
           component={Tratamientos}
+          options={{
+            title: "Registrar Usuario",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+         <Stack.Screen
+          name="AltaTratamientos"
+          component={AltaTratamiento}
+          options={{
+            title: "Registrar Usuario",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+         <Stack.Screen
+          name="VerTodosLosTratamientos"
+          component={VerTodosLosTratamientos}
           options={{
             title: "Registrar Usuario",
             headerStyle: {
