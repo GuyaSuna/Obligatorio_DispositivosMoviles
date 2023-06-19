@@ -1,78 +1,54 @@
-import React, { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  ScrollView,
-  KeyboardAvoidingView,
-  Alert,
-} from "react-native";
-// import MyText from "../../Componentes/MyText"; Lo vamos a usar para el buscador.
+import React, { useState, useEffect } from 'react';
+import { View, Button, Image, Text, StyleSheet, SafeAreaView, ScrollView, Alert } from 'react-native';
 
-import MyInputText from "../../Componentes/MyInputText";
-import MyText from "../../Componentes/MyText";
-import BotonPrincipal from "../../Componentes/BotonPrincipal";
+import * as ImagePicker from 'expo-image-picker';
+import * as Location from 'expo-location';
+import MapView, { Marker } from 'react-native-maps';
+import { Picker } from '@react-native-picker/picker';
+
+import DatabaseConnection from '../../DataBase/dbConnection';
 import { useNavigation } from "@react-navigation/native";
-import DatabaseConnection from "../../DataBase/dbConnection"
-import MyInputOpciones from "../../Componentes/MyInputOpcionMultiple";
 
-const ModificarObservacion = ({route}) => {
+
+const ModificarObservacion = ({ route }) => {
   const item = route.params;
 
-  const [Lugar, setLugar] = useState(item.Lugar || "");
-  const [Departamento, setDepartamento] = useState(item.Departamento || "");
-  const [Cantidad, setCantidad] = useState(item.Cantidad ? String(item.Cantidad) : "");
-  const [Latitud, setLatitud] = useState(item.Latitud ? String(item.Latitud) : "");
-  const [Longitud, setLongitud] = useState(item.Longitud ? String(item.Longitud) : "");
-  const navigation = useNavigation();
-  const db = DatabaseConnection.getConnection(); 
+  const [title, setTitle] = useState(item.Titulo);
+  const [imageUri, setImageUri] = useState(item.Foto);
+  const [latitude, setLatitude] = useState(item.Latitud);
+  const [longitude, setLongitude] = useState(item.Longitud);
 
+  const [locationPermission, setLocationPermission] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState(null);
 
-  
+const navigation = useNavigation();
 
-  const handleLugar = (lugar) => {
-    setLugar(lugar);
-  };
+  useEffect(() => {
+    checkLocationPermission();
+  }, []);
 
-  const handleDepartamento= (departamento) => {
-    setDepartamento(departamento);
-  };
-
-  const handleCantidad = (cantidad) => {
-    setCantidad(cantidad);
-  };
-
-  const handleLatitud = (latitud) => {
-    setLatitud(latitud);
-  };
-
-  const handleLongitud = (longitud) => {
-    setLongitud(longitud);
+  const handleTitle = (title) => {
+    setTitle(title);
   };
 
   const validateData = () => {
-    if (Lugar === "" && !Lugar.trim()) {
-      Alert.alert("Error", "El Lugar de usuario es obligatorio");
+    if (title === "" && !title.trim()) {
+      Alert.alert("Error", "El titulo  es obligatorio");
       return false;
     }
 
-    if (Departamento === "" && !Departamento.trim()) {
-      Alert.alert("Error", "El Departamento es obligatoria");
+    if (imageUri === "" && !imageUri.trim()) {
+      Alert.alert("Error", "La imagen es obligatoria");
       return false;
     }
 
-    if (isNaN(Cantidad) || Cantidad <= 0) {
-      Alert.alert("Error", "La cantidad debe ser un número válido");
-      return false;
-    }
-  
-    if (isNaN(Latitud)) {
-      Alert.alert("Error", "La latitud debe ser un número válido");
-      return false;
-    }
-  
-    if (isNaN(Longitud)) {
+    if (isNaN(longitude)) {
       Alert.alert("Error", "La longitud debe ser un número válido");
+      return false;
+    }
+
+    if (isNaN(latitude)) {
+      Alert.alert("Error", "La latitud debe ser un número válido");
       return false;
     }
 
@@ -80,18 +56,19 @@ const ModificarObservacion = ({route}) => {
   };
 
   const Modificar =() => {
-    console.log("### modificando Zona ###");
+   console.log("### add Obs ###" , title, imageUri,latitude,longitude,item.Titulo, item.Foto, item.Latitud,item.Longitud );
   
     if (validateData()) {
       console.log("### save zona ###");
 
       // llamar a la db y guardar los datos  
-       DatabaseConnection.ModificarZona(
-          Lugar,
-          Departamento,
-          Cantidad,
-          Latitud,
-          Longitud,
+       DatabaseConnection.ModificarObservaciones(
+          title,
+          imageUri,
+          latitude,
+          longitude,
+          item.Titulo,
+          item.Foto,
           item.Latitud,
           item.Longitud
         ).then((comprobante) => {
@@ -99,7 +76,7 @@ const ModificarObservacion = ({route}) => {
           if (comprobante) {
             Alert.alert(
               "Exito",
-              "Zona modificada correctamente",
+              "Observacion modificada correctamente",
               [
                 {
                   text: "Ok",
@@ -113,7 +90,7 @@ const ModificarObservacion = ({route}) => {
           } else {
             Alert.alert(
               "Error",
-              "Zona no se modificó correctamente",
+              "Observacion no se modificó correctamente",
               [
                 {
                   text: "Ok",
@@ -127,72 +104,122 @@ const ModificarObservacion = ({route}) => {
         });
     }   
   };
-  
 
-  
+  const checkLocationPermission = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    setLocationPermission(status === 'granted');
+  };
 
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled && result.assets.length > 0) {
+      setImageUri(result.assets[0].uri);
+    }
+  };
+
+  const handleGetLocation = async () => {
+    if (locationPermission) {
+      try {
+        const location = await Location.getCurrentPositionAsync();
+        setLatitude(location.coords.latitude);
+        setLongitude(location.coords.longitude);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.log('Location permission denied');
+    }
+  };
+
+  const handleMapPress = (event) => {
+    setSelectedLocation(event.nativeEvent.coordinate);
+    setLatitude(event.nativeEvent.coordinate.latitude);
+    setLongitude(event.nativeEvent.coordinate.longitude);
+  };
 
   return (
-   
     <SafeAreaView>
+    <View>
       <View>
-        <View>
-          <ScrollView>
-            <KeyboardAvoidingView>
-            <MyInputText
+        <ScrollView>
+    <View style={styles.container}>
+      <Picker
+        selectedValue={title}
+        onValueChange={handleTitle}
+        style={styles.picker}
+      >
+        <Picker.Item label="Titulo" value="" />
+        <Picker.Item label="Plaga Detectada" value="Plaga Detectada" />
+        <Picker.Item label="Planta en mal estado" value="Planta en mal estado" />
+        <Picker.Item label="Falta de Riego" value="Falta de Riego" />
+      </Picker>
 
-                placeholder="Lugar"
-                minLength={8}
-                maxLength={16}
-
-                onChangeText={handleLugar}
-                value={Lugar}
-              />
-
-
-              <MyInputText
-       
-                placeholder="Departamento"
-                minLength={8}
-                maxLength={16}
-                onChangeText={handleDepartamento}
-                value={Departamento}
-              />
-
-              <MyInputText
-
-                placeholder="Cantidad"
-             
-                onChangeText={handleCantidad}
-                value={Cantidad}
-              />
-                <MyInputText
-
-                placeholder="Latutid"
-               
-                onChangeText={handleLatitud}
-                value={Latitud}
-              />
-                <MyInputText
-
-                placeholder="Longitud"
-               
-                onChangeText={handleLongitud}
-                value={Longitud}
-              />
-
-              <BotonPrincipal title="Modificar Zona" onPress={Modificar} />
-            </KeyboardAvoidingView>
-          </ScrollView>
-        </View>
+      <MapView
+        style={styles.map}
+        initialRegion={{
+          latitude: latitude || 0,
+          longitude: longitude || 0,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+        onPress={handleMapPress}
+      >
+        {selectedLocation && <Marker coordinate={selectedLocation} />}
+      </MapView>
+      {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
+      <View style={styles.buttonContainer}>
+        <Button title="Seleccionar imagen" onPress={pickImage} />
       </View>
+      <View style={styles.buttonContainer}>
+        <Button title="Obtener ubicación" onPress={handleGetLocation} />
+      </View>
+      {latitude && longitude && (
+        <Text style={styles.locationText}>
+          Latitude: {latitude}, Longitude: {longitude}
+        </Text>
+      )}
+       <View style={styles.buttonContainer}>
+        <Button title="Modificar" onPress={Modificar} />
+      </View>
+    </View>
+    </ScrollView>
+    </View>
+    </View>
     </SafeAreaView>
- 
   );
-
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  picker: {
+    marginBottom: 5,
+  },
+  map: {
+    width: '100%',
+    height: 250,
+    marginBottom: 10,
+  },
+  image: {
+    width: 200,
+    height: 200,
+    marginBottom: 20,
+  },
+  locationText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  buttonContainer: {
+    marginBottom: 10,
+  },
+});
 
 export default ModificarObservacion;
-
-
