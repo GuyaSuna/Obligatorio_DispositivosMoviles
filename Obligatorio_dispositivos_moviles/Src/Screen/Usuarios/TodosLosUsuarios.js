@@ -49,6 +49,7 @@ const TodosLosUsuarios = () => {
   )
 }
 };
+
   const listItemView = (item) => {
     return ( 
       <View key={item.id} style={styles.listItemView}>
