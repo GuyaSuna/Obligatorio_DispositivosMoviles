@@ -6,6 +6,7 @@ import {
   Alert,
   ScrollView,
   StyleSheet,
+  Text
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import DatabaseConnection from "../../DataBase/dbConnection";
@@ -28,6 +29,9 @@ const AltaTratamientoForm = () => {
   const [selectedUsuario, setSelectedUsuario] = useState(null);
   const [selectedZona , setSelectedZona] = useState(null);
   const [selectedObservacion, setSelectedObservacion] = useState(null);
+  const [selectedInsumosList, setSelectedInsumosList] = useState([]);
+
+  const [selectedObservacionList, setSelectedObservacionList] = useState([]);
 
   useEffect(() => {
     DatabaseConnection.BuscarInsumo(setInsumos);
@@ -70,6 +74,12 @@ const AltaTratamientoForm = () => {
     return true;
   };
 
+  const handleObservacion = (item) => {
+    setSelectedObservacion(item);
+    console.log(item)
+    setSelectedObservacionList([...selectedObservacionList, item]);
+  };
+  
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.inputContainer}>
@@ -112,7 +122,7 @@ const AltaTratamientoForm = () => {
         />
          <Picker
           style={styles.picker}
-          selectedValue={zona}
+          selectedValue={selectedZona}
           onValueChange={(itemValue) => setSelectedZona(itemValue)}
         >
           <Picker.Item label="Seleccionar Zona" value={null} />
@@ -139,15 +149,19 @@ const AltaTratamientoForm = () => {
           ))}
         </Picker>
         <Picker
-          style={styles.picker}
-          selectedValue={selectedObservacion}
-          onValueChange={(itemValue) => setSelectedObservacion(itemValue)}
-        ><Picker.Item label="Seleccionar Observacion" value={null} />
+  style={styles.picker}
+  selectedValue={selectedObservacion}
+  onValueChange={(itemValue) => {
+    setSelectedObservacion(null);
+    handleObservacion(itemValue);
+  }}
+>
+<Picker.Item label="Seleccionar Observacion" value={null} />
           {observacion.map((obs) => (
             <Picker.Item
               key={obs.id}
               label={obs.Titulo}
-              value={obs.id}
+              value={obs.Titulo}
             />
           ))}
         </Picker>
@@ -165,6 +179,19 @@ const AltaTratamientoForm = () => {
             />
           ))}
         </Picker>
+        <View style={styles.listaContainer}>
+  <Text style={styles.listaTitulo}>Observaciones seleccionadas:</Text>
+  {selectedObservacionList.map((obs, index) => (
+  <Text key={obs.Titulo + index} style={styles.listaItem}>
+    {obs}
+  
+  </Text>
+  
+))}
+</View>
+
+
+
         <Button title="Guardar" onPress={handleGuardar} />
       </View>
     </ScrollView>
