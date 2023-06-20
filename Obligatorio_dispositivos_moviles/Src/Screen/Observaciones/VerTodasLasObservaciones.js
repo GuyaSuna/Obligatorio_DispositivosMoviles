@@ -26,30 +26,27 @@ const TodasLasObservaciones = () => {
      });
   };
 
-  const handleBorrar = (item) => {
-   let comprobante =  DatabaseConnection.DeleteObservaciones(item.Titulo, item.Foto, item.Latitud, item.Longitud)
-      if(comprobante){
-        Alert.alert("Éxito", "Observación borrada correctamente", [
-          {
-            text: "Ok",
-            onPress: () => navigation.navigate("PaginaPrincipal"),
-          }
-        ],
+  const handleBorrar = async (item) => {
+    try {
+      await DatabaseConnection.DeleteObservaciones(item.Titulo, item.Foto, item.Latitud, item.Longitud);
+      Alert.alert("Éxito", "Observación borrada correctamente", [
         {
-          cancelable: false
-        });
-      }
-      else {
-        Alert.alert("Error", error.message, [
-          {
-            text: "Ok",
-          }
-        ],
+          text: "Ok",
+          onPress: () => navigation.navigate("PaginaPrincipal"),
+        }
+      ], {
+        cancelable: false
+      });
+    } catch (error) {
+      Alert.alert("Error", error.message, [
         {
-          cancelable: false
-        });    
+          text: "Ok",
+        }
+      ], {
+        cancelable: false
+      });
+    }
   };
-}
   
   
   
