@@ -7,6 +7,7 @@ import BotonPrincipal from "../../Componentes/BotonPrincipal";
 
 
 const db = DatabaseConnection.getConnection();
+
 const TodasLasObservaciones = () => {
   // definir un estado local, para guardar los usuarios
   const [Observaciones, setObservaciones] = useState([]);

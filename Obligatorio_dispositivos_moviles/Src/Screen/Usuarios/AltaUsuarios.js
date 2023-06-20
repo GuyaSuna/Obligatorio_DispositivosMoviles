@@ -152,9 +152,5 @@ const styles = StyleSheet.create({
     marginRight: 35,
     borderRadius: 5,
   },
-  inputUser:{
-    flex: 1,
-    width: 100,
-    height: 100,
-  }
+  
 });
