@@ -15,23 +15,25 @@ const db = DatabaseConnection.getConnection();
 const AltaTratamientoForm = () => {
   const [identificacion, setIdentificacion] = useState("");
   const [nombreTratamiento, setNombreTratamiento] = useState("");
-  const [zona, setZona] = useState([]);
-  const [usuarios, setUsuarios] = useState([]);
-  const [selectedUsuario, setSelectedUsuario] = useState(null);
+
   const [fechaInicio, setFechaInicio] = useState("");
   const [fechaFin, setFechaFin] = useState("");
   const [tiempo, setTiempo] = useState("");
   const [ordenTrabajo, setOrdenTrabajo] = useState("");
-  const [insumos, setInsumos] = useState([]);
-  const [selectedInsumo, setSelectedInsumo] = useState(null);
-  const [observacion, setObservacion] = useState("");
-  const [observacionesDisponibles, setObservacionesDisponibles] = useState([]);
+  const [insumos, setInsumos] = useState([]); 
+  const [observacion, setObservacion] = useState([]);
+  const [zona, setZona] = useState([]);
+  const [usuarios, setUsuarios] = useState([]);
+   const [selectedInsumo, setSelectedInsumo] = useState(null);
+  const [selectedUsuario, setSelectedUsuario] = useState(null);
+  const [selectedZona , setSelectedZona] = useState(null);
+  const [selectedObservacion, setSelectedObservacion] = useState(null);
 
   useEffect(() => {
     DatabaseConnection.BuscarInsumo(setInsumos);
     DatabaseConnection.BuscarUsuarios(setUsuarios);
     DatabaseConnection.BuscarZonas(setZona);
-    DatabaseConnection.BuscarObservaciones(setObservacionesDisponibles);
+    DatabaseConnection.BuscarObservaciones(setObservacion);
   }, []);
 
 
@@ -138,14 +140,14 @@ const AltaTratamientoForm = () => {
         </Picker>
         <Picker
           style={styles.picker}
-          selectedValue={observacionesDisponibles}
-          onValueChange={setObservacion}
+          selectedValue={selectedObservacion}
+          onValueChange={(itemValue) => setSelectedObservacion(itemValue)}
         ><Picker.Item label="Seleccionar Observacion" value={null} />
-          {observacionesDisponibles.map((observacion) => (
+          {observacion.map((obs) => (
             <Picker.Item
-              key={observacion.id}
-              label={observacion.Titulo}
-              value={observacion.id}
+              key={obs.id}
+              label={obs.Titulo}
+              value={obs.id}
             />
           ))}
         </Picker>
