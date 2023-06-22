@@ -482,7 +482,7 @@ BuscarObservaciones: (setObservaciones) => {
         } else {
           Alert.alert(
             "Mensaje",
-            "No hay Zonas!!!",
+            "No hay Observaciones!!!",
             [
               {
                 text: "Ok",
@@ -491,7 +491,7 @@ BuscarObservaciones: (setObservaciones) => {
             ],
             { cancelable: false }
           );
-          reject(new Error("No hay zonas")); // Rechazar la promesa con un error
+          reject(new Error("No hay observaciones")); // Rechazar la promesa con un error
         }
       });
     });

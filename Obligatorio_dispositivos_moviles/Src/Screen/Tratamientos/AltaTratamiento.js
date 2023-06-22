@@ -28,7 +28,7 @@ const AltaTratamientoForm = () => {
    const [selectedInsumo, setSelectedInsumo] = useState(null);
   const [selectedUsuario, setSelectedUsuario] = useState(null);
   const [selectedZona , setSelectedZona] = useState(null);
-  const [selectedObservacion, setSelectedObservacion] = useState(null);
+  const [selectedObservacion, setSelectedObservacion] = useState([]);
   const [selectedInsumosList, setSelectedInsumosList] = useState([]);
 
   const [selectedObservacionList, setSelectedObservacionList] = useState([]);
@@ -38,6 +38,7 @@ const AltaTratamientoForm = () => {
     DatabaseConnection.BuscarUsuarios(setUsuarios);
     DatabaseConnection.BuscarZonas(setZona);
     DatabaseConnection.BuscarObservaciones(setObservacion);
+    console.log("Aca arrancamos",observacion[1]?.id)
   }, []);
 
 
@@ -46,13 +47,34 @@ const AltaTratamientoForm = () => {
       return;
     }
 
+    DatabaseConnection.InserTratamiento(identificacion, nombreTratamiento, fechaInicio,fechaFin,tiempo,ordenTrabajo,selectedInsumosList,selectedObservacionList,zona,usuarios)
+    .then((result) => {
+      Alert.alert(
+        "Exito",
+        "Usuario registrado correctamente",
+        [
+          {
+            text: "Ok",
+            onPress: () => navigation.navigate("PaginaPrincipal"),
+          },
+        ],
+        {
+          cancelable: false,
+        }
+      );
+    })
+    .catch((error) => {
+      console.log('Error al insertar usuario:', error);
+    });
+  
+
     // Resto del código para guardar el tratamiento
     // ...
 
     // Ejemplo de cómo acceder a los valores seleccionados en los pickers
     console.log("Usuario seleccionado:", selectedUsuario);
     console.log("Insumo seleccionado:", selectedInsumo);
-  };
+  }
 
   const validarCampos = () => {
     if (
@@ -79,6 +101,11 @@ const AltaTratamientoForm = () => {
     console.log(item)
     setSelectedObservacionList([...selectedObservacionList, item]);
   };
+  const handleInsumo = (item) => {
+    setSelectedInsumo(item);
+    console.log(item)
+    setSelectedInsumosList([...selectedObservacionList, item]);
+  };
   
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -96,12 +123,14 @@ const AltaTratamientoForm = () => {
           onChangeText={setNombreTratamiento}
         />
           
-        <TextInput
+          <TextInput
           style={styles.input}
           placeholder="Fecha de inicio"
           value={fechaInicio}
+          keyboardType="numeric"
           onChangeText={setFechaInicio}
         />
+
         <TextInput
           style={styles.input}
           placeholder="Fecha de fin"
@@ -137,14 +166,18 @@ const AltaTratamientoForm = () => {
         <Picker
           style={styles.picker}
           selectedValue={selectedInsumo}
-          onValueChange={(itemValue) => setSelectedInsumo(itemValue)}
+          onValueChange={(itemValue) => {
+            setSelectedInsumo(null);
+            console.log(itemValue)
+            handleInsumo(itemValue);
+          }}
         >
           <Picker.Item label="Seleccionar insumo" value={null} />
           {insumos.map((insumo) => (
             <Picker.Item
               key={insumo.id}
               label={insumo.Nombre}
-              value={insumo.id}
+              value={insumo}
             />
           ))}
         </Picker>
@@ -153,6 +186,7 @@ const AltaTratamientoForm = () => {
   selectedValue={selectedObservacion}
   onValueChange={(itemValue) => {
     setSelectedObservacion(null);
+    console.log(itemValue)
     handleObservacion(itemValue);
   }}
 >
@@ -161,14 +195,18 @@ const AltaTratamientoForm = () => {
             <Picker.Item
               key={obs.id}
               label={obs.Titulo}
-              value={obs.Titulo}
+              value={obs}
             />
           ))}
         </Picker>
          <Picker
           style={styles.picker}
           selectedValue={selectedUsuario}
-          onValueChange={(itemValue) => setSelectedUsuario(itemValue)}
+          onValueChange={(itemValue) => {
+            setSelectedUsuario(itemValue)
+        
+          }
+          }
         >
           <Picker.Item label="Seleccionar usuario" value={null} />
           {usuarios.map((usuario) => (
@@ -179,24 +217,34 @@ const AltaTratamientoForm = () => {
             />
           ))}
         </Picker>
-        <View style={styles.listaContainer}>
-  <Text style={styles.listaTitulo}>Observaciones seleccionadas:</Text>
-  {selectedObservacionList.map((obs, index) => (
-  <Text key={obs.Titulo + index} style={styles.listaItem}>
-    {obs}
+                  <View style={styles.listaContainer}>
+                  <Text style={styles.listaTitulo}>Observaciones seleccionadas:</Text>
+          {selectedObservacionList.map((obs, index) => (
+            <Text key={(obs.id ? obs.id : 'no-id') + index} style={styles.listaItem}>
+              {obs.Titulo}
+            </Text>
+          ))}
+          </View>
+
+            <View style={styles.listaContainer}>
+                    <Text style={styles.listaTitulo}>Insumos seleccionados:</Text>
+            {selectedInsumosList.map((Ins, index) => (
+              <Text key={(Ins.id ? Ins.id : 'no-id') + index} style={styles.listaItem}>
+                {Ins.Nombre}
+              </Text>
+            ))}
+
   
-  </Text>
-  
-))}
-</View>
-
-
-
-        <Button title="Guardar" onPress={handleGuardar} />
       </View>
+
+
+
+              <Button title="Guardar" onPress={handleGuardar} />
+       </View>
     </ScrollView>
-  );
+  )
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -224,5 +272,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
 });
+
 
 export default AltaTratamientoForm;
