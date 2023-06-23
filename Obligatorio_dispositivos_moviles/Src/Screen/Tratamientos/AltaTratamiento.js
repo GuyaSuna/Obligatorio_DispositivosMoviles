@@ -30,6 +30,7 @@ const AltaTratamientoForm = () => {
   const [selectedZona , setSelectedZona] = useState(null);
   const [selectedObservacion, setSelectedObservacion] = useState([]);
   const [selectedInsumosList, setSelectedInsumosList] = useState([]);
+  const [TextObs , setTextObs] = useState("");
 
   const [selectedObservacionList, setSelectedObservacionList] = useState([]);
 
@@ -41,7 +42,14 @@ const AltaTratamientoForm = () => {
     console.log("Aca arrancamos",observacion[1]?.id)
   }, []);
 
-
+  const handlePrueba = () => {
+    let texto = "";
+    selectedObservacionList.map((obs) => {
+      texto += obs.id + "," + obs.Titulo + "," + obs.Foto + "," + obs.Latitud + "," + obs.Longitud + "**";
+    });
+    console.log(texto);
+  };
+  
   const handleGuardar = () => {
     if (!validarCampos()) {
       return;
@@ -97,10 +105,12 @@ const AltaTratamientoForm = () => {
   };
 
   const handleObservacion = (item) => {
-    setSelectedObservacion(item);
-    console.log(item)
-    setSelectedObservacionList([...selectedObservacionList, item]);
-  };
+  setSelectedObservacion(item);
+  setTextObs((prevTextObs) => prevTextObs + item.id + "," + item.Titulo + "," + item.Foto + "," + item.Latitud + "," + item.Longitud + "/");
+  console.log("ESTO ES CHE b)", TextObs);
+  setSelectedObservacionList([...selectedObservacionList, item]);
+};
+
   const handleInsumo = (item) => {
     setSelectedInsumo(item);
     console.log(item)
@@ -165,11 +175,10 @@ const AltaTratamientoForm = () => {
         </Picker>
         <Picker
           style={styles.picker}
-          selectedValue={selectedInsumo}
+          selectedValue={selectedZona}
           onValueChange={(itemValue) => {
             setSelectedInsumo(null);
             console.log(itemValue)
-            handleInsumo(itemValue);
           }}
         >
           <Picker.Item label="Seleccionar insumo" value={null} />
@@ -217,6 +226,24 @@ const AltaTratamientoForm = () => {
             />
           ))}
         </Picker>
+         <Picker
+          style={styles.picker}
+          selectedValue={selectedUsuario}
+          onValueChange={(itemValue) => {
+            setSelectedUsuario(itemValue)
+        
+          }
+          }
+        >
+          <Picker.Item label="Seleccionar usuario" value={null} />
+          {usuarios.map((usuario) => (
+            <Picker.Item
+              key={usuario.id}
+              label={usuario.Nombre}
+              value={usuario.id}
+            />
+          ))}
+        </Picker>
                   <View style={styles.listaContainer}>
                   <Text style={styles.listaTitulo}>Observaciones seleccionadas:</Text>
           {selectedObservacionList.map((obs, index) => (
@@ -239,7 +266,7 @@ const AltaTratamientoForm = () => {
 
 
 
-              <Button title="Guardar" onPress={handleGuardar} />
+              <Button title="Guardar" onPress={handlePrueba} />
        </View>
     </ScrollView>
   )
