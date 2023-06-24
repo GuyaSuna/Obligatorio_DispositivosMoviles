@@ -31,6 +31,7 @@ const AltaTratamientoForm = () => {
   const [selectedObservacion, setSelectedObservacion] = useState([]);
   const [selectedInsumosList, setSelectedInsumosList] = useState([]);
   const [TextObs , setTextObs] = useState("");
+  const [TextIns , setTextIns] = useState("");
 
   const [selectedObservacionList, setSelectedObservacionList] = useState([]);
 
@@ -105,17 +106,47 @@ const AltaTratamientoForm = () => {
   };
 
   const handleObservacion = (item) => {
-  setSelectedObservacion(item);
-  setTextObs((prevTextObs) => prevTextObs + item.id + "," + item.Titulo + "," + item.Foto + "," + item.Latitud + "," + item.Longitud + "/");
-  console.log("ESTO ES CHE b)", TextObs);
-  setSelectedObservacionList([...selectedObservacionList, item]);
+
+    const observacionExistente = selectedObservacionList.find(obs => obs.id === item.id);
+  
+    if (observacionExistente) {
+
+      Alert.alert("Esta observacion ya existe");
+      return;
+    }
+  
+    setSelectedObservacion(item);
+    setTextObs(TextObs + item.id + "," + item.Titulo + "," + item.Foto + "," + item.Latitud + "," + item.Longitud + "**");
+    console.log("ESTO ES CHE b)", TextObs);
+    setSelectedObservacionList([...selectedObservacionList, item]);
+  };
+  
+
+const handleBorrarObs = (itemValue) => {
+  const nuevaLista = selectedObservacionList.filter((obs) => obs.id !== itemValue);
+  setSelectedObservacionList(nuevaLista);
+};
+const handleBorrarIns = (itemValue) => {
+  const nuevaLista = selectedInsumosList.filter((Ins) => Ins.id !== itemValue);
+  setSelectedInsumosList(nuevaLista);
 };
 
-  const handleInsumo = (item) => {
-    setSelectedInsumo(item);
-    console.log(item)
-    setSelectedInsumosList([...selectedObservacionList, item]);
-  };
+const handleInsumo = (item) => {
+
+  const InsumoExistente = selectedInsumosList.find(Ins => Ins.id === item.id);
+
+  if (InsumoExistente) {
+
+    Alert.alert("Este insumo ya existe");
+    return;
+  }
+
+  setSelectedInsumo(item);
+  setTextIns(TextIns + item.id + "," + item.Nombre + ","+item.Cantidad +  "**");
+  console.log("ESTO ES CHE b)", TextIns);
+  setSelectedInsumosList([...selectedInsumosList, item]);
+};
+
   
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -228,42 +259,32 @@ const AltaTratamientoForm = () => {
         </Picker>
          <Picker
           style={styles.picker}
-          selectedValue={selectedUsuario}
+          selectedValue={selectedObservacionList}
           onValueChange={(itemValue) => {
-            setSelectedUsuario(itemValue)
-        
+            handleBorrarObs(itemValue)       
           }
           }
         >
-          <Picker.Item label="Seleccionar usuario" value={null} />
-          {usuarios.map((usuario) => (
+          <Picker.Item label="Insumos Seleccionados" value={null} />
+          {selectedInsumosList.map((obs) => (
             <Picker.Item
-              key={usuario.id}
-              label={usuario.Nombre}
-              value={usuario.id}
+              key={obs.id}
+              label={obs.Titulo}
+              value={obs.id}
             />
           ))}
         </Picker>
-                  <View style={styles.listaContainer}>
-                  <Text style={styles.listaTitulo}>Observaciones seleccionadas:</Text>
-          {selectedObservacionList.map((obs, index) => (
-            <Text key={(obs.id ? obs.id : 'no-id') + index} style={styles.listaItem}>
-              {obs.Titulo}
-            </Text>
-          ))}
-          </View>
-
-            <View style={styles.listaContainer}>
-                    <Text style={styles.listaTitulo}>Insumos seleccionados:</Text>
-            {selectedInsumosList.map((Ins, index) => (
-              <Text key={(Ins.id ? Ins.id : 'no-id') + index} style={styles.listaItem}>
-                {Ins.Nombre}
-              </Text>
-            ))}
-
-  
-      </View>
-
+        <Picker
+          style={styles.picker}
+          selectedValue={selectedInsumosList}
+          onValueChange={(itemValue) => {
+            handleBorrarIns(itemValue)       
+          }
+          }
+        >
+         
+         
+        </Picker>
 
 
               <Button title="Guardar" onPress={handlePrueba} />
