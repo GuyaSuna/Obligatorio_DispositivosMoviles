@@ -507,7 +507,7 @@ createTratamientosTable: () => {
         if (results.rows.length === 0) {
           // La tabla no existe, se crea
           tx.executeSql(
-            'CREATE TABLE Tratamientos (id INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT,Zona TEXT,Usuario TEXT,FechaInicio INT, FechaFinalizacion INT, Tiempo INT,OrdenTrabajo TEXT,Insumos TEXT,Observaciones TEXT )',
+            'CREATE TABLE Tratamientos (id INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT,Zona TEXT,Usuario TEXT,FechaInicio DATE, FechaFinalizacion DATE, Tiempo INT,OrdenTrabajo TEXT,Insumos TEXT,Observaciones TEXT )',
             [],
             () => console.log('Tabla Tratamientos creada correctamente'),
             (tx, error) => console.log('Error al crear la tabla Tratamiento:', error)
@@ -591,6 +591,32 @@ BuscarTratamientos: (setTratamientos) => {
     });
   });
 },
+DeleteTratamientos: (id) => {
+  const db = DatabaseConnection.getConnection();
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DELETE FROM Tratamientos WHERE id=?",
+        [id],
+        (tx, results) => {
+          console.log("Results", results.rowsAffected);
+          if (results.rowsAffected > 0) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        },
+        (error) => {
+          console.log("Error deleting treatment", error);
+          reject(error);
+        }
+      );
+    });
+  });
+}
+
+
+
 };
 
 export default DatabaseConnection;

@@ -2,7 +2,7 @@ import React,{useEffect} from 'react'
 import { View , Text, scrollViewContainer, SafeAreaView , StyleSheet, ScrollView} from 'react-native'
 import BotonPrincipal from '../../Componentes/BotonPrincipal'
 import DatabaseConnection from '../../DataBase/dbConnection'
-const Observaciones = ({navigation}) => {
+const Tratamientos = ({navigation}) => {
 
    useEffect(() => {
      DatabaseConnection.createTratamientosTable();
@@ -68,4 +68,4 @@ const styles = StyleSheet.create({
 
 
 
-export default Observaciones
+export default Tratamientos

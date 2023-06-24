@@ -18,11 +18,7 @@ const Insumos = ({ navigation }) => {
                 btnIcon="user-plus"
                 onPress={() => navigation.navigate("AltaInsumo")}
               />
-              <BotonPrincipal
-                title="Borrar Insumos"
-                btnIcon="user-plus"
-                onPress={() => navigation.navigate("DeleteInsumo")}
-              />
+          
             </View>
             <View style={styles.viewContainerSecondColumn}>
               <BotonPrincipal

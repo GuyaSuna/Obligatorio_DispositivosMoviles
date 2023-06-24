@@ -4,8 +4,8 @@ import MyText from "../../Componentes/MyText";
 import DatabaseConnection from "../../DataBase/dbConnection"
 const db = DatabaseConnection.getConnection();
 import { useNavigation } from "@react-navigation/native";
-import { format } from "date-fns";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
+import Observaciones from "./Tratamientos";
 
 const VerTodosLosTratamientos = () => {
 
@@ -17,19 +17,23 @@ const VerTodosLosTratamientos = () => {
   }, []);
   const handleObservar = (item) => {
 
-    navigation.navigate('UnaZona', { 
-        Lugar : item.Lugar,
-        Departamento: item.Departamento,
-        Cantidad: item.Cantidad,
-        Latitud: item.Latitud,
-        Longitud: item.Longitud        
+    navigation.navigate('UnTratamiento', { 
+        Nombre : item.Nombre,
+        Zona: item.Zona,
+        Usuario: item.Usuario,
+        FechaInicio: item.FechaInicio,
+        FechaFinalizacion: item.FechaFinalizacion ,
+        Tiempo: item.Tiempo,
+        OrdenTrabajo: item.OrdenTrabajo,
+        Insumos: item.Insumos,
+        Observaciones: item.Observaciones ,    
      });
   };
   const handleBorrar = (item) => {
-
-   let comprobante = DatabaseConnection.DeleteZona(item.Latitud, item.Longitud, item.Lugar);
+console.log(item.id)
+   let comprobante = DatabaseConnection.DeleteTratamientos(item.id);
    if(comprobante = true){
-    Alert.alert("Exito", "Zona borrada correctamente", [
+    Alert.alert("Exito", "Tratamiento borrado correctamente", [
         {
           text: "Ok",
           onPress: () => navigation.navigate("PaginaPrincipal"),
@@ -55,19 +59,17 @@ const VerTodosLosTratamientos = () => {
 
   };
   const listItemView = (item) => {
-    const fechaInicio = format(new Date(item.FechaInicio), "dd/MM/yyyy");
-  const fechaFinalizacion = format(new Date(item.FechaFinalizacion), "dd/MM/yyyy");
-  
+    
     return (
       <View key={item.id} style={styles.listItemView}>
         <MyText textValue="Nombre" textStyle={styles.textStyle} />
         <MyText textValue={item.Nombre} textStyle={styles.textStyle} />
   
         <MyText textValue="Fecha Inicio" textStyle={styles.textStyle} />
-        <MyText textValue={fechaInicio} textStyle={styles.textStyle} />
+        <MyText textValue={item.FechaInicio} textStyle={styles.textStyle} />
 
         <MyText textValue="Fecha Finalizacion" textStyle={styles.textStyle} />
-        <MyText textValue={fechaFinalizacion} textStyle={styles.textStyle} />
+        <MyText textValue={item.FechaFinalizacion} textStyle={styles.textStyle} />
   
         <BotonPrincipal title="Observar" onPress={() => handleObservar(item)} />
         <BotonPrincipal title="Borrar" onPress={()=> handleBorrar(item)}/>
