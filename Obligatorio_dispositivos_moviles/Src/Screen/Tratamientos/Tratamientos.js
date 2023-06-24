@@ -4,9 +4,9 @@ import BotonPrincipal from '../../Componentes/BotonPrincipal'
 import DatabaseConnection from '../../DataBase/dbConnection'
 const Observaciones = ({navigation}) => {
 
-  //  useEffect(() => {
-  //    DatabaseConnection.createObservacionesTable();
-  // }, []);
+   useEffect(() => {
+     DatabaseConnection.createTratamientosTable();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>

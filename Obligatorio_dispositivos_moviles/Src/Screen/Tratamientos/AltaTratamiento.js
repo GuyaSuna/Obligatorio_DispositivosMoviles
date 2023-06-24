@@ -9,12 +9,13 @@ import {
   Text
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import DatabaseConnection from "../../DataBase/dbConnection";
+import { useNavigation } from "@react-navigation/native";
 
-const db = DatabaseConnection.getConnection();
+
 
 const AltaTratamientoForm = () => {
-  const [identificacion, setIdentificacion] = useState("");
   const [nombreTratamiento, setNombreTratamiento] = useState("");
 
   const [fechaInicio, setFechaInicio] = useState("");
@@ -34,7 +35,9 @@ const AltaTratamientoForm = () => {
   const [TextIns , setTextIns] = useState("");
 
   const [selectedObservacionList, setSelectedObservacionList] = useState([]);
-
+  
+const db = DatabaseConnection.getConnection();
+const navigation = useNavigation();
   useEffect(() => {
     DatabaseConnection.BuscarInsumo(setInsumos);
     DatabaseConnection.BuscarUsuarios(setUsuarios);
@@ -43,24 +46,21 @@ const AltaTratamientoForm = () => {
     console.log("Aca arrancamos",observacion[1]?.id)
   }, []);
 
-  const handlePrueba = () => {
-    let texto = "";
-    selectedObservacionList.map((obs) => {
-      texto += obs.id + "," + obs.Titulo + "," + obs.Foto + "," + obs.Latitud + "," + obs.Longitud + "**";
-    });
-    console.log(texto);
-  };
+
   
   const handleGuardar = () => {
     if (!validarCampos()) {
       return;
     }
 
-    DatabaseConnection.InserTratamiento(identificacion, nombreTratamiento, fechaInicio,fechaFin,tiempo,ordenTrabajo,selectedInsumosList,selectedObservacionList,zona,usuarios)
+    let TextZona = selectedZona.id + "," + zona.Lugar + ","+zona.Departamento + "," + zona.Cantidad+ ","+ zona.Latitud + ","+ zona.Longitud
+    let TextUsuario = selectedUsuario.id + "," + zona.Nombre + ","+zona.Password + "," + zona.Email
+
+    DatabaseConnection.inserTratamientos( nombreTratamiento, TextZona,TextUsuario,fechaInicio,fechaFin,tiempo,ordenTrabajo,TextIns,TextObs)
     .then((result) => {
       Alert.alert(
         "Exito",
-        "Usuario registrado correctamente",
+        "Tratamiento registrado correctamente",
         [
           {
             text: "Ok",
@@ -73,7 +73,7 @@ const AltaTratamientoForm = () => {
       );
     })
     .catch((error) => {
-      console.log('Error al insertar usuario:', error);
+      console.log('Error al insertar Tratamento:', error);
     });
   
 
@@ -87,7 +87,6 @@ const AltaTratamientoForm = () => {
 
   const validarCampos = () => {
     if (
-      identificacion === "" ||
       nombreTratamiento === "" ||
       zona === "" ||
       selectedUsuario === null ||
@@ -151,12 +150,7 @@ const handleInsumo = (item) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Identificación"
-          value={identificacion}
-          onChangeText={setIdentificacion}
-        />
+
         <TextInput
           style={styles.input}
           placeholder="Nombre de tratamiento"
@@ -168,7 +162,7 @@ const handleInsumo = (item) => {
           style={styles.input}
           placeholder="Fecha de inicio"
           value={fechaInicio}
-          keyboardType="numeric"
+  
           onChangeText={setFechaInicio}
         />
 
@@ -206,10 +200,11 @@ const handleInsumo = (item) => {
         </Picker>
         <Picker
           style={styles.picker}
-          selectedValue={selectedZona}
+          selectedValue={selectedInsumo}
           onValueChange={(itemValue) => {
             setSelectedInsumo(null);
             console.log(itemValue)
+            handleInsumo(itemValue);
           }}
         >
           <Picker.Item label="Seleccionar insumo" value={null} />
@@ -257,6 +252,8 @@ const handleInsumo = (item) => {
             />
           ))}
         </Picker>
+
+
          <Picker
           style={styles.picker}
           selectedValue={selectedObservacionList}
@@ -265,8 +262,8 @@ const handleInsumo = (item) => {
           }
           }
         >
-          <Picker.Item label="Insumos Seleccionados" value={null} />
-          {selectedInsumosList.map((obs) => (
+          <Picker.Item label="Observaciones Seleccionadas" value={null} />
+          {selectedObservacionList.map((obs) => (
             <Picker.Item
               key={obs.id}
               label={obs.Titulo}
@@ -274,7 +271,10 @@ const handleInsumo = (item) => {
             />
           ))}
         </Picker>
-        <Picker
+
+         
+         
+       <Picker
           style={styles.picker}
           selectedValue={selectedInsumosList}
           onValueChange={(itemValue) => {
@@ -282,12 +282,19 @@ const handleInsumo = (item) => {
           }
           }
         >
-         
-         
+          <Picker.Item label="Insumos Seleccionados" value={null} />
+          {selectedInsumosList.map((ins) => (
+            <Picker.Item
+              key={ins.id}
+              label={ins.Nombre}
+              value={ins.id}
+            />
+          ))}
         </Picker>
+         
 
 
-              <Button title="Guardar" onPress={handlePrueba} />
+              <BotonPrincipal title="Guardar" onPress={handleGuardar} />
        </View>
     </ScrollView>
   )
