@@ -8,12 +8,16 @@ const UnTratamiento = ({ route }) => {
 const navigation = useNavigation();
 
 const HandleModificar = () => {
-  navigation.navigate("ModificarTratamientos",  { 
-    Lugar : item.Lugar,
-    Departamento: item.Departamento,
-    Cantidad: item.Cantidad,
-    Latitud: item.Latitud,
-    Longitud: item.Longitud        
+  navigation.navigate("ModificarTratamiento",  { 
+    Nombre : item.Nombre,
+    Zona : item.Zona,
+    Usuario: item.Usuario,
+    FechaInicio: item.FechaInicio,   
+    FechaFinalizacion: item.FechaFinalizacion,
+    Tiempo: item.Tiempo,
+    OrdenTrabajo: item.OrdenTrabajo,
+    Insumos: item.Insumos,
+    Observaciones: item.Observaciones,
  });
 }
 
@@ -29,10 +33,10 @@ const HandleModificar = () => {
       <Text style={styles.label}>FechaFinalizacion: {item?.FechaFinalizacion}</Text>
    
 
-      <Text style={styles.label}>Insumos: {item?.Insumos}</Text>
+      <Text style={styles.label}>Usuario: {item?.Usuario}</Text>
     
 
-      <Text style={styles.label}>Observacion: {item?.Observaciones}</Text>
+      <Text style={styles.label}>Zona: {item?.Zona}</Text>
 
 
       <BotonPrincipal

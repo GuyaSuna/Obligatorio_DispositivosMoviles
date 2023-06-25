@@ -34,6 +34,7 @@ const AltaTratamientoForm = () => {
   const [TextObs , setTextObs] = useState("");
   const [TextIns , setTextIns] = useState("");
 
+
   const [selectedObservacionList, setSelectedObservacionList] = useState([]);
   
 const db = DatabaseConnection.getConnection();
@@ -53,10 +54,10 @@ const navigation = useNavigation();
       return;
     }
 
-    let TextZona = selectedZona.id + "," + zona.Lugar + ","+zona.Departamento + "," + zona.Cantidad+ ","+ zona.Latitud + ","+ zona.Longitud
-    let TextUsuario = selectedUsuario.id + "," + zona.Nombre + ","+zona.Password + "," + zona.Email
+    console.log("Texto de Zona:", selectedZona);
+    console.log("Texto de Usuario:", selectedUsuario);
 
-    DatabaseConnection.inserTratamientos( nombreTratamiento, TextZona,TextUsuario,fechaInicio,fechaFin,tiempo,ordenTrabajo,TextIns,TextObs)
+    DatabaseConnection.inserTratamientos( nombreTratamiento, selectedZona,selectedUsuario,fechaInicio,fechaFin,tiempo,ordenTrabajo,TextIns,TextObs)
     .then((result) => {
       Alert.alert(
         "Exito",
@@ -76,11 +77,6 @@ const navigation = useNavigation();
       console.log('Error al insertar Tratamento:', error);
     });
   
-
-    // Resto del código para guardar el tratamiento
-    // ...
-
-    // Ejemplo de cómo acceder a los valores seleccionados en los pickers
     console.log("Usuario seleccionado:", selectedUsuario);
     console.log("Insumo seleccionado:", selectedInsumo);
   }
@@ -88,22 +84,22 @@ const navigation = useNavigation();
   const validarCampos = () => {
     if (
       nombreTratamiento === "" ||
-      zona === "" ||
+      selectedZona === null ||
       selectedUsuario === null ||
       fechaInicio === "" ||
       fechaFin === "" ||
       tiempo === "" ||
       ordenTrabajo === "" ||
       selectedInsumo === null ||
-      observacion === ""
+      selectedObservacionList.length === 0
     ) {
       Alert.alert("Error", "Por favor completa todos los campos");
       return false;
     }
-
+  
     return true;
   };
-
+  
   const handleObservacion = (item) => {
 
     const observacionExistente = selectedObservacionList.find(obs => obs.id === item.id);
@@ -129,6 +125,7 @@ const handleBorrarIns = (itemValue) => {
   const nuevaLista = selectedInsumosList.filter((Ins) => Ins.id !== itemValue);
   setSelectedInsumosList(nuevaLista);
 };
+
 
 const handleInsumo = (item) => {
 
@@ -187,7 +184,7 @@ const handleInsumo = (item) => {
          <Picker
           style={styles.picker}
           selectedValue={selectedZona}
-          onValueChange={(itemValue) => setSelectedZona(itemValue)}
+          onValueChange={(itemValue) => {setSelectedZona(itemValue) }}
         >
           <Picker.Item label="Seleccionar Zona" value={null} />
           {zona.map((zona) => (

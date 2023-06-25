@@ -613,7 +613,94 @@ DeleteTratamientos: (id) => {
       );
     });
   });
-}
+},
+ModificarTratamientos: ( id, Nombre, Zona,Usuario,FechaInicio, FechaFinalizacion, Tiempo, OrdenTrabajo, Insumos , Observaciones) => {
+  return new Promise((resolve, reject) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        "UPDATE Tratamientos SET Nombre=?, Zona=?, Usuario=?, FechaInicio=?, FechaFinalizacion=?, Tiempo =?, OrdenTrabajo = ?, Insumos=?, Observaciones=? WHERE Id=?",
+        [
+          Nombre,
+          Zona,
+          Usuario,
+          FechaInicio,
+          FechaFinalizacion,
+          Tiempo,
+          OrdenTrabajo,
+          Insumos,
+          Observaciones,
+          id,
+        ],
+        (_, results) => {
+          if (results.rowsAffected > 0) {
+            resolve(true); 
+          } else {
+            resolve(false);
+          }
+        },
+        (_, error) => {
+          reject(error); 
+        }
+      );
+    });
+  });
+},
+SeleccionarZonaUnica: (id,setSelectedZonas) => {
+  return new Promise((resolve, reject) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(`SELECT * FROM Zonas WHERE Id=?`, [id], (tx, results) => {
+        console.log("results", results);
+        if (results.rows.length > 0) {
+          setSelectedZonas(results.rows._array); // Actualizar el estado Zonas con los resultados
+          resolve(results.rows._array); // Resolver la promesa con los resultados
+        } else {
+          Alert.alert(
+            "Mensaje",
+            "No hay Zonas!!!",
+            [
+              {
+                text: "Ok",
+                onPress: () => navigation.navigate("PaginaPrincipal"),
+              },
+            ],
+            { cancelable: false }
+          );
+          reject(new Error("No hay zonas")); // Rechazar la promesa con un error
+        }
+      });
+    });
+  });
+},
+SeleccionarUsuarioUnico: (id,setSelectedUsuario) => {
+  return new Promise((resolve, reject) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(`SELECT * FROM Usuarios WHERE Id=?`, [id], (tx, results) => {
+        console.log("results", results);
+        if (results.rows.length > 0) {
+          setSelectedUsuario(results.rows._array); 
+          resolve(results.rows._array); 
+        } else {
+          Alert.alert(
+            "Mensaje",
+            "No hay Usuario!!!",
+            [
+              {
+                text: "Ok",
+                onPress: () => navigation.navigate("PaginaPrincipal"),
+              },
+            ],
+            { cancelable: false }
+          );
+          reject(new Error("No hay Usuario")); 
+        }
+      });
+    });
+  });
+},
+
 
 
 
