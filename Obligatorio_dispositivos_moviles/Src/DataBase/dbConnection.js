@@ -482,7 +482,7 @@ BuscarObservaciones: (setObservaciones) => {
         } else {
           Alert.alert(
             "Mensaje",
-            "No hay Zonas!!!",
+            "No hay Observaciones!!!",
             [
               {
                 text: "Ok",
@@ -491,18 +491,132 @@ BuscarObservaciones: (setObservaciones) => {
             ],
             { cancelable: false }
           );
-          reject(new Error("No hay zonas")); // Rechazar la promesa con un error
+          reject(new Error("No hay observaciones")); // Rechazar la promesa con un error
         }
       });
     });
   });
 },
+createTratamientosTable: () => {
+  const db = DatabaseConnection.getConnection();
+  db.transaction((tx) => {
+    tx.executeSql(
+      'SELECT name FROM sqlite_master WHERE type="table" AND name="Tratamientos"',
+      [],
+      (tx, results) => {
+        if (results.rows.length === 0) {
+          // La tabla no existe, se crea
+          tx.executeSql(
+            'CREATE TABLE Tratamientos (id INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT,Zona TEXT,Usuario TEXT,FechaInicio DATE, FechaFinalizacion DATE, Tiempo INT,OrdenTrabajo TEXT,Insumos TEXT,Observaciones TEXT )',
+            [],
+            () => console.log('Tabla Tratamientos creada correctamente'),
+            (tx, error) => console.log('Error al crear la tabla Tratamiento:', error)
+          );
+        } else {
+          // La tabla ya existe, no es necesario crearla nuevamente
+          console.log('La tabla Tratamientos ya existe');
+        }
+      },
+      (tx, error) => console.log('Error al verificar la existencia de la tabla Tratamientos:', error)
+    );
+  });
+},
+
+DeleteTratamientosTable: () => {
+  const db = DatabaseConnection.getConnection();
+  db.transaction((tx) => {
+    tx.executeSql(
+      'SELECT name FROM sqlite_master WHERE type="table" AND name="Tratamientos"',
+      [],
+      (tx, results) => {
+        if (results.rows.length > 0) {
+          // La tabla no existe, se crea
+          tx.executeSql(
+            'DROP TABLE Tratamientos', 
+            [],
+            () => console.log('Tabla Tratamientos Borrada correctamente'),
+            (tx, error) => console.log('Error al crear la tabla Tratamiento:', error)
+          );
+        } else {
+          // La tabla ya existe, no es necesario crearla nuevamente
+          console.log('La tabla Tratamientos no existe');
+        }
+      },
+      (tx, error) => console.log('Error al verificar la existencia de la tabla Tratamientos:', error)
+    );
+  });
+},
+
+inserTratamientos: async (Nombre, Zona,Usuario,FechaInicio, FechaFinalizacion, Tiempo, OrdenTrabajo, Insumos , Observaciones) => {
+  return new Promise((resolve, reject) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        'INSERT INTO Tratamientos ( Nombre,Zona,Usuario,FechaInicio , FechaFinalizacion , Tiempo ,OrdenTrabajo,Insumos,Observaciones) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [Nombre, Zona, Usuario, FechaInicio, FechaFinalizacion, Tiempo, OrdenTrabajo, Insumos, Observaciones],
+        (tx, results) => {
+          resolve(results.rowsAffected);
+        },
+        (tx, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+},
+BuscarTratamientos: (setTratamientos) => {
+  return new Promise((resolve, reject) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(`SELECT * FROM Tratamientos`, [], (tx, results) => {
+        console.log("results", results);
+        if (results.rows.length > 0) {
+          setTratamientos(results.rows._array);
+          resolve(results.rows._array); 
+        } else {
+          Alert.alert(
+            "Mensaje",
+            "No hay Tratamientos!!!",
+            [
+              {
+                text: "Ok",
+                onPress: () => navigation.navigate("PaginaPrincipal"),
+              },
+            ],
+            { cancelable: false }
+          );
+          reject(new Error("No hay Tratamientos")); // Rechazar la promesa con un error
+        }
+      });
+    });
+  });
+},
+DeleteTratamientos: (id) => {
+  const db = DatabaseConnection.getConnection();
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DELETE FROM Tratamientos WHERE id=?",
+        [id],
+        (tx, results) => {
+          console.log("Results", results.rowsAffected);
+          if (results.rowsAffected > 0) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        },
+        (error) => {
+          console.log("Error deleting treatment", error);
+          reject(error);
+        }
+      );
+    });
+  });
+}
 
 
 
-
-
-  
 };
 
 export default DatabaseConnection;

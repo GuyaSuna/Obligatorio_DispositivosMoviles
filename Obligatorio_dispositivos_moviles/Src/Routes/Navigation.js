@@ -21,6 +21,7 @@ import AltaZona from "../Screen/Zonas/AltaZona";
 
 import ModificarZona from "../Screen/Zonas/ModificarZona";
 import TodasLasZonas from "../Screen/Zonas/TodasLasZonas";
+import UnTratamiento from "../Screen/Tratamientos/VerTratamiento";
 import UnaZona from "../Screen/Zonas/UnaZona";
 
 import Insumos from "../Screen/Insumos/Insumos";
@@ -424,6 +425,20 @@ const Navigation = () => {
           component={VerTodosLosTratamientos}
           options={{
             title: "Registrar Usuario",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+          <Stack.Screen
+          name="UnTratamiento"
+          component={UnTratamiento}
+          options={{
+            title: "UnTratamiento",
             headerStyle: {
               backgroundColor: "#f4511e",
             },
