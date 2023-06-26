@@ -6,35 +6,53 @@ import {
   SafeAreaView,
   ScrollView,
 } from "react-native";
-import MyBotonPrincipal from "../Componentes/BotonPrincipal";
+import BotonPrincipal from "../Componentes/BotonPrincipal";
+import {Box, Menu, Divider, NativeBaseConfigProvider} from 'native-base';
 
 const MainScreen = ({ navigation }) => {
   let backgroundImageSource =
     "https://s2.best-wallpaper.net/wallpaper/iphone/1311/Green-nature-branch-leaves-bokeh_iphone_320x480.jpg";
 
-
-
-  
-
   return (
+    <NativeBaseConfigProvider>
     <ImageBackground
       source={{ uri: backgroundImageSource }}
       style={styles.background}
       resizeMode="cover"
       imageStyle={styles.backgroundImage}
     >
+      
+      <Box w="90%" alignItems="center">
+      <Menu closeOnSelect={false} w="190" onOpen={() => console.log("opened")} onClose={() => console.log("closed")} trigger={triggerProps => {
+      return <Pressable {...triggerProps}>
+              <HamburgerIcon />
+            </Pressable>
+    }}>
+        <Menu.OptionGroup defaultValue="Arial" title="free" type="radio">
+          <Menu.ItemOption value="Arial">Arial</Menu.ItemOption>
+          <Menu.ItemOption value="Nunito Sans">Nunito Sans</Menu.ItemOption>
+          <Menu.ItemOption value="Roboto">Roboto</Menu.ItemOption>
+        </Menu.OptionGroup>
+        <Divider mt="3" w="100%" />
+        <Menu.OptionGroup title="paid" type="checkbox">
+          <Menu.ItemOption value="SF Pro">SF Pro</Menu.ItemOption>
+          <Menu.ItemOption value="Helvetica">Helvetica</Menu.ItemOption>
+        </Menu.OptionGroup>
+      </Menu>
+    </Box>
+    
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollViewContainer}>
           <View style={styles.viewContainer}>
             <View style={styles.generalContainer}>
               <View style={styles.viewContainerFirstColumn}>
-                <MyBotonPrincipal
+                <BotonPrincipal
                   title="Usuarios"
                   btnIcon="user-circle"
                   onPress={() => navigation.navigate("ScreenUsuarios")}
                 />
 
-                <MyBotonPrincipal
+                <BotonPrincipal
                   title="Zonas"
                   btnIcon="map"
                   onPress={() => navigation.navigate("Zonas")}
@@ -42,13 +60,13 @@ const MainScreen = ({ navigation }) => {
               </View>
 
               <View style={styles.viewContainerSecondColumn}>
-                <MyBotonPrincipal
+                <BotonPrincipal
                   title="Insumos"
                   btnIcon="flask"
                   onPress={() => navigation.navigate("Insumos")}
                 />
 
-                <MyBotonPrincipal
+                <BotonPrincipal
                   title=" Observaciones"
                   btnIcon="eye"
                   onPress={() => navigation.navigate("Observaciones")}
@@ -58,13 +76,13 @@ const MainScreen = ({ navigation }) => {
 
             <View style={styles.generalContainer}>
               <View style={styles.viewContainerFirstColumn}>
-                <MyBotonPrincipal
+                <BotonPrincipal
                   title="Tratamientos"
                   btnIcon="heart"
                   onPress={() => navigation.navigate("Tratamientos")}
                 />
 
-                <MyBotonPrincipal
+                <BotonPrincipal
                   title="Por las dudas"
                   btnIcon="star"
                   onPress={() => navigation.navigate("")}
@@ -72,13 +90,13 @@ const MainScreen = ({ navigation }) => {
               </View>
 
               <View style={styles.viewContainerSecondColumn}>
-                <MyBotonPrincipal
+                <BotonPrincipal
                   title="Por las dudas"
                   btnIcon="bookmark"
                   onPress={() => navigation.navigate("")}
                 />
 
-                <MyBotonPrincipal
+                <BotonPrincipal
                   title="Por las dudas"
                   btnIcon="map"
                   onPress={() => navigation.navigate("")}
@@ -89,6 +107,7 @@ const MainScreen = ({ navigation }) => {
         </ScrollView>
       </SafeAreaView>
     </ImageBackground>
+    </NativeBaseConfigProvider>
   );
 };
 
@@ -127,6 +146,9 @@ const styles = StyleSheet.create({
   backgroundImage: {
     opacity: 0.5,
   },
+  
+  
+
 });
 
 export default MainScreen;
