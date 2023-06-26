@@ -20,21 +20,23 @@ const ModificarTratamiento = ({route}) => {
   const [fechaInicio, setFechaInicio] = useState(0);
   const [fechaFin, setFechaFin] = useState(0);
   const [tiempo, setTiempo] = useState("");
-
   const [ordenTrabajo, setOrdenTrabajo] = useState("");
   const [insumos, setInsumos] = useState([]); 
   const [observacion, setObservacion] = useState([]);
   const [zona, setZona] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
-  const [selectedInsumo, setSelectedInsumo] = useState(null);
+
   const [selectedUsuario, setSelectedUsuario] = useState(null);
   const [selectedZona , setSelectedZona] = useState(null);
   const [selectedObservacion, setSelectedObservacion] = useState([]);
-  const [selectedInsumosList, setSelectedInsumosList] = useState([]);
+
   const [TextObs , setTextObs] = useState("");
   const [TextIns , setTextIns] = useState("");
   const [selectedObservacionList, setSelectedObservacionList] = useState([]);
   const [selectedObservacionItem, setSelectedObservacionItem] = useState(null);
+
+  const [selectedInsumo, setSelectedInsumo] = useState(null);
+  const [selectedInsumosList, setSelectedInsumosList] = useState([]);
 
 
   const item = route.params;
@@ -42,6 +44,7 @@ const ModificarTratamiento = ({route}) => {
   
 const db = DatabaseConnection.getConnection();
 const navigation = useNavigation();
+
 useEffect(() => {
   DatabaseConnection.BuscarZonas(setZona);
   DatabaseConnection.BuscarUsuarios(setUsuarios);
@@ -70,10 +73,11 @@ useEffect(() => {
       let AtributosIns = partesIns[i].split(",");
       if (AtributosIns.length === 3) {
         let objIns = {
-          Id: AtributosIns[0],
+          id: parseInt(AtributosIns[0]),
           Nombre: AtributosIns[1],
           Cantidad: AtributosIns[2],
         };
+        console.log("Pruebaaaaaa",AtributosIns[0])
         setSelectedInsumosList((prevList) => [...prevList, objIns]);
       }
     }
@@ -84,7 +88,7 @@ useEffect(() => {
       let AtributosObs = partesObs[j].split(",");
       if (AtributosObs.length === 5) {
         let objObser = {
-          Id: parseInt(AtributosObs[0]),
+          id: parseInt(AtributosObs[0]),
           Titulo: AtributosObs[1],
           Foto: AtributosObs[2],
           Latitud: AtributosObs[3],
@@ -150,8 +154,14 @@ useEffect(() => {
     return true;
   };
 
+
+  
+  const handleBorrarObs = (itemValue) => {
+    const nuevaLista = selectedObservacionList.filter((obs) => obs.id !== itemValue);
+    setSelectedObservacionList(nuevaLista);
+  };
   const handleObservacion = (item) => {
-    const observacionExistente = selectedObservacionList.find((obs) => obs.Id === item.Id);
+    const observacionExistente = selectedObservacionList.find((obs) => obs.id === item.id);
   
     if (observacionExistente) {
       Alert.alert("Esta observacion ya existe");
@@ -166,32 +176,23 @@ useEffect(() => {
       setSelectedObservacionList([...selectedObservacionList, item]);
     }
   };
-  
-  const handleBorrarObs = (itemValue) => {
-    const nuevaLista = selectedObservacionList.filter((obs) => obs.id !== itemValue);
-    setSelectedObservacionList(nuevaLista);
-  };
 
   const handleInsumo = (item) => {
-  if (!item || !item.Nombre) {
-    return;
-  }
-
-  const insumoExistente = selectedInsumosList.find((ins) => ins.Id === item.Id);
+    const insumoExistente = selectedInsumosList.find((ins) => ins.id === item.id);
 
   if (insumoExistente) {
-    Alert.alert("Este insumo ya existe");
-    return;
-  }
+     Alert.alert("Este insumo ya existe");
+      return;
+    }
 
-  setSelectedInsumo(item);
-  setTextIns(TextIns + item.Id + "," + item.Nombre + "," + item.Cantidad + "**");
-
-  if (item) {
-    setSelectedInsumosList([...selectedInsumosList, insumoExistente]);
-  }
-};
-
+    setSelectedInsumo(item);
+    setTextIns(TextIns + item.id + "," + item.Nombre + "," + item.Cantidad + "**");
+    console.log("ESTO ES CHE b)", TextIns);
+  
+    setSelectedInsumosList([...selectedInsumosList, item]);
+  };
+  
+  
 
 const handleBorrarIns = (itemValue) => {
   const nuevaLista = selectedInsumosList.filter((ins) => ins.id !== itemValue);
@@ -252,23 +253,22 @@ const handleBorrarIns = (itemValue) => {
           ))}
         </Picker>
         <Picker
-          style={styles.picker}
-          selectedValue={selectedInsumo}
-          onValueChange={(itemValue) => {
-            setSelectedInsumo(null);
-            console.log(itemValue)
-            handleInsumo(itemValue);
-          }}
-        >
-          <Picker.Item label="Seleccionar insumo" value={null} />
-          {insumos.map((insumo) => (
-            <Picker.Item
-              key={insumo.id}
-              label={insumo.Nombre}
-              value={insumo}
-            />
-          ))}
-        </Picker> 
+  style={styles.picker}
+  selectedValue={selectedInsumo}
+  onValueChange={(itemValue) => {
+    setSelectedInsumo(itemValue);
+    handleInsumo(itemValue);
+  }}
+>
+  <Picker.Item label="Seleccionar insumo" value={null} />
+  {insumos.map((insumo) => (
+    <Picker.Item
+      key={insumo.Id}
+      label={insumo.Nombre}
+      value={insumo}
+    />
+  ))}
+</Picker>
       <Picker
   style={styles.picker}
   selectedValue={selectedObservacion}
@@ -313,12 +313,13 @@ const handleBorrarIns = (itemValue) => {
   onValueChange={(itemValue) => {
     handleObservacion(itemValue);
     handleBorrarObs(itemValue);
+    setSelectedObservacionItem(itemValue);
   }}
 >
   <Picker.Item label="Observaciones Seleccionadas" value={null} />
   {selectedObservacionList.map((obs) => (
     <Picker.Item
-      key={obs.Id} // Agrega la prop "key" con un valor único, por ejemplo, obs.Id
+      key={obs.id} // Agrega la prop "key" con un valor único, por ejemplo, obs.Id
       label={obs.Titulo}
       value={obs}
     />
@@ -326,26 +327,21 @@ const handleBorrarIns = (itemValue) => {
 </Picker>
 
 <Picker
-    style={styles.picker}
-    selectedValue={selectedInsumosList}
-    onValueChange={(itemValue) => {
-      handleBorrarIns(itemValue)       
-    }}
-  >
-    <Picker.Item label="Insumos Seleccionados" value={null} />
-    {selectedInsumosList.map((ins) => (
-      <Picker.Item
-        key={ins.Id}
-        label={ins.Nombre}
-        value={ins.id}
-      />
-    ))}
-  </Picker>
-
-
-
-         
-
+  style={styles.picker}
+  selectedValue={selectedInsumosList}
+  onValueChange={(itemValue) => {
+    setSelectedInsumosList(itemValue);
+  }}
+>
+  <Picker.Item label="Insumos Seleccionados" value={null} />
+  {selectedInsumosList.map((ins) => (
+    <Picker.Item
+      key={ins.id}
+      label={ins.Nombre}
+      value={ins}
+    />
+  ))}
+</Picker>
 
               <BotonPrincipal title="Guardar"  />
        </View>
