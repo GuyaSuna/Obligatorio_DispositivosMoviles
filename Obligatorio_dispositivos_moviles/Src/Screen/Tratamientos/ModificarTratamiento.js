@@ -17,9 +17,10 @@ import { useNavigation } from "@react-navigation/native";
 
 const ModificarTratamiento = ({route}) => {
   const [nombreTratamiento, setNombreTratamiento] = useState("");
-  const [fechaInicio, setFechaInicio] = useState("");
-  const [fechaFin, setFechaFin] = useState("");
+  const [fechaInicio, setFechaInicio] = useState(0);
+  const [fechaFin, setFechaFin] = useState(0);
   const [tiempo, setTiempo] = useState("");
+
   const [ordenTrabajo, setOrdenTrabajo] = useState("");
   const [insumos, setInsumos] = useState([]); 
   const [observacion, setObservacion] = useState([]);
@@ -46,6 +47,15 @@ useEffect(() => {
   DatabaseConnection.BuscarUsuarios(setUsuarios);
   DatabaseConnection.BuscarInsumo(setInsumos);
   DatabaseConnection.BuscarObservaciones(setObservacion);
+
+  setNombreTratamiento(item.Nombre);
+  setFechaInicio(item.FechaInicio);
+  setFechaFin(item.FechaFinalizacion);
+  setTiempo(item.Tiempo.toString());
+  setOrdenTrabajo(item.OrdenTrabajo);
+
+  console.log(item.Tiempo)
+
   let user = parseInt(item.Usuario);
   let zona = parseInt(item.Zona);
 
@@ -141,7 +151,7 @@ useEffect(() => {
   };
 
   const handleObservacion = (item) => {
-    const observacionExistente = selectedObservacionList.find((obs) => obs.id === item.id);
+    const observacionExistente = selectedObservacionList.find((obs) => obs.Id === item.Id);
   
     if (observacionExistente) {
       Alert.alert("Esta observacion ya existe");
@@ -162,22 +172,26 @@ useEffect(() => {
     setSelectedObservacionList(nuevaLista);
   };
 
-const handleInsumo = (item) => {
-  const InsumoExistente = selectedInsumosList.find((ins) => ins.id === item.id);
+  const handleInsumo = (item) => {
+  if (!item || !item.Nombre) {
+    return;
+  }
 
-  if (InsumoExistente) {
+  const insumoExistente = selectedInsumosList.find((ins) => ins.Id === item.Id);
+
+  if (insumoExistente) {
     Alert.alert("Este insumo ya existe");
     return;
   }
 
   setSelectedInsumo(item);
-  setTextIns(TextIns + item.id + "," + item.Nombre + "," + item.Cantidad + "**");
-  console.log("ESTO ES CHE b)", TextIns);
+  setTextIns(TextIns + item.Id + "," + item.Nombre + "," + item.Cantidad + "**");
 
   if (item) {
-    setSelectedInsumosList([...selectedInsumosList, item]);
+    setSelectedInsumosList([...selectedInsumosList, insumoExistente]);
   }
 };
+
 
 const handleBorrarIns = (itemValue) => {
   const nuevaLista = selectedInsumosList.filter((ins) => ins.id !== itemValue);
@@ -196,26 +210,27 @@ const handleBorrarIns = (itemValue) => {
           onChangeText={setNombreTratamiento}
         />
           
-          <TextInput
+         <TextInput
           style={styles.input}
           placeholder="Fecha de inicio"
-          value={fechaInicio}
-  
+          value={fechaInicio.toString()} 
           onChangeText={setFechaInicio}
         />
 
         <TextInput
           style={styles.input}
           placeholder="Fecha de fin"
-          value={fechaFin}
+          value={fechaFin.toString()} 
           onChangeText={setFechaFin}
         />
+
         <TextInput
           style={styles.input}
           placeholder="Tiempo"
           value={tiempo}
           onChangeText={setTiempo}
         />
+
         <TextInput
           style={styles.input}
           placeholder="Orden de trabajo"
@@ -296,35 +311,37 @@ const handleBorrarIns = (itemValue) => {
   style={styles.picker}
   selectedValue={selectedObservacionItem}
   onValueChange={(itemValue) => {
-    setSelectedObservacionItem(itemValue);
+    handleObservacion(itemValue);
     handleBorrarObs(itemValue);
   }}
 >
   <Picker.Item label="Observaciones Seleccionadas" value={null} />
   {selectedObservacionList.map((obs) => (
-    <Picker.Item key={obs.id} label={obs.Titulo} value={obs} />
+    <Picker.Item
+      key={obs.Id} // Agrega la prop "key" con un valor único, por ejemplo, obs.Id
+      label={obs.Titulo}
+      value={obs}
+    />
   ))}
 </Picker>
 
-         
-         
-       <Picker
-          style={styles.picker}
-          selectedValue={selectedInsumosList}
-          onValueChange={(itemValue) => {
-            handleBorrarIns(itemValue)       
-          }
-          }
-        >
-          <Picker.Item label="Insumos Seleccionados" value={null} />
-          {selectedInsumosList.map((ins) => (
-            <Picker.Item
-              key={ins.id}
-              label={ins.Nombre}
-              value={ins.id}
-            />
-          ))}
-        </Picker> 
+<Picker
+    style={styles.picker}
+    selectedValue={selectedInsumosList}
+    onValueChange={(itemValue) => {
+      handleBorrarIns(itemValue)       
+    }}
+  >
+    <Picker.Item label="Insumos Seleccionados" value={null} />
+    {selectedInsumosList.map((ins) => (
+      <Picker.Item
+        key={ins.Id}
+        label={ins.Nombre}
+        value={ins.id}
+      />
+    ))}
+  </Picker>
+
 
 
          

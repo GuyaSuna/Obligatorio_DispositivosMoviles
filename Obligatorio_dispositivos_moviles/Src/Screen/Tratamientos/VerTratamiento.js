@@ -30,6 +30,8 @@ const HandleModificar = () => {
 
       <Text style={styles.label}>Nombre: {item?.Nombre}</Text>
 
+      <Text style={styles.label}>Tiempo: {item?.Tiempo}</Text>
+
 
       <Text style={styles.label}>FechaInicio: {item?.FechaInicio}</Text>
     
