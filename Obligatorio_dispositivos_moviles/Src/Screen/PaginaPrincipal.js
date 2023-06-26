@@ -7,14 +7,15 @@ import {
   ScrollView,
 } from "react-native";
 import BotonPrincipal from "../Componentes/BotonPrincipal";
-import {Box, Menu, Divider, NativeBaseConfigProvider} from 'native-base';
+import BotonLargo from "../Componentes/BotonLargo";
+
 
 const MainScreen = ({ navigation }) => {
   let backgroundImageSource =
     "https://s2.best-wallpaper.net/wallpaper/iphone/1311/Green-nature-branch-leaves-bokeh_iphone_320x480.jpg";
 
   return (
-    <NativeBaseConfigProvider>
+    
     <ImageBackground
       source={{ uri: backgroundImageSource }}
       style={styles.background}
@@ -22,25 +23,8 @@ const MainScreen = ({ navigation }) => {
       imageStyle={styles.backgroundImage}
     >
       
-      <Box w="90%" alignItems="center">
-      <Menu closeOnSelect={false} w="190" onOpen={() => console.log("opened")} onClose={() => console.log("closed")} trigger={triggerProps => {
-      return <Pressable {...triggerProps}>
-              <HamburgerIcon />
-            </Pressable>
-    }}>
-        <Menu.OptionGroup defaultValue="Arial" title="free" type="radio">
-          <Menu.ItemOption value="Arial">Arial</Menu.ItemOption>
-          <Menu.ItemOption value="Nunito Sans">Nunito Sans</Menu.ItemOption>
-          <Menu.ItemOption value="Roboto">Roboto</Menu.ItemOption>
-        </Menu.OptionGroup>
-        <Divider mt="3" w="100%" />
-        <Menu.OptionGroup title="paid" type="checkbox">
-          <Menu.ItemOption value="SF Pro">SF Pro</Menu.ItemOption>
-          <Menu.ItemOption value="Helvetica">Helvetica</Menu.ItemOption>
-        </Menu.OptionGroup>
-      </Menu>
-    </Box>
-    
+      
+        
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollViewContainer}>
           <View style={styles.viewContainer}>
@@ -76,29 +60,20 @@ const MainScreen = ({ navigation }) => {
 
             <View style={styles.generalContainer}>
               <View style={styles.viewContainerFirstColumn}>
-                <BotonPrincipal
+                <BotonLargo style={styles.botonLargo}
                   title="Tratamientos"
                   btnIcon="heart"
                   onPress={() => navigation.navigate("Tratamientos")}
                 />
 
-                <BotonPrincipal
-                  title="Por las dudas"
+                <BotonLargo style={styles.botonLargo}
+                  title="Datos Tratamientos"
                   btnIcon="star"
                   onPress={() => navigation.navigate("")}
                 />
-              </View>
-
-              <View style={styles.viewContainerSecondColumn}>
-                <BotonPrincipal
+                <BotonLargo style={styles.botonLargo}
                   title="Por las dudas"
                   btnIcon="bookmark"
-                  onPress={() => navigation.navigate("")}
-                />
-
-                <BotonPrincipal
-                  title="Por las dudas"
-                  btnIcon="map"
                   onPress={() => navigation.navigate("")}
                 />
               </View>
@@ -107,7 +82,6 @@ const MainScreen = ({ navigation }) => {
         </ScrollView>
       </SafeAreaView>
     </ImageBackground>
-    </NativeBaseConfigProvider>
   );
 };
 
@@ -127,12 +101,15 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   generalContainer: {
+    flex: 1,
     flexDirection: "row",
+    alignContent: "center",
   },
   viewContainerFirstColumn: {
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
+    alignContent: "center",
   },
   viewContainerSecondColumn: {
     flex: 1,
@@ -146,9 +123,12 @@ const styles = StyleSheet.create({
   backgroundImage: {
     opacity: 0.5,
   },
-  
-  
-
+  botonLargo:{
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+    alignContent: "center",
+  }
 });
 
 export default MainScreen;
