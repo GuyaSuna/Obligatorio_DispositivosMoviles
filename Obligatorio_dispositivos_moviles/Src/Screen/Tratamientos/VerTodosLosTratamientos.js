@@ -18,6 +18,7 @@ const VerTodosLosTratamientos = () => {
   const handleObservar = (item) => {
 
     navigation.navigate('UnTratamiento', { 
+        Id: item.id,
         Nombre : item.Nombre,
         Zona: item.Zona,
         Usuario: item.Usuario,
@@ -64,6 +65,8 @@ console.log(item.id)
       <View key={item.id} style={styles.listItemView}>
         <MyText textValue="Nombre" textStyle={styles.textStyle} />
         <MyText textValue={item.Nombre} textStyle={styles.textStyle} />
+
+        <MyText textValue={item.id} textStyle={styles.textStyle} />
   
         <MyText textValue="Fecha Inicio" textStyle={styles.textStyle} />
         <MyText textValue={item.FechaInicio} textStyle={styles.textStyle} />

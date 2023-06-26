@@ -613,7 +613,105 @@ DeleteTratamientos: (id) => {
       );
     });
   });
-}
+},
+ModificarTratamientos: ( id, Nombre, Zona,Usuario,FechaInicio, FechaFinalizacion, Tiempo, OrdenTrabajo, Insumos , Observaciones) => {
+  return new Promise((resolve, reject) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        "UPDATE Tratamientos SET Nombre=?, Zona=?, Usuario=?, FechaInicio=?, FechaFinalizacion=?, Tiempo =?, OrdenTrabajo = ?, Insumos=?, Observaciones=? WHERE Id=?",
+        [
+          Nombre,
+          Zona,
+          Usuario,
+          FechaInicio,
+          FechaFinalizacion,
+          Tiempo,
+          OrdenTrabajo,
+          Insumos,
+          Observaciones,
+          id,
+        ],
+        (_, results) => {
+          if (results.rowsAffected > 0) {
+            resolve(true); 
+          } else {
+            resolve(false);
+          }
+        },
+        (_, error) => {
+          reject(error); 
+        }
+      );
+    });
+  });
+},
+TestSeleccionarUsuario : (userId , setSelectedUser) => {
+  const db = DatabaseConnection.getConnection();
+  db.transaction((tx) => {
+    tx.executeSql("SELECT * FROM Usuarios WHERE id=?", [userId], (tx, results) => {
+      console.log("results", results);
+      if (results.rows.length > 0) {
+        const usuario = results.rows.item(0);
+        console.log("Usuario encontrado:", usuario);
+        setSelectedUser(results.rows.item(0));
+      } else {
+        console.log("No se encontró ningún usuario con el ID:", userId);
+      }
+    });
+  });
+},
+TestSeleccionarZona  : (zonaId , setSelectedZona) => {
+  const db = DatabaseConnection.getConnection();
+  db.transaction((tx) => {
+    tx.executeSql("SELECT * FROM Zonas WHERE id=?", [zonaId], (tx, results) => {
+      console.log("results", results);
+      if (results.rows.length > 0) {
+        const Zona = results.rows.item(0);
+        console.log("Zona encontrads:", Zona);
+        setSelectedZona(results.rows.item(0));
+      } else {
+        console.log("No se encontró ningún usuario con el ID:", userId);
+      }
+    });
+  });
+},
+
+SeleccionarZonaUnica: (zona,setSelectedZonas) => {
+  return new Promise((resolve, reject) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql("SELECT * FROM Zonas WHERE Id=?", [zona], (tx, results) => {
+        console.log("results", results);
+        if (results.rows.length > 0) {
+          setSelectedZonas(results.rows._array); // Actualizar el estado Zonas con los resultados
+          resolve(results.rows._array); // Resolver la promesa con los resultados
+        } else {        
+          reject(new Error("No hay zonas")); // Rechazar la promesa con un error
+        }
+      });
+    });
+  });
+},
+
+SeleccionarUsuarioUnico: (userId, setSelectedUsuario) => {
+  return new Promise((resolve, reject) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql("SELECT * FROM Usuarios WHERE id=?", [userId], (tx, results) => {
+        console.log("results", results);
+        if (results.rows.length > 0) {
+          const usuario = results.rows.item(0); // Obtener el primer elemento de los resultados
+          setSelectedUsuario(usuario);
+          resolve(usuario);
+        } else {
+          reject(new Error("No hay Usuario"));
+        }
+      });
+    });
+  });
+},
+
 
 
 

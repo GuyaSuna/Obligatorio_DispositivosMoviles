@@ -15,6 +15,7 @@ import ModificarObservacion from "../Screen/Observaciones/ModificarObservaiones"
 import Tratamientos from "../Screen/Tratamientos/Tratamientos";
 import AltaTratamiento from "../Screen/Tratamientos/AltaTratamiento";
 import VerTodosLosTratamientos from "../Screen/Tratamientos/VerTodosLosTratamientos";
+import ModificarTratamiento from "../Screen/Tratamientos/ModificarTratamiento";
 
 import Zonas from "../Screen/Zonas/Zonas";
 import AltaZona from "../Screen/Zonas/AltaZona";
@@ -425,6 +426,20 @@ const Navigation = () => {
           component={VerTodosLosTratamientos}
           options={{
             title: "Registrar Usuario",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+         <Stack.Screen
+          name="ModificarTratamiento"
+          component={ModificarTratamiento}
+          options={{
+            title: "Modificar Tratamiento",
             headerStyle: {
               backgroundColor: "#f4511e",
             },
