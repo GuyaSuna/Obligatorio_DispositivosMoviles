@@ -9,6 +9,7 @@ const navigation = useNavigation();
 
 const HandleModificar = () => {
   navigation.navigate("ModificarTratamiento",  { 
+    Id : item.Id,
     Nombre : item.Nombre,
     Zona : item.Zona,
     Usuario: item.Usuario,
@@ -24,6 +25,9 @@ const HandleModificar = () => {
   return (
     <ScrollView>
     <View style={styles.container}>
+
+    <Text style={styles.label}>Id: {item?.Id}</Text>
+
       <Text style={styles.label}>Nombre: {item?.Nombre}</Text>
 
 
