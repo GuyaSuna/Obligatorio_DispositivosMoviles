@@ -104,36 +104,55 @@ useEffect(() => {
 
 
   
-  // const handleGuardar = () => {
-  //   if (!validarCampos()) {
-  //     return;
-  //   }
+const handleGuardar = () => {
+  if (!validarCampos()) {
+    return;
+  }
 
-  //   let TextZona = selectedZona.id + "," + zona.Lugar + ","+zona.Departamento + "," + zona.Cantidad+ ","+ zona.Latitud + ","+ zona.Longitud
-  //   let TextUsuario = selectedUsuario.id + "," + zona.Nombre + ","+zona.Password + "," + zona.Email
+  const observacionesTexto = selectedObservacionList.map(
+    (obs) => `${obs.id},${obs.Titulo},${obs.Foto},${obs.Latitud},${obs.Longitud}`
+  ).join("**");
 
-  //   DatabaseConnection.ModificarTratamientos( item.id ,nombreTratamiento, TextZona,TextUsuario,fechaInicio,fechaFin,tiempo,ordenTrabajo,TextIns,TextObs)
-  //   .then((result) => {
-  //     Alert.alert(
-  //       "Exito",
-  //       "Tratamiento registrado correctamente",
-  //       [
-  //         {
-  //           text: "Ok",
-  //           onPress: () => navigation.navigate("PaginaPrincipal"),
-  //         },
-  //       ],
-  //       {
-  //         cancelable: false,
-  //       }
-  //     );
-  //   })
-  //   .catch((error) => {
-  //     console.log('Error al modificar Tratamento:', error);
-  //   });
-  
+  const insumosTexto = selectedInsumosList.map(
+    (ins) => `${ins.id},${ins.Nombre},${ins.Cantidad}`
+  ).join("**");
 
-  // }
+  DatabaseConnection.ModificarTratamientos(
+    item.Id,
+    nombreTratamiento,
+    selectedZona,
+    selectedUsuario,
+    fechaInicio,
+    fechaFin,
+    tiempo,
+    ordenTrabajo,
+    insumosTexto,
+    observacionesTexto
+  )
+    .then((result) => {
+      if (result) {
+        Alert.alert(
+          "Éxito",
+          "Tratamiento modificado correctamente",
+          [
+            {
+              text: "Ok",
+              onPress: () => navigation.navigate("PaginaPrincipal"),
+            },
+          ],
+          { cancelable: false }
+        );
+      } else {
+        Alert.alert(
+          "Error",
+          "No se pudo modificar el tratamiento. Por favor, intenta nuevamente."
+        );
+      }
+    })
+    .catch((error) => {
+      console.log("Error al Modificar Tratamento:", error);
+    });
+};
 
   const validarCampos = () => {
     if (
@@ -143,9 +162,8 @@ useEffect(() => {
       fechaInicio === "" ||
       fechaFin === "" ||
       tiempo === "" ||
-      ordenTrabajo === "" ||
-      selectedInsumo === null ||
-      observacion === ""
+      ordenTrabajo === "" 
+
     ) {
       Alert.alert("Error", "Por favor completa todos los campos");
       return false;
@@ -156,10 +174,7 @@ useEffect(() => {
 
 
   
-  const handleBorrarObs = (itemValue) => {
-    const nuevaLista = selectedObservacionList.filter((obs) => obs.id !== itemValue);
-    setSelectedObservacionList(nuevaLista);
-  };
+
   const handleObservacion = (item) => {
     const observacionExistente = selectedObservacionList.find((obs) => obs.id === item.id);
   
@@ -194,10 +209,16 @@ useEffect(() => {
   
   
 
-const handleBorrarIns = (itemValue) => {
-  const nuevaLista = selectedInsumosList.filter((ins) => ins.id !== itemValue);
-  setSelectedInsumosList(nuevaLista);
-};
+  const handleBorrarObs = (itemValue) => {
+    const nuevaLista = selectedObservacionList.filter((obs) => obs.id !== parseInt(itemValue));
+    setSelectedObservacionList(nuevaLista);
+  };
+  
+  const handleBorrarIns = (itemValue) => {
+    const nuevaLista = selectedInsumosList.filter((ins) => ins.id !== parseInt(itemValue));
+    setSelectedInsumosList(nuevaLista);
+  };
+  
 
   
   return (
@@ -308,42 +329,41 @@ const handleBorrarIns = (itemValue) => {
 
 
         <Picker
-  style={styles.picker}
-  selectedValue={selectedObservacionItem}
-  onValueChange={(itemValue) => {
-    handleObservacion(itemValue);
-    handleBorrarObs(itemValue);
-    setSelectedObservacionItem(itemValue);
-  }}
->
-  <Picker.Item label="Observaciones Seleccionadas" value={null} />
-  {selectedObservacionList.map((obs) => (
-    <Picker.Item
-      key={obs.id} // Agrega la prop "key" con un valor único, por ejemplo, obs.Id
-      label={obs.Titulo}
-      value={obs}
-    />
-  ))}
-</Picker>
+          style={styles.picker}
+          selectedValue={selectedObservacionList}
+          onValueChange={(itemValue) => {
+            handleBorrarObs(itemValue)       
+          }
+          }
+        >
+          <Picker.Item label="Observaciones Seleccionadas" value={null} />
+          {selectedObservacionList.map((obs) => (
+            <Picker.Item
+              key={obs.id}
+              label={obs.Titulo}
+              value={obs.id}
+            />
+          ))}
+        </Picker>
 
 <Picker
-  style={styles.picker}
-  selectedValue={selectedInsumosList}
-  onValueChange={(itemValue) => {
-    setSelectedInsumosList(itemValue);
-  }}
->
-  <Picker.Item label="Insumos Seleccionados" value={null} />
-  {selectedInsumosList.map((ins) => (
-    <Picker.Item
-      key={ins.id}
-      label={ins.Nombre}
-      value={ins}
-    />
-  ))}
-</Picker>
-
-              <BotonPrincipal title="Guardar"  />
+          style={styles.picker}
+          selectedValue={selectedInsumosList}
+          onValueChange={(itemValue) => {
+            handleBorrarIns(itemValue)       
+          }
+          }
+        >
+          <Picker.Item label="Insumos Seleccionados" value={null} />
+          {selectedInsumosList.map((ins) => (
+            <Picker.Item
+              key={ins.id}
+              label={ins.Nombre}
+              value={ins.id}
+            />
+          ))}
+        </Picker>
+              <BotonPrincipal title="Guardar" onPress={handleGuardar} />
        </View>
     </ScrollView>
   )
