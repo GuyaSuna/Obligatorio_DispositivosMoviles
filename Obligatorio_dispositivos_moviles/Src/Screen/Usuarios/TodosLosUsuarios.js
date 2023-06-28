@@ -24,7 +24,7 @@ const TodosLosUsuarios = () => {
 
     const handleBorrar = (item) => {
 
-    let comprobante = DatabaseConnection.DeleteUsuario(item.Nombre,item.Password,item.Email);
+    let comprobante = DatabaseConnection.DeleteUsuario(item.id);
     if(comprobante = true){
       Alert.alert("Exito", "Usuario borrado correctamente",[
     {
@@ -49,6 +49,7 @@ const TodosLosUsuarios = () => {
   )
 }
 };
+
   const listItemView = (item) => {
     return ( 
       <View key={item.id} style={styles.listItemView}>

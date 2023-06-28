@@ -26,12 +26,12 @@ const TodasLasZonas = () => {
   };
   const handleBorrar = (item) => {
 
-   let comprobante = DatabaseConnection.DeleteZona(item.Latitud, item.Longitud, item.Lugar);
+   let comprobante = DatabaseConnection.DeleteZona(item.id);
    if(comprobante = true){
     Alert.alert("Exito", "Zona borrada correctamente", [
         {
           text: "Ok",
-          onPress: () => navigation.navigate("PaginaPrincipal"),
+          // onPress: () => navigation.navigate("PaginaPrincipal"),
         }
       ],
       {
@@ -50,9 +50,9 @@ const TodasLasZonas = () => {
     }
     )
   }
-
-
   };
+
+
   const listItemView = (item) => {
     return (
       <View key={item.id} style={styles.listItemView}>

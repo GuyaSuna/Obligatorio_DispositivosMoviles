@@ -58,12 +58,12 @@ const DatabaseConnection = {
 
   
 
-  DeleteZona: (Latitud, Longitud, Lugar) => {
+  DeleteZona: (Id) => {
     const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {
       tx.executeSql(
-        "DELETE FROM Zonas WHERE Latitud = ? AND Longitud = ? AND Lugar = ?",
-        [Latitud, Longitud, Lugar],
+        "DELETE FROM Zonas WHERE Id = ?",
+        [Id],
         (tx, results) => {
           console.log("Results", results.rowsAffected);
           if (results.rowsAffected > 0) {
@@ -188,12 +188,12 @@ const DatabaseConnection = {
     });
   },
 
-DeleteUsuario:(Nombre , Password , Email )=>{
+DeleteUsuario:(Id )=>{
   const db = DatabaseConnection.getConnection();
 db.transaction((tx) => {
   tx.executeSql(
-    'DELETE FROM Usuarios WHERE Nombre = ? AND Password = ? AND Email = ?',
-    [Nombre , Password, Email],
+    'DELETE FROM Usuarios WHERE Id = ?',
+    [Id],
     (tx, results) => {
       console.log("Results", results.rowsAffected);
       if(results.rowsAffected > 0){
@@ -294,12 +294,12 @@ InsertInsumo: (insumoName, insumoCantidad) => {
   });
 },
 
-DeleteInsumo: (Id, Nombre, Cantidad) => {
+DeleteInsumo: (Id) => {
   const db = DatabaseConnection.getConnection();
   db.transaction((tx) => {
     tx.executeSql(
-      "DELETE FROM Insumos WHERE id = ? AND Nombre = ? AND Cantidad = ?",
-      [Id, Nombre, Cantidad],
+      "DELETE FROM Insumos WHERE id = ?",
+      [Id],
       (tx, results) => {
         console.log("Results", results.rowsAffected);
         if (results.rowsAffected > 0) {
@@ -412,12 +412,12 @@ insertObservaciones: async (title, imageUri, latitude, longitude) => {
 
 
 
-DeleteObservaciones: (Titulo, Foto, Latitud, Longitud) => {
+DeleteObservaciones: (Id) => {
   const db = DatabaseConnection.getConnection();
   db.transaction((tx) => {
     tx.executeSql(
-      "DELETE FROM Observacion WHERE Titulo = ? AND Foto = ? AND Latitud = ? AND Longitud= ?",
-      [Titulo, Foto, Latitud, Longitud],
+      "DELETE FROM Observaciones WHERE Id= ?",
+      [Id],
       (tx, results) => {
         console.log("Results", results.rowsAffected);
         if (results.rowsAffected > 0) {
@@ -482,7 +482,7 @@ BuscarObservaciones: (setObservaciones) => {
         } else {
           Alert.alert(
             "Mensaje",
-            "No hay Zonas!!!",
+            "No hay Observaciones!!!",
             [
               {
                 text: "Ok",
@@ -491,7 +491,221 @@ BuscarObservaciones: (setObservaciones) => {
             ],
             { cancelable: false }
           );
+          reject(new Error("No hay observaciones")); // Rechazar la promesa con un error
+        }
+      });
+    });
+  });
+},
+createTratamientosTable: () => {
+  const db = DatabaseConnection.getConnection();
+  db.transaction((tx) => {
+    tx.executeSql(
+      'SELECT name FROM sqlite_master WHERE type="table" AND name="Tratamientos"',
+      [],
+      (tx, results) => {
+        if (results.rows.length === 0) {
+          // La tabla no existe, se crea
+          tx.executeSql(
+            'CREATE TABLE Tratamientos (id INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT,Zona TEXT,Usuario TEXT,FechaInicio DATE, FechaFinalizacion DATE, Tiempo INT,OrdenTrabajo TEXT,Insumos TEXT,Observaciones TEXT )',
+            [],
+            () => console.log('Tabla Tratamientos creada correctamente'),
+            (tx, error) => console.log('Error al crear la tabla Tratamiento:', error)
+          );
+        } else {
+          // La tabla ya existe, no es necesario crearla nuevamente
+          console.log('La tabla Tratamientos ya existe');
+        }
+      },
+      (tx, error) => console.log('Error al verificar la existencia de la tabla Tratamientos:', error)
+    );
+  });
+},
+
+DeleteTratamientosTable: () => {
+  const db = DatabaseConnection.getConnection();
+  db.transaction((tx) => {
+    tx.executeSql(
+      'SELECT name FROM sqlite_master WHERE type="table" AND name="Tratamientos"',
+      [],
+      (tx, results) => {
+        if (results.rows.length > 0) {
+          // La tabla no existe, se crea
+          tx.executeSql(
+            'DROP TABLE Tratamientos', 
+            [],
+            () => console.log('Tabla Tratamientos Borrada correctamente'),
+            (tx, error) => console.log('Error al crear la tabla Tratamiento:', error)
+          );
+        } else {
+          // La tabla ya existe, no es necesario crearla nuevamente
+          console.log('La tabla Tratamientos no existe');
+        }
+      },
+      (tx, error) => console.log('Error al verificar la existencia de la tabla Tratamientos:', error)
+    );
+  });
+},
+
+inserTratamientos: async (Nombre, Zona,Usuario,FechaInicio, FechaFinalizacion, Tiempo, OrdenTrabajo, Insumos , Observaciones) => {
+  return new Promise((resolve, reject) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        'INSERT INTO Tratamientos ( Nombre,Zona,Usuario,FechaInicio , FechaFinalizacion , Tiempo ,OrdenTrabajo,Insumos,Observaciones) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [Nombre, Zona, Usuario, FechaInicio, FechaFinalizacion, Tiempo, OrdenTrabajo, Insumos, Observaciones],
+        (tx, results) => {
+          resolve(results.rowsAffected);
+        },
+        (tx, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+},
+BuscarTratamientos: (setTratamientos) => {
+  return new Promise((resolve, reject) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(`SELECT * FROM Tratamientos`, [], (tx, results) => {
+        console.log("results", results);
+        if (results.rows.length > 0) {
+          setTratamientos(results.rows._array);
+          resolve(results.rows._array); 
+        } else {
+          Alert.alert(
+            "Mensaje",
+            "No hay Tratamientos!!!",
+            [
+              {
+                text: "Ok",
+                onPress: () => navigation.navigate("PaginaPrincipal"),
+              },
+            ],
+            { cancelable: false }
+          );
+          reject(new Error("No hay Tratamientos")); // Rechazar la promesa con un error
+        }
+      });
+    });
+  });
+},
+DeleteTratamientos: (id) => {
+  const db = DatabaseConnection.getConnection();
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DELETE FROM Tratamientos WHERE id=?",
+        [id],
+        (tx, results) => {
+          console.log("Results", results.rowsAffected);
+          if (results.rowsAffected > 0) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        },
+        (error) => {
+          console.log("Error deleting treatment", error);
+          reject(error);
+        }
+      );
+    });
+  });
+},
+ModificarTratamientos: ( id, Nombre, Zona,Usuario,FechaInicio, FechaFinalizacion, Tiempo, OrdenTrabajo, Insumos , Observaciones) => {
+  return new Promise((resolve, reject) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql(
+        "UPDATE Tratamientos SET Nombre=?, Zona=?, Usuario=?, FechaInicio=?, FechaFinalizacion=?, Tiempo =?, OrdenTrabajo = ?, Insumos=?, Observaciones=? WHERE Id=?",
+        [
+          Nombre,
+          Zona,
+          Usuario,
+          FechaInicio,
+          FechaFinalizacion,
+          Tiempo,
+          OrdenTrabajo,
+          Insumos,
+          Observaciones,
+          id,
+        ],
+        (_, results) => {
+          if (results.rowsAffected > 0) {
+            resolve(true); 
+          } else {
+            resolve(false);
+          }
+        },
+        (_, error) => {
+          reject(error); 
+        }
+      );
+    });
+  });
+},
+TestSeleccionarUsuario : (userId , setSelectedUser) => {
+  const db = DatabaseConnection.getConnection();
+  db.transaction((tx) => {
+    tx.executeSql("SELECT * FROM Usuarios WHERE id=?", [userId], (tx, results) => {
+      console.log("results", results);
+      if (results.rows.length > 0) {
+        const usuario = results.rows.item(0);
+        console.log("Usuario encontrado:", usuario);
+        setSelectedUser(results.rows.item(0));
+      } else {
+        console.log("No se encontró ningún usuario con el ID:", userId);
+      }
+    });
+  });
+},
+TestSeleccionarZona  : (zonaId , setSelectedZona) => {
+  const db = DatabaseConnection.getConnection();
+  db.transaction((tx) => {
+    tx.executeSql("SELECT * FROM Zonas WHERE id=?", [zonaId], (tx, results) => {
+      console.log("results", results);
+      if (results.rows.length > 0) {
+        const Zona = results.rows.item(0);
+        console.log("Zona encontrads:", Zona);
+        setSelectedZona(results.rows.item(0));
+      } else {
+        console.log("No se encontró ningún usuario con el ID:", userId);
+      }
+    });
+  });
+},
+
+SeleccionarZonaUnica: (zona,setSelectedZonas) => {
+  return new Promise((resolve, reject) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql("SELECT * FROM Zonas WHERE Id=?", [zona], (tx, results) => {
+        console.log("results", results);
+        if (results.rows.length > 0) {
+          setSelectedZonas(results.rows._array); // Actualizar el estado Zonas con los resultados
+          resolve(results.rows._array); // Resolver la promesa con los resultados
+        } else {        
           reject(new Error("No hay zonas")); // Rechazar la promesa con un error
+        }
+      });
+    });
+  });
+},
+
+SeleccionarUsuarioUnico: (userId, setSelectedUsuario) => {
+  return new Promise((resolve, reject) => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction((tx) => {
+      tx.executeSql("SELECT * FROM Usuarios WHERE id=?", [userId], (tx, results) => {
+        console.log("results", results);
+        if (results.rows.length > 0) {
+          const usuario = results.rows.item(0); // Obtener el primer elemento de los resultados
+          setSelectedUsuario(usuario);
+          resolve(usuario);
+        } else {
+          reject(new Error("No hay Usuario"));
         }
       });
     });
@@ -501,8 +715,6 @@ BuscarObservaciones: (setObservaciones) => {
 
 
 
-
-  
 };
 
 export default DatabaseConnection;

@@ -1,32 +1,329 @@
-import React, {useState} from 'react'
-import { View, DatePickerIOS, StyleSheet} from 'react-native'
-import MyModal from '../../Componentes/MyModal';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  TextInput,
+  Button,
+  Alert,
+  ScrollView,
+  StyleSheet,
+  Text
+} from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import BotonPrincipal from "../../Componentes/BotonPrincipal";
+import DatabaseConnection from "../../DataBase/dbConnection";
+import { useNavigation } from "@react-navigation/native";
 
-const AltaTratamiento = () => {
 
-  const [chosenDate, setChosenDate] = useState(new Date());
-  const [modalVisible, setModalVisible] = useState(false);
 
-  const handleOpenModal = () => {
-    setModalVisible(true);
+const AltaTratamientoForm = () => {
+  const [nombreTratamiento, setNombreTratamiento] = useState("");
+
+  const [fechaInicio, setFechaInicio] = useState("");
+  const [fechaFin, setFechaFin] = useState("");
+  const [tiempo, setTiempo] = useState("");
+  const [ordenTrabajo, setOrdenTrabajo] = useState("");
+  const [insumos, setInsumos] = useState([]); 
+  const [observacion, setObservacion] = useState([]);
+  const [zona, setZona] = useState([]);
+  const [usuarios, setUsuarios] = useState([]);
+   const [selectedInsumo, setSelectedInsumo] = useState(null);
+  const [selectedUsuario, setSelectedUsuario] = useState(null);
+  const [selectedZona , setSelectedZona] = useState(null);
+  const [selectedObservacion, setSelectedObservacion] = useState([]);
+  const [selectedInsumosList, setSelectedInsumosList] = useState([]);
+
+
+
+  const [selectedObservacionList, setSelectedObservacionList] = useState([]);
+  
+const db = DatabaseConnection.getConnection();
+const navigation = useNavigation();
+  useEffect(() => {
+    DatabaseConnection.BuscarInsumo(setInsumos);
+    DatabaseConnection.BuscarUsuarios(setUsuarios);
+    DatabaseConnection.BuscarZonas(setZona);
+    DatabaseConnection.BuscarObservaciones(setObservacion);
+    console.log("Aca arrancamos",observacion[1]?.id)
+  }, []);
+
+
+  
+  const handleGuardar = () => {
+    if (!validarCampos()) {
+      return;
+    }
+
+    console.log("Texto de Zona:", selectedZona);
+    console.log("Texto de Usuario:", selectedUsuario);
+
+    const observacionesTexto = selectedObservacionList.map(obs => `${obs.id},${obs.Titulo},${obs.Foto},${obs.Latitud},${obs.Longitud}`).join("**");
+
+    const insumosTexto = selectedInsumosList.map(ins => `${ins.id},${ins.Nombre},${ins.Cantidad}`).join("**");
+
+
+    DatabaseConnection.inserTratamientos( nombreTratamiento, selectedZona,selectedUsuario,fechaInicio,fechaFin,tiempo,ordenTrabajo,insumosTexto,observacionesTexto)
+    .then((result) => {
+      Alert.alert(
+        "Exito",
+        "Tratamiento registrado correctamente",
+        [
+          {
+            text: "Ok",
+            onPress: () => navigation.navigate("PaginaPrincipal"),
+          },
+        ],
+        {
+          cancelable: false,
+        }
+      );
+    })
+    .catch((error) => {
+      console.log('Error al insertar Tratamento:', error);
+    });
+  
+    console.log("Usuario seleccionado:", selectedUsuario);
+    console.log("Insumo seleccionado:", selectedInsumo);
+  }
+
+  const validarCampos = () => {
+    if (
+      nombreTratamiento === "" ||
+      selectedZona === null ||
+      selectedUsuario === null ||
+      fechaInicio === "" ||
+      fechaFin === "" ||
+      tiempo === "" ||
+      ordenTrabajo === "" ||
+      selectedInsumo === null ||
+      selectedObservacionList.length === 0
+    ) {
+      Alert.alert("Error", "Por favor completa todos los campos");
+      return false;
+    }
+  
+    return true;
   };
+  
+  const handleObservacion = (item) => {
 
-  const handleCloseModal = () => {
-    setModalVisible(false);
+    const observacionExistente = selectedObservacionList.find(obs => obs.id === item.id);
+  
+    if (observacionExistente) {
+
+      Alert.alert("Esta observacion ya existe");
+      return;
+    }
+  
+    setSelectedObservacion(item);  
+    setSelectedObservacionList([...selectedObservacionList, item]);
   };
+  
 
+const handleBorrarObs = (itemValue) => {
+  const nuevaLista = selectedObservacionList.filter((obs) => obs.id !== itemValue);
+  setSelectedObservacionList(nuevaLista);
+};
+const handleBorrarIns = (itemValue) => {
+  const nuevaLista = selectedInsumosList.filter((Ins) => Ins.id !== itemValue);
+  setSelectedInsumosList(nuevaLista);
+};
+
+
+const handleInsumo = (item) => {
+
+  const InsumoExistente = selectedInsumosList.find(Ins => Ins.id === item.id);
+
+  if (InsumoExistente) {
+
+    Alert.alert("Este insumo ya existe");
+    return;
+  }
+
+  setSelectedInsumo(item);
+  setSelectedInsumosList([...selectedInsumosList, item]);
+};
+
+  
   return (
-    <MyModal visible={modalVisible} onClose={handleCloseModal}>
-      <View style={styles.container}>
-        <DatePickerIOS date={chosenDate} onDateChange={setChosenDate} />
-      </View>
-    </MyModal>
-  );
-}
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.inputContainer}>
+
+        <TextInput
+          style={styles.input}
+          placeholder="Nombre de tratamiento"
+          value={nombreTratamiento}
+          onChangeText={setNombreTratamiento}
+        />
+          
+          <TextInput
+          style={styles.input}
+          placeholder="Fecha de inicio"
+          value={fechaInicio}
+  
+          onChangeText={setFechaInicio}
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Fecha de fin"
+          value={fechaFin}
+          onChangeText={setFechaFin}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Tiempo"
+          value={tiempo}
+          onChangeText={setTiempo}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Orden de trabajo"
+          value={ordenTrabajo}
+          onChangeText={setOrdenTrabajo}
+        />
+         <Picker
+          style={styles.picker}
+          selectedValue={selectedZona}
+          onValueChange={(itemValue) => {setSelectedZona(itemValue) }}
+        >
+          <Picker.Item label="Seleccionar Zona" value={null} />
+          {zona.map((zona) => (
+            <Picker.Item
+              key={zona.id}
+              label={zona.Lugar}
+              value={zona.id}
+            />
+          ))}
+        </Picker>
+        <Picker
+          style={styles.picker}
+          selectedValue={selectedInsumo}
+          onValueChange={(itemValue) => {
+            setSelectedInsumo(null);
+            console.log(itemValue)
+            handleInsumo(itemValue);
+          }}
+        >
+          <Picker.Item label="Seleccionar insumo" value={null} />
+          {insumos.map((insumo) => (
+            <Picker.Item
+              key={insumo.id}
+              label={insumo.Nombre}
+              value={insumo}
+            />
+          ))}
+        </Picker>
+        <Picker
+  style={styles.picker}
+  selectedValue={selectedObservacion}
+  onValueChange={(itemValue) => {
+    setSelectedObservacion(null);
+    console.log(itemValue)
+    handleObservacion(itemValue);
+  }}
+>
+<Picker.Item label="Seleccionar Observacion" value={null} />
+          {observacion.map((obs) => (
+            <Picker.Item
+              key={obs.id}
+              label={obs.Titulo}
+              value={obs}
+            />
+          ))}
+        </Picker>
+         <Picker
+          style={styles.picker}
+          selectedValue={selectedUsuario}
+          onValueChange={(itemValue) => {
+            setSelectedUsuario(itemValue)
+        
+          }
+          }
+        >
+          <Picker.Item label="Seleccionar usuario" value={null} />
+          {usuarios.map((usuario) => (
+            <Picker.Item
+              key={usuario.id}
+              label={usuario.Nombre}
+              value={usuario.id}
+            />
+          ))}
+        </Picker>
+
+
+         <Picker
+          style={styles.picker}
+          selectedValue={selectedObservacionList}
+          onValueChange={(itemValue) => {
+            handleBorrarObs(itemValue)       
+          }
+          }
+        >
+          <Picker.Item label="Observaciones Seleccionadas" value={null} />
+          {selectedObservacionList.map((obs) => (
+            <Picker.Item
+              key={obs.id}
+              label={obs.Titulo}
+              value={obs.id}
+            />
+          ))}
+        </Picker>
+
+         
+         
+       <Picker
+          style={styles.picker}
+          selectedValue={selectedInsumosList}
+          onValueChange={(itemValue) => {
+            handleBorrarIns(itemValue)       
+          }
+          }
+        >
+          <Picker.Item label="Insumos Seleccionados" value={null} />
+          {selectedInsumosList.map((ins) => (
+            <Picker.Item
+              key={ins.id}
+              label={ins.Nombre}
+              value={ins.id}
+            />
+          ))}
+        </Picker>
+         
+
+
+              <BotonPrincipal title="Guardar" onPress={handleGuardar} />
+       </View>
+    </ScrollView>
+  )
+};
+
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center'
+    flexGrow: 1,
+    padding: 16,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  inputContainer: {
+    width: "100%",
+    maxWidth: 400,
+  },
+  input: {
+    marginBottom: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 4,
+  },
+  picker: {
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 4,
   },
 });
-export default AltaTratamiento
+
+
+export default AltaTratamientoForm;
