@@ -26,7 +26,7 @@ const TodasLasObservaciones = () => {
 
   const handleBorrar = async (item) => {
     try {
-      await DatabaseConnection.DeleteObservaciones(item.Titulo, item.Foto, item.Latitud, item.Longitud);
+       DatabaseConnection.DeleteObservaciones(item.id);
       Alert.alert("Éxito", "Observación borrada correctamente", [
         {
           text: "Ok",

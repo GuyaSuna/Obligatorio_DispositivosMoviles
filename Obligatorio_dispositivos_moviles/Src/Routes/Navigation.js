@@ -27,7 +27,6 @@ import UnaZona from "../Screen/Zonas/UnaZona";
 
 import Insumos from "../Screen/Insumos/Insumos";
 import AltaInsumo from "../Screen/Insumos/AltaInsumo";
-import BajaInsumo from "../Screen/Insumos/BajaInsumo";
 import ModificarInsumo from "../Screen/Insumos/ModificarInsumo";
 import TodosLosInusmos from "../Screen/Insumos/TodosLosInsumos";
 import UnInsumo from "../Screen/Insumos/UnInsumo";
@@ -35,7 +34,6 @@ import UnInsumo from "../Screen/Insumos/UnInsumo";
 import ScreenUsuarios from "../Screen/Usuarios/ScreenUsuarios";
 import EditUsuario from "../Screen/Usuarios/EditUsuarios";
 import AltaUsuario from "../Screen/Usuarios/AltaUsuarios";
-import DeleteUsuarios from "../Screen/Usuarios/DeleteUsuarios";
 import TodosLosUsuarios from "../Screen/Usuarios/TodosLosUsuarios";
 import UnUsuario from "../Screen/Usuarios/UnUsuario";
 
@@ -171,20 +169,6 @@ const Navigation = () => {
           component={AltaInsumo}
           options={{
             title: "INGRESO DE INSUMOS",
-            headerStyle: {
-              backgroundColor: "#f4511e",
-            },
-            headerTintColor: "#fff",
-            headerTitleStyle: {
-              fontWeight: "bold",
-            },
-          }}
-        />
-        <Stack.Screen
-          name="BajaInsumo"
-          component={BajaInsumo}
-          options={{
-            title: "ELIMINAR INSUMOS",
             headerStyle: {
               backgroundColor: "#f4511e",
             },

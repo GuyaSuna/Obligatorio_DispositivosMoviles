@@ -58,12 +58,12 @@ const DatabaseConnection = {
 
   
 
-  DeleteZona: (Latitud, Longitud, Lugar) => {
+  DeleteZona: (Id) => {
     const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {
       tx.executeSql(
-        "DELETE FROM Zonas WHERE Latitud = ? AND Longitud = ? AND Lugar = ?",
-        [Latitud, Longitud, Lugar],
+        "DELETE FROM Zonas WHERE Id = ?",
+        [Id],
         (tx, results) => {
           console.log("Results", results.rowsAffected);
           if (results.rowsAffected > 0) {
@@ -188,12 +188,12 @@ const DatabaseConnection = {
     });
   },
 
-DeleteUsuario:(Nombre , Password , Email )=>{
+DeleteUsuario:(Id )=>{
   const db = DatabaseConnection.getConnection();
 db.transaction((tx) => {
   tx.executeSql(
-    'DELETE FROM Usuarios WHERE Nombre = ? AND Password = ? AND Email = ?',
-    [Nombre , Password, Email],
+    'DELETE FROM Usuarios WHERE Id = ?',
+    [Id],
     (tx, results) => {
       console.log("Results", results.rowsAffected);
       if(results.rowsAffected > 0){
@@ -294,12 +294,12 @@ InsertInsumo: (insumoName, insumoCantidad) => {
   });
 },
 
-DeleteInsumo: (Id, Nombre, Cantidad) => {
+DeleteInsumo: (Id) => {
   const db = DatabaseConnection.getConnection();
   db.transaction((tx) => {
     tx.executeSql(
-      "DELETE FROM Insumos WHERE id = ? AND Nombre = ? AND Cantidad = ?",
-      [Id, Nombre, Cantidad],
+      "DELETE FROM Insumos WHERE id = ?",
+      [Id],
       (tx, results) => {
         console.log("Results", results.rowsAffected);
         if (results.rowsAffected > 0) {
@@ -412,12 +412,12 @@ insertObservaciones: async (title, imageUri, latitude, longitude) => {
 
 
 
-DeleteObservaciones: (Titulo, Foto, Latitud, Longitud) => {
+DeleteObservaciones: (Id) => {
   const db = DatabaseConnection.getConnection();
   db.transaction((tx) => {
     tx.executeSql(
-      "DELETE FROM Observacion WHERE Titulo = ? AND Foto = ? AND Latitud = ? AND Longitud= ?",
-      [Titulo, Foto, Latitud, Longitud],
+      "DELETE FROM Observaciones WHERE Id= ?",
+      [Id],
       (tx, results) => {
         console.log("Results", results.rowsAffected);
         if (results.rowsAffected > 0) {

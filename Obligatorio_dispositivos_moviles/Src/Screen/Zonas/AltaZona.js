@@ -14,7 +14,8 @@ import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection";
 import {Picker} from '@react-native-picker/picker';
-import { Marker,MapView } from "react-native-maps";
+import * as Location from 'expo-location';
+import MapView, { Marker } from 'react-native-maps';
 
 const AltaZona = () => {
 
@@ -46,13 +47,7 @@ checkLocationPermission();
     setCantidad(cantidad);
   };
 
-  const handleLatitud = (latitud) => {
-    setLatitud(latitud);
-  };
 
-  const handleLongitud = (longitud) => {
-    setLongitud(longitud);
-  };
 
   const validateData = () => {
     if (Lugar === "" && !Lugar.trim()) {
@@ -202,5 +197,10 @@ const styles = StyleSheet.create({
   container: {},
   inputUser: {},
   inputPassword: {},
+  map: {
+    width: '100%',
+    height: 250,
+    marginBottom: 10,
+  },
   
 });
