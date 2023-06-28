@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import {
   StyleSheet,
   SafeAreaViewBase,
@@ -10,22 +10,29 @@ import {
   ImageBackground,
 } from "react-native";
 import MyInputText from "../../Componentes/MyInputText";
-import MyText from "../../Componentes/MyText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection";
-import MyInputOpciones from "../../Componentes/MyInputOpcionMultiple";
 import {Picker} from '@react-native-picker/picker';
+import { Marker,MapView } from "react-native-maps";
 
 const AltaZona = () => {
+
   const [Lugar, setLugar] = useState("");
   const [Departamento, setDepartamento] = useState("");
   const [Cantidad, setCantidad] = useState("");
-  const [Latitud, setLatitud] = useState("");
-  const [Longitud, setLongitud] = useState("");
+  const [Latitud, setLatitud] = useState(null);
+  const [Longitud, setLongitud] = useState(null);
+  const [locationPermission, setLocationPermission] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState(null);
 
   const navigation = useNavigation();
   const db = DatabaseConnection.getConnection();
+
+  useEffect (() => {
+checkLocationPermission();
+  }, []);
+
 
   const handleLugar = (lugar) => {
     setLugar(lugar);
@@ -125,18 +132,17 @@ const AltaZona = () => {
     }
   };
 
-  // if(results.rowsAffected > 0){
-  //   Alert.alert("Exito", "Zona registrado correctamente", [
-  //     {
-  //       text: "Ok",
-  //       onPress: () => navigation.navigate("PaginaPrincipal"),
-  //     }
-  //   ],
-  //   {
-  //     cancelable: false
-  //   }
 
+  const checkLocationPermission = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    setLocationPermission(status === 'granted');
+  };
 
+  const handleMapPress = (event) => {
+    setSelectedLocation(event.nativeEvent.coordinate);
+    setLatitud(event.nativeEvent.coordinate.latitude);
+    setLongitud(event.nativeEvent.coordinate.longitude);
+  };
     
   return (
     <SafeAreaView>
@@ -162,23 +168,23 @@ const AltaZona = () => {
                 value={Departamento}
               />
 
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: Latitud || 0,
+              longitude: Longitud || 0,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+            onPress={handleMapPress}
+          >
+            {selectedLocation && <Marker coordinate={selectedLocation} />}
+          </MapView>
               <MyInputText
                 styles={styles.inputEmail}
                 placeholder="Cantidad"
                 onChangeText={handleCantidad}
                 value={Cantidad}
-              />
-              <MyInputText
-                styles={styles.inputEmail}
-                placeholder="Latutid"
-                onChangeText={handleLatitud}
-                value={Latitud}
-              />
-              <MyInputText
-                styles={styles.inputEmail}
-                placeholder="Longitud"
-                onChangeText={handleLongitud}
-                value={Longitud}
               />
 
               <BotonPrincipal title="Alta Zona" onPress={addZone} />
