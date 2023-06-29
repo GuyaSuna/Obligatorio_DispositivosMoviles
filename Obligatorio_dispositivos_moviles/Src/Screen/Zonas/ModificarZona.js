@@ -57,7 +57,7 @@ const ModificarZona = ({route}) => {
     }
 
     if (Departamento === "" && !Departamento.trim()) {
-      Alert.alert("Error", "El Departamento es obligatoria");
+      Alert.alert("Error", "El Departamento es obligatorio");
       return false;
     }
 

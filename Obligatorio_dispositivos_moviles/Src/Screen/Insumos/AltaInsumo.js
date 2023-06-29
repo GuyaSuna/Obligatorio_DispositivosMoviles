@@ -33,8 +33,8 @@ const AltaInsumo = () => {
       Alert.alert("Error", "El nombre del Insumo es obligatorio");
       return false;
     }
-    if (insumoCantidad.trim() === "") {
-      Alert.alert("Error", "La cantidad del Insumo es obligatoria");
+    if (insumoCantidad.trim() === ""  || insumoCantidad < 1 ) {
+      Alert.alert("Error", "La cantidad del Insumo es obligatoria y debe ser un valor aceptado");
       return false;
     }
     return true;

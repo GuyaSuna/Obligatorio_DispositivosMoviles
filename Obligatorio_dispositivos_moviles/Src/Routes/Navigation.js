@@ -37,7 +37,7 @@ import AltaUsuario from "../Screen/Usuarios/AltaUsuarios";
 import TodosLosUsuarios from "../Screen/Usuarios/TodosLosUsuarios";
 import UnUsuario from "../Screen/Usuarios/UnUsuario";
 
-
+import Contactanos from "../Screen/Contactanos/Contactanos";
 
 const Stack = createStackNavigator();
 
@@ -168,7 +168,7 @@ const Navigation = () => {
           name="AltaInsumo"
           component={AltaInsumo}
           options={{
-            title: "INGRESO DE INSUMOS",
+            title: "Ingreso Insumos",
             headerStyle: {
               backgroundColor: "#f4511e",
             },
@@ -182,7 +182,7 @@ const Navigation = () => {
           name="ModificarInsumo"
           component={ModificarInsumo}
           options={{
-            title: "EDITAR INSUMOS",
+            title: "Modificar Insumos",
             headerStyle: {
               backgroundColor: "#f4511e",
             },
@@ -309,7 +309,7 @@ const Navigation = () => {
           name="Observaciones"
           component={Observaciones}
           options={{
-            title: "Registrar Usuario",
+            title: "Observaciones",
             headerStyle: {
               backgroundColor: "#f4511e",
             },
@@ -381,7 +381,7 @@ const Navigation = () => {
           name="Tratamientos"
           component={Tratamientos}
           options={{
-            title: "Registrar Usuario",
+            title: "Tratamientos",
             headerStyle: {
               backgroundColor: "#f4511e",
             },
@@ -395,7 +395,7 @@ const Navigation = () => {
           name="AltaTratamientos"
           component={AltaTratamiento}
           options={{
-            title: "Registrar Usuario",
+            title: "Alta Tratamientos",
             headerStyle: {
               backgroundColor: "#f4511e",
             },
@@ -409,7 +409,7 @@ const Navigation = () => {
           name="VerTodosLosTratamientos"
           component={VerTodosLosTratamientos}
           options={{
-            title: "Registrar Usuario",
+            title: "Ver Tratamientos",
             headerStyle: {
               backgroundColor: "#f4511e",
             },
@@ -437,7 +437,21 @@ const Navigation = () => {
           name="UnTratamiento"
           component={UnTratamiento}
           options={{
-            title: "UnTratamiento",
+            title: "Un Tratamiento",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+                  <Stack.Screen
+          name="Contactanos"
+          component={Contactanos}
+          options={{
+            title: "Contactanos",
             headerStyle: {
               backgroundColor: "#f4511e",
             },

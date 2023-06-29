@@ -119,8 +119,8 @@ const DatabaseConnection = {
         tx.executeSql(`SELECT * FROM Zonas`, [], (tx, results) => {
           console.log("results", results);
           if (results.rows.length > 0) {
-            setZonas(results.rows._array); // Actualizar el estado Zonas con los resultados
-            resolve(results.rows._array); // Resolver la promesa con los resultados
+            setZonas(results.rows._array); 
+            resolve(results.rows._array); 
           } else {
             Alert.alert(
               "Mensaje",
@@ -133,7 +133,7 @@ const DatabaseConnection = {
               ],
               { cancelable: false }
             );
-            reject(new Error("No hay zonas")); // Rechazar la promesa con un error
+            reject(new Error("No hay zonas")); 
           }
         });
       });
@@ -149,7 +149,7 @@ const DatabaseConnection = {
         [],
         (tx, results) => {
           if (results.rows.length === 0) {
-            // La tabla no existe, se crea
+           
             tx.executeSql(
               'CREATE TABLE Usuarios (id INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT,Password TEXT, Email TEXT )',
               [],
@@ -157,7 +157,7 @@ const DatabaseConnection = {
               (tx, error) => console.log('Error al crear la tabla Usuarios:', error)
             );
           } else {
-            // La tabla ya existe, no es necesario crearla nuevamente
+
             console.log('La tabla Usuarios ya existe');
           }
         },
@@ -522,42 +522,20 @@ createTratamientosTable: () => {
   });
 },
 
-DeleteTratamientosTable: () => {
-  const db = DatabaseConnection.getConnection();
-  db.transaction((tx) => {
-    tx.executeSql(
-      'SELECT name FROM sqlite_master WHERE type="table" AND name="Tratamientos"',
-      [],
-      (tx, results) => {
-        if (results.rows.length > 0) {
-          // La tabla no existe, se crea
-          tx.executeSql(
-            'DROP TABLE Tratamientos', 
-            [],
-            () => console.log('Tabla Tratamientos Borrada correctamente'),
-            (tx, error) => console.log('Error al crear la tabla Tratamiento:', error)
-          );
-        } else {
-          // La tabla ya existe, no es necesario crearla nuevamente
-          console.log('La tabla Tratamientos no existe');
-        }
-      },
-      (tx, error) => console.log('Error al verificar la existencia de la tabla Tratamientos:', error)
-    );
-  });
-},
 
-inserTratamientos: async (Nombre, Zona,Usuario,FechaInicio, FechaFinalizacion, Tiempo, OrdenTrabajo, Insumos , Observaciones) => {
+inserTratamientos: async (Nombre, Zona,Usuario,selectedDate, selectedEndDate, Tiempo, OrdenTrabajo, Insumos , Observaciones) => {
   return new Promise((resolve, reject) => {
     const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {
       tx.executeSql(
         'INSERT INTO Tratamientos ( Nombre,Zona,Usuario,FechaInicio , FechaFinalizacion , Tiempo ,OrdenTrabajo,Insumos,Observaciones) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        [Nombre, Zona, Usuario, FechaInicio, FechaFinalizacion, Tiempo, OrdenTrabajo, Insumos, Observaciones],
+        [Nombre, Zona, Usuario, selectedDate, selectedEndDate, Tiempo, OrdenTrabajo, Insumos, Observaciones],
         (tx, results) => {
+          console.log("Sip")
           resolve(results.rowsAffected);
         },
         (tx, error) => {
+          console.log("Nope")
           reject(error);
         }
       );
@@ -607,7 +585,7 @@ DeleteTratamientos: (id) => {
           }
         },
         (error) => {
-          console.log("Error deleting treatment", error);
+          console.log("Error Al borrar un tratamiento", error);
           reject(error);
         }
       );
@@ -646,7 +624,7 @@ ModificarTratamientos: ( id, Nombre, Zona,Usuario,FechaInicio, FechaFinalizacion
     });
   });
 },
-TestSeleccionarUsuario : (userId , setSelectedUser) => {
+SeleccionarUsuarioUnico : (userId , setSelectedUser) => {
   const db = DatabaseConnection.getConnection();
   db.transaction((tx) => {
     tx.executeSql("SELECT * FROM Usuarios WHERE id=?", [userId], (tx, results) => {
@@ -661,59 +639,21 @@ TestSeleccionarUsuario : (userId , setSelectedUser) => {
     });
   });
 },
-TestSeleccionarZona  : (zonaId , setSelectedZona) => {
+SeleccionarZonaUnica: (zonaId, setSelectedZona) => {
   const db = DatabaseConnection.getConnection();
   db.transaction((tx) => {
     tx.executeSql("SELECT * FROM Zonas WHERE id=?", [zonaId], (tx, results) => {
       console.log("results", results);
       if (results.rows.length > 0) {
         const Zona = results.rows.item(0);
-        console.log("Zona encontrads:", Zona);
+        console.log("Zona encontrada:", Zona);
         setSelectedZona(results.rows.item(0));
       } else {
-        console.log("No se encontró ningún usuario con el ID:", userId);
+        console.log("No se encontró ninguna Zona con el ID:", zonaId);
       }
     });
   });
-},
-
-SeleccionarZonaUnica: (zona,setSelectedZonas) => {
-  return new Promise((resolve, reject) => {
-    const db = DatabaseConnection.getConnection();
-    db.transaction((tx) => {
-      tx.executeSql("SELECT * FROM Zonas WHERE Id=?", [zona], (tx, results) => {
-        console.log("results", results);
-        if (results.rows.length > 0) {
-          setSelectedZonas(results.rows._array); // Actualizar el estado Zonas con los resultados
-          resolve(results.rows._array); // Resolver la promesa con los resultados
-        } else {        
-          reject(new Error("No hay zonas")); // Rechazar la promesa con un error
-        }
-      });
-    });
-  });
-},
-
-SeleccionarUsuarioUnico: (userId, setSelectedUsuario) => {
-  return new Promise((resolve, reject) => {
-    const db = DatabaseConnection.getConnection();
-    db.transaction((tx) => {
-      tx.executeSql("SELECT * FROM Usuarios WHERE id=?", [userId], (tx, results) => {
-        console.log("results", results);
-        if (results.rows.length > 0) {
-          const usuario = results.rows.item(0); // Obtener el primer elemento de los resultados
-          setSelectedUsuario(usuario);
-          resolve(usuario);
-        } else {
-          reject(new Error("No hay Usuario"));
-        }
-      });
-    });
-  });
-},
-
-
-
+}
 
 };
 

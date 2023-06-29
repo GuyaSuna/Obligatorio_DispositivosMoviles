@@ -62,27 +62,14 @@ const MainScreen = ({ navigation }) => {
                   title="Tratamientos"
                   btnIcon="heart"
                   onPress={() => navigation.navigate("Tratamientos")}
-                />
-
-                <MyBotonPrincipal
-                  title="Por las dudas"
-                  btnIcon="star"
-                  onPress={() => navigation.navigate("")}
-                />
+                />           
               </View>
-
               <View style={styles.viewContainerSecondColumn}>
                 <MyBotonPrincipal
-                  title="Por las dudas"
+                  title="Contactanos"
                   btnIcon="bookmark"
-                  onPress={() => navigation.navigate("")}
-                />
-
-                <MyBotonPrincipal
-                  title="Por las dudas"
-                  btnIcon="map"
-                  onPress={() => navigation.navigate("")}
-                />
+                  onPress={() => navigation.navigate("Contactanos")}
+                />         
               </View>
             </View>
           </View>
@@ -131,13 +118,4 @@ const styles = StyleSheet.create({
 
 export default MainScreen;
 
-{
-  /* <ImageBackground
-      source={{ uri: backgroundImageSource }}
-      style={styles.background}
-      resizeMode="cover"
-      imageStyle={styles.backgroundImage}
-    >
-     <Menu navigation={navigation}/>
-    </ImageBackground> */
-}
+

@@ -47,8 +47,6 @@ checkLocationPermission();
     setCantidad(cantidad);
   };
 
-
-
   const validateData = () => {
     if (Lugar === "" && !Lugar.trim()) {
       Alert.alert("Error", "El Lugar de usuario es obligatorio");
@@ -56,11 +54,11 @@ checkLocationPermission();
     }
 
     if (Departamento === "" && !Departamento.trim()) {
-      Alert.alert("Error", "El Departamento es obligatoria");
+      Alert.alert("Error", "El Departamento es obligatorio");
       return false;
     }
 
-    if (isNaN(Cantidad) || Cantidad <= 0) {
+    if (isNaN(Cantidad) || Cantidad < 1) {
       Alert.alert("Error", "La cantidad debe ser un número válido");
       return false;
     }
@@ -177,7 +175,7 @@ checkLocationPermission();
           </MapView>
               <MyInputText
                 styles={styles.inputEmail}
-                placeholder="Cantidad"
+                placeholder="Cantidad Trabajadores"
                 onChangeText={handleCantidad}
                 value={Cantidad}
               />
