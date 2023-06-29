@@ -523,17 +523,19 @@ createTratamientosTable: () => {
 },
 
 
-inserTratamientos: async (Nombre, Zona,Usuario,FechaInicio, FechaFinalizacion, Tiempo, OrdenTrabajo, Insumos , Observaciones) => {
+inserTratamientos: async (Nombre, Zona,Usuario,selectedDate, selectedEndDate, Tiempo, OrdenTrabajo, Insumos , Observaciones) => {
   return new Promise((resolve, reject) => {
     const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {
       tx.executeSql(
         'INSERT INTO Tratamientos ( Nombre,Zona,Usuario,FechaInicio , FechaFinalizacion , Tiempo ,OrdenTrabajo,Insumos,Observaciones) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        [Nombre, Zona, Usuario, FechaInicio, FechaFinalizacion, Tiempo, OrdenTrabajo, Insumos, Observaciones],
+        [Nombre, Zona, Usuario, selectedDate, selectedEndDate, Tiempo, OrdenTrabajo, Insumos, Observaciones],
         (tx, results) => {
+          console.log("Sip")
           resolve(results.rowsAffected);
         },
         (tx, error) => {
+          console.log("Nope")
           reject(error);
         }
       );
@@ -652,44 +654,6 @@ SeleccionarZonaUnica: (zonaId, setSelectedZona) => {
     });
   });
 }
-
-// SeleccionarZonaUnica: (zona,setSelectedZonas) => {
-//   return new Promise((resolve, reject) => {
-//     const db = DatabaseConnection.getConnection();
-//     db.transaction((tx) => {
-//       tx.executeSql("SELECT * FROM Zonas WHERE Id=?", [zona], (tx, results) => {
-//         console.log("results", results);
-//         if (results.rows.length > 0) {
-//           setSelectedZonas(results.rows._array); // Actualizar el estado Zonas con los resultados
-//           resolve(results.rows._array); // Resolver la promesa con los resultados
-//         } else {        
-//           reject(new Error("No hay zonas")); // Rechazar la promesa con un error
-//         }
-//       });
-//     });
-//   });
-// },
-
-// SeleccionarUsuarioUnico: (userId, setSelectedUsuario) => {
-//   return new Promise((resolve, reject) => {
-//     const db = DatabaseConnection.getConnection();
-//     db.transaction((tx) => {
-//       tx.executeSql("SELECT * FROM Usuarios WHERE id=?", [userId], (tx, results) => {
-//         console.log("results", results);
-//         if (results.rows.length > 0) {
-//           const usuario = results.rows.item(0); // Obtener el primer elemento de los resultados
-//           setSelectedUsuario(usuario);
-//           resolve(usuario);
-//         } else {
-//           reject(new Error("No hay Usuario"));
-//         }
-//       });
-//     });
-//   });
-// },
-
-
-
 
 };
 

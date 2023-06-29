@@ -13,6 +13,7 @@ const UnTratamiento = ({ route }) => {
 
   useEffect(() => {
     DatabaseConnection.SeleccionarZonaUnica(parseInt(item.Zona), setSelectedZona);
+    console.log("ZONAAAAA",selectedZona)
   }, []);
 
   const HandleModificar = () => {
@@ -68,7 +69,7 @@ const UnTratamiento = ({ route }) => {
             longitude: selectedZona?.Longitud || 0,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
-          }}
+          }}          
         >
           <Marker
             coordinate={{

@@ -47,8 +47,6 @@ checkLocationPermission();
     setCantidad(cantidad);
   };
 
-
-
   const validateData = () => {
     if (Lugar === "" && !Lugar.trim()) {
       Alert.alert("Error", "El Lugar de usuario es obligatorio");
@@ -177,7 +175,7 @@ checkLocationPermission();
           </MapView>
               <MyInputText
                 styles={styles.inputEmail}
-                placeholder="Cantidad"
+                placeholder="Cantidad Trabajadores"
                 onChangeText={handleCantidad}
                 value={Cantidad}
               />

@@ -66,9 +66,9 @@ const MainScreen = ({ navigation }) => {
               </View>
               <View style={styles.viewContainerSecondColumn}>
                 <MyBotonPrincipal
-                  title="Informece"
+                  title="Contactanos"
                   btnIcon="bookmark"
-                  onPress={() => navigation.navigate("")}
+                  onPress={() => navigation.navigate("Contactanos")}
                 />         
               </View>
             </View>

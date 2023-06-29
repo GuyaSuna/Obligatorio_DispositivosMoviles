@@ -6,8 +6,10 @@ import {
   Alert,
   ScrollView,
   StyleSheet,
-  Text
+  Text,
+  TouchableOpacity
 } from "react-native";
+import { Calendar } from "react-native-calendars";
 import { Picker } from "@react-native-picker/picker";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import DatabaseConnection from "../../DataBase/dbConnection";
@@ -17,26 +19,22 @@ import { useNavigation } from "@react-navigation/native";
 
 const ModificarTratamiento = ({route}) => {
   const [nombreTratamiento, setNombreTratamiento] = useState("");
-  const [fechaInicio, setFechaInicio] = useState(0);
-  const [fechaFin, setFechaFin] = useState(0);
   const [tiempo, setTiempo] = useState("");
   const [ordenTrabajo, setOrdenTrabajo] = useState("");
   const [insumos, setInsumos] = useState([]); 
   const [observacion, setObservacion] = useState([]);
   const [zona, setZona] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
-
   const [selectedUsuario, setSelectedUsuario] = useState(null);
   const [selectedZona , setSelectedZona] = useState(null);
   const [selectedObservacion, setSelectedObservacion] = useState([]);
-
-  const [TextObs , setTextObs] = useState("");
-  const [TextIns , setTextIns] = useState("");
   const [selectedObservacionList, setSelectedObservacionList] = useState([]);
-  const [selectedObservacionItem, setSelectedObservacionItem] = useState(null);
-
   const [selectedInsumo, setSelectedInsumo] = useState(null);
   const [selectedInsumosList, setSelectedInsumosList] = useState([]);
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [isEndDatePickerVisible, setEndDatePickerVisible] = useState(false);
+  const [selectedEndDate, setSelectedEndDate] = useState("");
 
 
   const item = route.params;
@@ -52,8 +50,8 @@ useEffect(() => {
   DatabaseConnection.BuscarObservaciones(setObservacion);
 
   setNombreTratamiento(item.Nombre);
-  setFechaInicio(item.FechaInicio);
-  setFechaFin(item.FechaFinalizacion);
+  setSelectedDate(item.FechaInicio);
+  setSelectedEndDate(item.FechaFinalizacion);
   setTiempo(item.Tiempo.toString());
   setOrdenTrabajo(item.OrdenTrabajo);
 
@@ -102,6 +100,33 @@ useEffect(() => {
 
 
 
+const renderSelectedObservaciones = () => {
+  return selectedObservacionList.map((obs) => (
+    <View key={obs.id} style={styles.selectedItemContainer}>
+      <Text style={styles.selectedItemText}>{obs.Titulo}</Text>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={() => handleBorrarObs(obs.id)}
+      >
+        <Text style={styles.deleteButtonText}>X</Text>
+      </TouchableOpacity>
+    </View>
+  ));
+};
+
+const renderSelectedInsumos = () => {
+  return selectedInsumosList.map((ins) => (
+    <View key={ins.id} style={styles.selectedItemContainer}>
+      <Text style={styles.selectedItemText}>{ins.Nombre}</Text>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={() => handleBorrarIns(ins.id)}
+      >
+        <Text style={styles.deleteButtonText}>X</Text>
+      </TouchableOpacity>
+    </View>
+  ));
+};
 
   
 const handleGuardar = () => {
@@ -122,8 +147,8 @@ const handleGuardar = () => {
     nombreTratamiento,
     selectedZona,
     selectedUsuario,
-    fechaInicio,
-    fechaFin,
+    selectedDate,
+    selectedEndDate,
     tiempo,
     ordenTrabajo,
     insumosTexto,
@@ -154,60 +179,68 @@ const handleGuardar = () => {
     });
 };
 
-  const validarCampos = () => {
-    if (
-      nombreTratamiento === "" ||
-      zona === "" ||
-      selectedUsuario === null ||
-      fechaInicio === "" ||
-      fechaFin === "" ||
-      tiempo === "" ||
-      ordenTrabajo === "" 
+const validarCampos = () => {
+  if (
+    nombreTratamiento === "" ||
+    selectedZona === null ||
+    selectedUsuario === null ||
+    selectedDate=== "" ||
+    selectedEndDate === "" ||
+    tiempo === "" ||
+    ordenTrabajo === "" ||
+    selectedInsumosList.length === 0 ||
+    selectedObservacionList.length === 0
+  ) {
+    Alert.alert("Error", "Por favor completa todos los campos");
+    return false;
+  }
 
-    ) {
-      Alert.alert("Error", "Por favor completa todos los campos");
-      return false;
-    }
+  // Validar que la fecha de fin no sea anterior a la fecha de inicio
+  const fechaInicioObj = new Date(selectedDate);
+  const fechaFinObj = new Date(selectedEndDate);
 
-    return true;
-  };
+  if (fechaFinObj < fechaInicioObj) {
+    Alert.alert("Error", "La fecha de fin no puede ser anterior a la fecha de inicio");
+    return false;
+  }
+
+  return true;
+};
 
 
   
 
   const handleObservacion = (item) => {
-    const observacionExistente = selectedObservacionList.find((obs) => obs.id === item.id);
+    if (item != null) {
+      const observacionExistente = selectedObservacionList.find(
+        (obs) => obs.id === item.id
+      );
   
-    if (observacionExistente) {
-      Alert.alert("Esta observacion ya existe");
-      return;
-    }
+      if (observacionExistente) {
+        Alert.alert("Esta observacion ya existe");
+        return;
+      }
   
-    setSelectedObservacion(item);
-    setTextObs(TextObs + item.id + "," + item.Titulo + "," + item.Foto + "," + item.Latitud + "," + item.Longitud + "**");
-    console.log("ESTO ES CHE b)", TextObs);
-  
-    if (item) {
+      setSelectedObservacion(item);
       setSelectedObservacionList([...selectedObservacionList, item]);
     }
+    console.log("Jiji");
   };
-
+  
   const handleInsumo = (item) => {
-    const insumoExistente = selectedInsumosList.find((ins) => ins.id === item.id);
-
-  if (insumoExistente) {
-     Alert.alert("Este insumo ya existe");
-      return;
+    if (item != null) {
+      const insumoExistente = selectedInsumosList.find((ins) => ins.id === item.id);
+  
+      if (insumoExistente) {
+        Alert.alert("Este insumo ya existe");
+        return;
+      }
+  
+      setSelectedInsumo(item);
+      setSelectedInsumosList([...selectedInsumosList, item]);
     }
-
-    setSelectedInsumo(item);
-    setTextIns(TextIns + item.id + "," + item.Nombre + "," + item.Cantidad + "**");
-    console.log("ESTO ES CHE b)", TextIns);
-  
-    setSelectedInsumosList([...selectedInsumosList, item]);
+    console.log("Jiji");
   };
-  
-  
 
   const handleBorrarObs = (itemValue) => {
     const nuevaLista = selectedObservacionList.filter((obs) => obs.id !== parseInt(itemValue));
@@ -219,7 +252,14 @@ const handleGuardar = () => {
     setSelectedInsumosList(nuevaLista);
   };
   
-
+  const handleDateSelection = (date) => {
+    setSelectedDate(date.dateString);
+    setDatePickerVisible(false);
+  };
+  const handleEndDateSelection = (date) => {
+    setSelectedEndDate(date.dateString);
+    setEndDatePickerVisible(false);
+  };
   
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -232,19 +272,43 @@ const handleGuardar = () => {
           onChangeText={setNombreTratamiento}
         />
           
-         <TextInput
+          <TouchableOpacity
           style={styles.input}
-          placeholder="Fecha de inicio"
-          value={fechaInicio.toString()} 
-          onChangeText={setFechaInicio}
-        />
+          onPress={() => setDatePickerVisible(true)}
+        >
+          <Text>
+            {selectedDate !== "" ? selectedDate : "Seleccionar fecha de inicio"}
+          </Text>
+        </TouchableOpacity>
 
-        <TextInput
+        {isDatePickerVisible && (
+          <Calendar
+            onDayPress={handleDateSelection}
+            markedDates={{ [selectedDate]: { selected: true } }}
+            onMonthChange={() => {}}
+            hideExtraDays
+          />
+        )}
+
+<TouchableOpacity
           style={styles.input}
-          placeholder="Fecha de fin"
-          value={fechaFin.toString()} 
-          onChangeText={setFechaFin}
-        />
+          onPress={() => setEndDatePickerVisible(true)}
+        >
+          <Text>
+            {selectedEndDate !== "" ? selectedEndDate : "Seleccionar fecha de fin"}
+          </Text>
+        </TouchableOpacity>
+
+
+        {isEndDatePickerVisible && (
+          <Calendar
+            onDayPress={handleEndDateSelection}
+            markedDates={{ [selectedEndDate]: { selected: true } }}
+            onMonthChange={() => {}}
+            hideExtraDays
+          />
+        )}
+
 
         <TextInput
           style={styles.input}
@@ -327,42 +391,15 @@ const handleGuardar = () => {
           ))}
         </Picker>
 
+    <View>
+        <Text style={styles.selectedSectionTitle}>Observaciones Seleccionadas:</Text>
+        {renderSelectedObservaciones()}
+      </View>
 
-        <Picker
-          style={styles.picker}
-          selectedValue={selectedObservacionList}
-          onValueChange={(itemValue) => {
-            handleBorrarObs(itemValue)       
-          }
-          }
-        >
-          <Picker.Item label="Observaciones Seleccionadas" value={null} />
-          {selectedObservacionList.map((obs) => (
-            <Picker.Item
-              key={obs.id}
-              label={obs.Titulo}
-              value={obs.id}
-            />
-          ))}
-        </Picker>
-
-<Picker
-          style={styles.picker}
-          selectedValue={selectedInsumosList}
-          onValueChange={(itemValue) => {
-            handleBorrarIns(itemValue)       
-          }
-          }
-        >
-          <Picker.Item label="Insumos Seleccionados" value={null} />
-          {selectedInsumosList.map((ins) => (
-            <Picker.Item
-              key={ins.id}
-              label={ins.Nombre}
-              value={ins.id}
-            />
-          ))}
-        </Picker>
+      <View>
+        <Text style={styles.selectedSectionTitle}>Insumos Seleccionados:</Text>
+        {renderSelectedInsumos()}
+      </View>
               <BotonPrincipal title="Guardar" onPress={handleGuardar} />
        </View>
     </ScrollView>
@@ -394,6 +431,25 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 4,
+  },
+  selectedItemContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  selectedItemText: {
+    flex: 1,
+    marginRight: 10,
+  },
+  deleteButton: {
+    backgroundColor: "red",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  deleteButtonText: {
+    color: "white",
+    fontWeight: "bold",
   },
 });
 

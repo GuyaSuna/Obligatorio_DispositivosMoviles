@@ -37,7 +37,7 @@ import AltaUsuario from "../Screen/Usuarios/AltaUsuarios";
 import TodosLosUsuarios from "../Screen/Usuarios/TodosLosUsuarios";
 import UnUsuario from "../Screen/Usuarios/UnUsuario";
 
-
+import Contactanos from "../Screen/Contactanos/Contactanos";
 
 const Stack = createStackNavigator();
 
@@ -438,6 +438,20 @@ const Navigation = () => {
           component={UnTratamiento}
           options={{
             title: "Un Tratamiento",
+            headerStyle: {
+              backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+                  <Stack.Screen
+          name="Contactanos"
+          component={Contactanos}
+          options={{
+            title: "Contactanos",
             headerStyle: {
               backgroundColor: "#f4511e",
             },
