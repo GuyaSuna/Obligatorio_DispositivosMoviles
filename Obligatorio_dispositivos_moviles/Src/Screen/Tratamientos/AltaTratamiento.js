@@ -32,7 +32,7 @@ const AltaTratamientoForm = () => {
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [isEndDatePickerVisible, setEndDatePickerVisible] = useState(false);
-const [selectedEndDate, setSelectedEndDate] = useState("");
+  const [selectedEndDate, setSelectedEndDate] = useState("");
 
 
   const db = DatabaseConnection.getConnection();
@@ -244,7 +244,7 @@ console.log(selectedEndDate)
           />
         )}
 
-<Picker
+        <Picker
           style={styles.picker}
           selectedValue={selectedZona}
           onValueChange={(itemValue) => setSelectedZona(itemValue)}
