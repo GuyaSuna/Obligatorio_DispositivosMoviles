@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, ImageBackground } from 'react-native';
+import { View, StyleSheet, Text, ImageBackground, TouchableOpacity } from 'react-native';
+import { Audio } from 'expo-av';
+import AlexisTheme from '../../Sonidos/AlexisTheme.MP3.mp3';
 
 const Contactanos = () => {
   const backgroundImageSource = "https://s2.best-wallpaper.net/wallpaper/iphone/1311/Green-nature-branch-leaves-bokeh_iphone_320x480.jpg";
   const [titleColor, setTitleColor] = useState('#fff');
+  const [sound, setSound] = useState(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -16,8 +19,28 @@ const Contactanos = () => {
       setTitleColor(color);
     }, 1000);
 
-    return () => clearInterval(interval);
+    // Cargar el archivo de música
+    const loadSound = async () => {
+      const { sound } = await Audio.Sound.createAsync(AlexisTheme);
+      setSound(sound);
+    };
+
+    loadSound();
+
+    return () => {
+      clearInterval(interval);
+      // Liberar los recursos del archivo de música al desmontar el componente
+      if (sound) {
+        sound.unloadAsync();
+      }
+    };
   }, []);
+
+  const playMusic = async () => {
+    if (sound) {
+      await sound.replayAsync();
+    }
+  };
 
   return (
     <ImageBackground
@@ -46,6 +69,9 @@ const Contactanos = () => {
           </View>
         </View>
       </View>
+      <TouchableOpacity style={styles.button} onPress={playMusic}>
+        <Text style={styles.buttonText}>Reproducir música</Text>
+      </TouchableOpacity>
     </ImageBackground>
   );
 };
@@ -90,6 +116,18 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     opacity: 0.7,
+  },
+  button: {
+    backgroundColor: '#c0392b',
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 16,
+    alignSelf: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
