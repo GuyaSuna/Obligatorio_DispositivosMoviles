@@ -56,11 +56,11 @@ checkLocationPermission();
     }
 
     if (Departamento === "" && !Departamento.trim()) {
-      Alert.alert("Error", "El Departamento es obligatoria");
+      Alert.alert("Error", "El Departamento es obligatorio");
       return false;
     }
 
-    if (isNaN(Cantidad) || Cantidad <= 0) {
+    if (isNaN(Cantidad) || Cantidad < 1) {
       Alert.alert("Error", "La cantidad debe ser un número válido");
       return false;
     }
