@@ -78,7 +78,7 @@ const Navigation = () => {
           options={{
             title: "Pagina Usuario",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -92,7 +92,7 @@ const Navigation = () => {
           options={{
             title: "AltaUsuarios",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -156,7 +156,7 @@ const Navigation = () => {
           options={{
             title: "Insumos",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -170,7 +170,7 @@ const Navigation = () => {
           options={{
             title: "INGRESO DE INSUMOS",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -184,7 +184,7 @@ const Navigation = () => {
           options={{
             title: "EDITAR INSUMOS",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -311,7 +311,7 @@ const Navigation = () => {
           options={{
             title: "Registrar Usuario",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -325,7 +325,7 @@ const Navigation = () => {
           options={{
             title: "Alta Observaciones",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -340,7 +340,7 @@ const Navigation = () => {
           options={{
             title: "Todas las Observaciones",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -355,7 +355,7 @@ const Navigation = () => {
           options={{
             title: "Una Observacion",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -369,7 +369,7 @@ const Navigation = () => {
           options={{
             title: "Modificar Observacion",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -383,7 +383,7 @@ const Navigation = () => {
           options={{
             title: "Registrar Usuario",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -397,7 +397,7 @@ const Navigation = () => {
           options={{
             title: "Registrar Usuario",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -411,7 +411,7 @@ const Navigation = () => {
           options={{
             title: "Registrar Usuario",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -425,7 +425,7 @@ const Navigation = () => {
           options={{
             title: "Modificar Tratamiento",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -439,7 +439,7 @@ const Navigation = () => {
           options={{
             title: "UnTratamiento",
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: "#95C117",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
