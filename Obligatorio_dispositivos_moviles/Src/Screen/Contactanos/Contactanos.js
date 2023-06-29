@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, ImageBackground } from 'react-native';
 
 const Contactanos = () => {
-  let backgroundImageSource = "https://s2.best-wallpaper.net/wallpaper/iphone/1311/Green-nature-branch-leaves-bokeh_iphone_320x480.jpg";
+  const backgroundImageSource = "https://s2.best-wallpaper.net/wallpaper/iphone/1311/Green-nature-branch-leaves-bokeh_iphone_320x480.jpg";
   const [titleColor, setTitleColor] = useState('#fff');
 
   useEffect(() => {
@@ -60,6 +60,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 16,
+    textAlign: 'center',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 3,
   },
   form: {
     width: '80%',
@@ -82,12 +86,11 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     resizeMode: "cover",
+    justifyContent: 'center',
   },
   backgroundImage: {
-    opacity: 0.5,
+    opacity: 0.7,
   },
 });
 
 export default Contactanos;
-
-  
