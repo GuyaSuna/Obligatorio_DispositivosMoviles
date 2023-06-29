@@ -59,7 +59,7 @@ const navigation = useNavigation();
    console.log("### add Obs ###" , title, imageUri,latitude,longitude,item.Titulo, item.Foto, item.Latitud,item.Longitud );
   
     if (validateData()) {
-      console.log("### save zona ###");
+      console.log("### save Observacion ###");
 
       // llamar a la db y guardar los datos  
        DatabaseConnection.ModificarObservaciones(

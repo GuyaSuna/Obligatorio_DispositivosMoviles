@@ -168,7 +168,7 @@ const Navigation = () => {
           name="AltaInsumo"
           component={AltaInsumo}
           options={{
-            title: "INGRESO DE INSUMOS",
+            title: "Ingreso Insumos",
             headerStyle: {
               backgroundColor: "#95C117",
             },
@@ -182,7 +182,7 @@ const Navigation = () => {
           name="ModificarInsumo"
           component={ModificarInsumo}
           options={{
-            title: "EDITAR INSUMOS",
+            title: "Modificar Insumos",
             headerStyle: {
               backgroundColor: "#95C117",
             },
@@ -309,7 +309,7 @@ const Navigation = () => {
           name="Observaciones"
           component={Observaciones}
           options={{
-            title: "Registrar Usuario",
+            title: "Observaciones",
             headerStyle: {
               backgroundColor: "#95C117",
             },
@@ -381,7 +381,7 @@ const Navigation = () => {
           name="Tratamientos"
           component={Tratamientos}
           options={{
-            title: "Registrar Usuario",
+            title: "Tratamientos",
             headerStyle: {
               backgroundColor: "#95C117",
             },
@@ -395,7 +395,7 @@ const Navigation = () => {
           name="AltaTratamientos"
           component={AltaTratamiento}
           options={{
-            title: "Registrar Usuario",
+            title: "Alta Tratamientos",
             headerStyle: {
               backgroundColor: "#95C117",
             },
@@ -409,7 +409,7 @@ const Navigation = () => {
           name="VerTodosLosTratamientos"
           component={VerTodosLosTratamientos}
           options={{
-            title: "Registrar Usuario",
+            title: "Ver Tratamientos",
             headerStyle: {
               backgroundColor: "#95C117",
             },
@@ -437,7 +437,7 @@ const Navigation = () => {
           name="UnTratamiento"
           component={UnTratamiento}
           options={{
-            title: "UnTratamiento",
+            title: "Un Tratamiento",
             headerStyle: {
               backgroundColor: "#95C117",
             },

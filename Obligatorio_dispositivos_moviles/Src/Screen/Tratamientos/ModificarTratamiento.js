@@ -63,8 +63,8 @@ useEffect(() => {
   let zona = parseInt(item.Zona);
 
   console.log("Usuario " + user + " Zona " + zona);
-  DatabaseConnection.TestSeleccionarZona(zona, setSelectedZona);
-  DatabaseConnection.TestSeleccionarUsuario(user, setSelectedUsuario);
+  DatabaseConnection.SeleccionarZonaUnica(zona, setSelectedZona);
+  DatabaseConnection.SeleccionarUsuarioUnico(user, setSelectedUsuario);
   let partesObs = item.Observaciones.split("**");
   let partesIns = item.Insumos.split("**");
 

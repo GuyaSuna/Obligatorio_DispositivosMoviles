@@ -35,8 +35,8 @@ const ModificarInsumos = ({ route }) => {
       Alert.alert("Error", "El nombre del Insumo es obligatorio");
       return false;
     }
-    if (insumoCantidad === "" || !insumoCantidad.trim()) {
-      Alert.alert("Error", "La cantidad del Insumo es obligatoria");
+    if (insumoCantidad === "" || !insumoCantidad.trim()  || insumoCantidad <1) {
+      Alert.alert("Error", "La cantidad del Insumo es obligatoria y debe ser una suma valida");
       return false;
     }
     return true;

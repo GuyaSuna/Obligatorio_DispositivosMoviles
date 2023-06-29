@@ -1,55 +1,85 @@
-import React from "react";
-import { StyleSheet, Text, View , ScrollView} from "react-native";
+import { React, useEffect, useState, useRef } from "react";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
+import DatabaseConnection from "../../DataBase/dbConnection";
+import MapView, { Marker } from "react-native-maps";
 
 const UnTratamiento = ({ route }) => {
+  const [selectedZona, setSelectedZona] = useState(null);
   const item = route.params;
-const navigation = useNavigation();
+  const navigation = useNavigation();
+  const mapRef = useRef(null);
 
-const HandleModificar = () => {
-  navigation.navigate("ModificarTratamiento",  { 
-    Id : item.Id,
-    Nombre : item.Nombre,
-    Zona : item.Zona,
-    Usuario: item.Usuario,
-    FechaInicio: item.FechaInicio,   
-    FechaFinalizacion: item.FechaFinalizacion,
-    Tiempo: item.Tiempo,
-    OrdenTrabajo: item.OrdenTrabajo,
-    Insumos: item.Insumos,
-    Observaciones: item.Observaciones,
- });
-}
+  useEffect(() => {
+    DatabaseConnection.SeleccionarZonaUnica(parseInt(item.Zona), setSelectedZona);
+  }, []);
+
+  const HandleModificar = () => {
+    navigation.navigate("ModificarTratamiento", {
+      Id: item.Id,
+      Nombre: item.Nombre,
+      Zona: item.Zona,
+      Usuario: item.Usuario,
+      FechaInicio: item.FechaInicio,
+      FechaFinalizacion: item.FechaFinalizacion,
+      Tiempo: item.Tiempo,
+      OrdenTrabajo: item.OrdenTrabajo,
+      Insumos: item.Insumos,
+      Observaciones: item.Observaciones,
+    });
+  };
+
+  useEffect(() => {
+    if (selectedZona && selectedZona.Latitud && selectedZona.Longitud && mapRef.current) {
+      mapRef.current.animateToRegion({
+        latitude: selectedZona.Latitud,
+        longitude: selectedZona.Longitud,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      });
+    }
+  }, [selectedZona]);
 
   return (
     <ScrollView>
-    <View style={styles.container}>
+      <View style={styles.container}>
+        <Text style={styles.label}>Id: {item?.Id}</Text>
 
-    <Text style={styles.label}>Id: {item?.Id}</Text>
+        <Text style={styles.label}>Nombre: {item?.Nombre}</Text>
 
-      <Text style={styles.label}>Nombre: {item?.Nombre}</Text>
+        <Text style={styles.label}>Tiempo: {item?.Tiempo}</Text>
 
-      <Text style={styles.label}>Tiempo: {item?.Tiempo}</Text>
+        <Text style={styles.label}>FechaInicio: {item?.FechaInicio}</Text>
 
+        <Text style={styles.label}>FechaFinalizacion: {item?.FechaFinalizacion}</Text>
 
-      <Text style={styles.label}>FechaInicio: {item?.FechaInicio}</Text>
-    
+        <Text style={styles.label}>Usuario: {item?.Usuario}</Text>
 
-      <Text style={styles.label}>FechaFinalizacion: {item?.FechaFinalizacion}</Text>
-   
+        <Text style={styles.label}>
+          Zona: {selectedZona ? `Latitud: ${selectedZona.Latitud}, Longitud: ${selectedZona.Longitud}` : ""}
+        </Text>
 
-      <Text style={styles.label}>Usuario: {item?.Usuario}</Text>
-    
+        <MapView
+          ref={mapRef}
+          style={styles.map}
+          initialRegion={{
+            latitude: selectedZona?.Latitud || 0,
+            longitude: selectedZona?.Longitud || 0,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        >
+          <Marker
+            coordinate={{
+              latitude: selectedZona?.Latitud || 0,
+              longitude: selectedZona?.Longitud || 0,
+            }}
+          />
+        </MapView>
 
-      <Text style={styles.label}>Zona: {item?.Zona}</Text>
-
-
-      <BotonPrincipal
-      title="Modificar"
-      onPress={() =>HandleModificar()}
-      />
-    </View>
+        <BotonPrincipal title="Modificar" onPress={() => HandleModificar()} />
+      </View>
     </ScrollView>
   );
 };
@@ -68,6 +98,11 @@ const styles = StyleSheet.create({
   value: {
     fontSize: 16,
     marginBottom: 16,
+  },
+  map: {
+    width: "100%",
+    height: 250,
+    marginBottom: 10,
   },
 });
 

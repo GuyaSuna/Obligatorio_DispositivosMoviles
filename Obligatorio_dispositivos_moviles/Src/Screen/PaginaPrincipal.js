@@ -64,6 +64,11 @@ const MainScreen = ({ navigation }) => {
                   title="Tratamientos"
                   btnIcon="heart"
                   onPress={() => navigation.navigate("Tratamientos")}
+                />           
+              </View>
+              <View style={styles.viewContainerSecondColumn}>
+                <MyBotonPrincipal
+                  title="Informece"
                 />
 
                 <BotonLargo style={styles.botonLargo}
@@ -75,7 +80,7 @@ const MainScreen = ({ navigation }) => {
                   title="Por las dudas"
                   btnIcon="bookmark"
                   onPress={() => navigation.navigate("")}
-                />
+                />         
               </View>
             </View>
           </View>
@@ -133,13 +138,4 @@ const styles = StyleSheet.create({
 
 export default MainScreen;
 
-{
-  /* <ImageBackground
-      source={{ uri: backgroundImageSource }}
-      style={styles.background}
-      resizeMode="cover"
-      imageStyle={styles.backgroundImage}
-    >
-     <Menu navigation={navigation}/>
-    </ImageBackground> */
-}
+

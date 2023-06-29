@@ -93,7 +93,7 @@ const navigation = useNavigation();
       fechaFin === "" ||
       tiempo === "" ||
       ordenTrabajo === "" ||
-      selectedInsumo === null ||
+      selectedInsumosList.length === 0 ||
       selectedObservacionList.length === 0
     ) {
       Alert.alert("Error", "Por favor completa todos los campos");
