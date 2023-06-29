@@ -118,13 +118,4 @@ const styles = StyleSheet.create({
 
 export default MainScreen;
 
-{
-  /* <ImageBackground
-      source={{ uri: backgroundImageSource }}
-      style={styles.background}
-      resizeMode="cover"
-      imageStyle={styles.backgroundImage}
-    >
-     <Menu navigation={navigation}/>
-    </ImageBackground> */
-}
+

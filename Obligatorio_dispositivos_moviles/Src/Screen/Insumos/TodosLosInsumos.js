@@ -26,11 +26,7 @@ const TodosLosInusmos = () => {
     });
   };
   const handleBorrar = (item) => {
-    let comprobante = DatabaseConnection.DeleteInsumo(
-      item.id,
-      item.Nombre,
-      item.Cantidad
-    );
+    let comprobante = DatabaseConnection.DeleteInsumo(item.id);
     if ((comprobante = true)) {
       Alert.alert(
         "Exito",
