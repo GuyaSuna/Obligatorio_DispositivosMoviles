@@ -31,8 +31,7 @@ const AltaTratamientoForm = () => {
   const [selectedZona , setSelectedZona] = useState(null);
   const [selectedObservacion, setSelectedObservacion] = useState([]);
   const [selectedInsumosList, setSelectedInsumosList] = useState([]);
-  const [TextObs , setTextObs] = useState("");
-  const [TextIns , setTextIns] = useState("");
+
 
 
   const [selectedObservacionList, setSelectedObservacionList] = useState([]);
@@ -56,7 +55,12 @@ const navigation = useNavigation();
     console.log("Texto de Zona:", selectedZona);
     console.log("Texto de Usuario:", selectedUsuario);
 
-    DatabaseConnection.inserTratamientos( nombreTratamiento, selectedZona,selectedUsuario,fechaInicio,fechaFin,tiempo,ordenTrabajo,TextIns,TextObs)
+    const observacionesTexto = selectedObservacionList.map(obs => `${obs.id},${obs.Titulo},${obs.Foto},${obs.Latitud},${obs.Longitud}`).join("**");
+
+    const insumosTexto = selectedInsumosList.map(ins => `${ins.id},${ins.Nombre},${ins.Cantidad}`).join("**");
+
+
+    DatabaseConnection.inserTratamientos( nombreTratamiento, selectedZona,selectedUsuario,fechaInicio,fechaFin,tiempo,ordenTrabajo,insumosTexto,observacionesTexto)
     .then((result) => {
       Alert.alert(
         "Exito",
@@ -109,9 +113,7 @@ const navigation = useNavigation();
       return;
     }
   
-    setSelectedObservacion(item);
-    setTextObs(TextObs + item.id + "," + item.Titulo + "," + item.Foto + "," + item.Latitud + "," + item.Longitud + "**");
-    console.log("ESTO ES CHE b)", TextObs);
+    setSelectedObservacion(item);  
     setSelectedObservacionList([...selectedObservacionList, item]);
   };
   
@@ -137,8 +139,6 @@ const handleInsumo = (item) => {
   }
 
   setSelectedInsumo(item);
-  setTextIns(TextIns + item.id + "," + item.Nombre + ","+item.Cantidad +  "**");
-  console.log("ESTO ES CHE b)", TextIns);
   setSelectedInsumosList([...selectedInsumosList, item]);
 };
 
