@@ -17,7 +17,6 @@ const BotonPrincipal = ({
         <Text style={styles.text}>{title}</Text>
       </View>
    </TouchableHighlight>
-
   );
   
 };
