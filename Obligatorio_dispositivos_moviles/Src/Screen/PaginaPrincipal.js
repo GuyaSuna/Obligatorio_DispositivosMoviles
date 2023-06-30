@@ -6,37 +6,35 @@ import {
   SafeAreaView,
   ScrollView,
 } from "react-native";
-import BotonPrincipal from "../Componentes/BotonPrincipal";
-import BotonLargo from "../Componentes/BotonLargo";
-
+import MyBotonPrincipal from "../Componentes/BotonPrincipal";
 
 const MainScreen = ({ navigation }) => {
   let backgroundImageSource =
     "https://s2.best-wallpaper.net/wallpaper/iphone/1311/Green-nature-branch-leaves-bokeh_iphone_320x480.jpg";
 
+
+
+  
+
   return (
-    
     <ImageBackground
       source={{ uri: backgroundImageSource }}
       style={styles.background}
       resizeMode="cover"
       imageStyle={styles.backgroundImage}
     >
-      
-      
-        
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollViewContainer}>
           <View style={styles.viewContainer}>
             <View style={styles.generalContainer}>
               <View style={styles.viewContainerFirstColumn}>
-                <BotonPrincipal
+                <MyBotonPrincipal
                   title="Usuarios"
                   btnIcon="user-circle"
                   onPress={() => navigation.navigate("ScreenUsuarios")}
                 />
 
-                <BotonPrincipal
+                <MyBotonPrincipal
                   title="Zonas"
                   btnIcon="map"
                   onPress={() => navigation.navigate("Zonas")}
@@ -44,13 +42,13 @@ const MainScreen = ({ navigation }) => {
               </View>
 
               <View style={styles.viewContainerSecondColumn}>
-                <BotonPrincipal
+                <MyBotonPrincipal
                   title="Insumos"
                   btnIcon="flask"
                   onPress={() => navigation.navigate("Insumos")}
                 />
 
-                <BotonPrincipal
+                <MyBotonPrincipal
                   title=" Observaciones"
                   btnIcon="eye"
                   onPress={() => navigation.navigate("Observaciones")}
@@ -60,14 +58,14 @@ const MainScreen = ({ navigation }) => {
 
             <View style={styles.generalContainer}>
               <View style={styles.viewContainerFirstColumn}>
-                <BotonPrincipal style={styles.botonLargo}
+                <MyBotonPrincipal
                   title="Tratamientos"
                   btnIcon="heart"
                   onPress={() => navigation.navigate("Tratamientos")}
                 />           
               </View>
               <View style={styles.viewContainerSecondColumn}>
-                <BotonPrincipal
+                <MyBotonPrincipal
                   title="Contactanos"
                   btnIcon="bookmark"
                   onPress={() => navigation.navigate("Contactanos")}
@@ -97,15 +95,12 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   generalContainer: {
-    flex: 1,
     flexDirection: "row",
-    alignContent: "center",
   },
   viewContainerFirstColumn: {
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
-    alignContent: "center",
   },
   viewContainerSecondColumn: {
     flex: 1,
@@ -119,12 +114,6 @@ const styles = StyleSheet.create({
   backgroundImage: {
     opacity: 0.5,
   },
-  botonLargo:{
-    flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-    alignContent: "center",
-  }
 });
 
 export default MainScreen;

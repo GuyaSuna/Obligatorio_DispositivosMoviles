@@ -1,22 +1,13 @@
 import React, { useEffect } from "react";
-import { View, Text, SafeAreaView, ScrollView, StyleSheet, ImageBackground } from "react-native";
+import { View, Text, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import DatabaseConnection from "../../DataBase/dbConnection";
 
 const Insumos = ({ navigation }) => {
-  let backgroundImageSource =
-  "https://s2.best-wallpaper.net/wallpaper/iphone/1311/Green-nature-branch-leaves-bokeh_iphone_320x480.jpg";
-
   useEffect(() => {
     DatabaseConnection.CreateInsumosTable();
   }, []);
   return (
-    <ImageBackground
-      source={{ uri: backgroundImageSource }}
-      style={styles.background}
-      resizeMode="cover"
-      imageStyle={styles.backgroundImage}
-    >
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
         <View style={styles.viewContainer}>
@@ -40,7 +31,6 @@ const Insumos = ({ navigation }) => {
         </View>
       </ScrollView>
     </SafeAreaView>
-    </ImageBackground>
   );
 };
 
@@ -71,14 +61,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
-  },
-
-  background: {
-    flex: 1,
-    resizeMode: "cover",
-  },
-  backgroundImage: {
-    opacity: 0.5,
   },
 });
 

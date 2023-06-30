@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity,TouchableHighlight, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const BotonPrincipal = ({
@@ -11,12 +11,13 @@ const BotonPrincipal = ({
 }) => {
   return (
 
-   <TouchableHighlight style={btnIcon ? styles.button : styles.button2} onPress={onPress}>
+   <TouchableOpacity style={btnIcon ? styles.button : styles.button2} onPress={onPress}>
            <View style={styles.container}>
         {btnIcon != '' &&  <Icon name={btnIcon} size={40} color="white" />}
         <Text style={styles.text}>{title}</Text>
       </View>
-   </TouchableHighlight>
+   </TouchableOpacity>
+
   );
   
 };

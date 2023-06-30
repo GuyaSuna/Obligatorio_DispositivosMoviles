@@ -120,26 +120,13 @@ const validateData =()=>{
                 </View>
             </View>
         </SafeAreaView>
-
-        
      );
 }
  
 export default AltaUsuario;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    padding: 10,
-    borderRadius: 10,
-    marginBottom: 70,
-    marginTop: 50,
-    marginLeft: 20,
-    marginRight: 20
-  },
+  container: { flex: 1, justifyContent: "center", alignItems: "center" },
   button: {
     flex: 1,
     alignContent: "center",
@@ -152,5 +139,4 @@ const styles = StyleSheet.create({
     marginRight: 35,
     borderRadius: 5,
   },
-  
 });
