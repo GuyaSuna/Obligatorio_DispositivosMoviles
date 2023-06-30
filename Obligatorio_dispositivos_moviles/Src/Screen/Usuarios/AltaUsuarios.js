@@ -4,7 +4,7 @@ import MyInputText from "../../Componentes/MyInputText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection";
-
+import Background from "../../Componentes/Background";
 
 
 const AltaUsuario = () => {
@@ -83,74 +83,62 @@ const validateData =()=>{
 }
 
 
-    return ( 
+    return (
+      <Background>
         <SafeAreaView style={styles.container}>
-            <View>
-                <View>
-                    <ScrollView>
-                        <KeyboardAvoidingView behavior="padding" style={styles.container}>
-                            <MyInputText
-                            styles={styles.inputUser}
-                            placeholder="Nombre de usuario"
-                            value={UserName}
-                            onChangeText={handleUserName}
-                            />
-                            <MyInputText 
-                            styles={styles.inputPassword}
-                            placeholder="Contraseña"
-                            value={Password}
-                            onChangeText={handlePassword}
-                            minLength={8}
-                            maxLength={16}
-                            />
-                            <MyInputText
-                            styles={styles.inputEmail}
-                            placeholder="Correo"
-                            value={Email}
-                            onChangeText={handleEmail}
-                            keyboardType="email-address"
-                            />
-                            <BotonPrincipal
-                            title="Registrar Usuario"
-                            btnColor="green"
-                            onPress={addUser}
-                            />
-                        </KeyboardAvoidingView>
-                    </ScrollView>
-                </View>
+          <View>
+            <View style={styles.listItemView}>
+              <ScrollView>
+                <KeyboardAvoidingView
+                  behavior="padding"
+                  style={styles.container}
+                >
+                  <MyInputText
+                    styles={styles.inputUser}
+                    placeholder="Nombre de usuario"
+                    value={UserName}
+                    onChangeText={handleUserName}
+                  />
+                  <MyInputText
+                    styles={styles.inputPassword}
+                    placeholder="Contraseña"
+                    value={Password}
+                    onChangeText={handlePassword}
+                    minLength={8}
+                    maxLength={16}
+                  />
+                  <MyInputText
+                    styles={styles.inputEmail}
+                    placeholder="Correo"
+                    value={Email}
+                    onChangeText={handleEmail}
+                    keyboardType="email-address"
+                  />
+                  <BotonPrincipal
+                    title="Registrar Usuario"
+                    btnColor="green"
+                    onPress={addUser}
+                  />
+                </KeyboardAvoidingView>
+              </ScrollView>
             </View>
+          </View>
         </SafeAreaView>
-
-        
-     );
+      </Background>
+    );
 }
  
 export default AltaUsuario;
 
 const styles = StyleSheet.create({
-  container: {
+  container: { flex: 1 },
+  button: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+  },
+  listItemView: {
     backgroundColor: "white",
     padding: 10,
     borderRadius: 10,
-    marginBottom: 70,
-    marginTop: 50,
-    marginLeft: 20,
-    marginRight: 20
+    margin: 10,
   },
-  button: {
-    flex: 1,
-    alignContent: "center",
-    alignItems: "center",
-    backgroundColor: "black",
-    color: "white",
-    padding: 10,
-    marginTop: 10,
-    marginLeft: 35,
-    marginRight: 35,
-    borderRadius: 5,
-  },
-  
 });

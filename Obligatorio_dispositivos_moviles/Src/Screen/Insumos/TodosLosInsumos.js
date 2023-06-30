@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, SafeAreaView, FlatList, Alert } from "react-native";
 import MyText from "../../Componentes/MyText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
-
+import Background from "../../Componentes/Background";
 import DatabaseConnection from "../../DataBase/dbConnection";
 const db = DatabaseConnection.getConnection();
 
@@ -58,33 +58,40 @@ const TodosLosInusmos = () => {
     }
   };
   //LISTA DE INSUMOS
-  const listItemView = (item) => {
+  const listItemView = item => {
     return (
-      <View key={item.id} style={styles.listItemView}>
-        <MyText textValue="INSUMO: " textStyle={styles.textStyle} />
-        <MyText textValue={item.Nombre} textStyle={styles.textStyle} />
+      <Background>
+        <View key={item.id} style={styles.listItemView}>
+          <MyText textValue="INSUMO: " textStyle={styles.textStyle} />
+          <MyText textValue={item.Nombre} textStyle={styles.textStyle} />
 
-        <MyText textValue="CANT. EN LITROS: " textStyle={styles.textStyle} />
-        <MyText textValue={item.Cantidad} textStyle={styles.textStyle} />
+          <MyText textValue="CANT. EN LITROS: " textStyle={styles.textStyle} />
+          <MyText textValue={item.Cantidad} textStyle={styles.textStyle} />
 
-        <BotonPrincipal title="Observar" onPress={() => handleObservar(item)} />
-        <BotonPrincipal title="Borrar" onPress={() => handleBorrar(item)} />
-      </View>
+          <BotonPrincipal
+            title="Observar"
+            onPress={() => handleObservar(item)}
+          />
+          <BotonPrincipal title="Borrar" onPress={() => handleBorrar(item)} />
+        </View>
+      </Background>
     );
   };
   return (
-    <SafeAreaView style={styles.container}>
-      <View>
+    <Background>
+      <SafeAreaView style={styles.container}>
         <View>
-          <FlatList
-            data={Insumos}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => listItemView(item)}
-            contentContainerStyle={{ paddingHorizontal: 15 }}
-          />
+          <View>
+            <FlatList
+              data={Insumos}
+              keyExtractor={item => item.id.toString()}
+              renderItem={({ item }) => listItemView(item)}
+              contentContainerStyle={{ paddingHorizontal: 15 }}
+            />
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Background>
   );
 };
 export default TodosLosInusmos;
@@ -98,10 +105,12 @@ const styles = StyleSheet.create({
     color: "black",
     alignContent: "center",
     justifyContent: "center",
+    fontSize: 18,
+    fontWeight: "bold",
   },
   listItemView: {
     backgroundColor: "white",
-    margin: 5,
+    marginTop: 5,
     padding: 10,
     borderRadius: 10,
   },

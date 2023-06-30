@@ -3,39 +3,37 @@ import {View, Text, SafeAreaView,ScrollView, StyleSheet, ImageBackground} from "
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useEffect } from "react";
 import DatabaseConnection from "../../DataBase/dbConnection";
+import Background from "../../Componentes/Background"
 
 const ScreenUsuarios = ({navigation}) => {
   
   useEffect(() =>{
     DatabaseConnection.createUsuariosTable();
  },[]);
-    return ( 
-     
+    return (
+      <Background>
         <SafeAreaView style={styles.container}>
-            <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-                <View style={styles.viewContainer}>
-                    <View style={styles.viewContainerFirstColumn}>
-                        <BotonPrincipal
-                        title="Alta Usuarios"
-                        btnIcon="user-plus"
-                        onPress={() => navigation.navigate("AltaUsuarios")}
-                        />
-                        
-                        <View style={styles.viewContainerSecondColumn}>
-                            
-
-                            <BotonPrincipal
-                            title="Ver Usuarios"
-                            btnIcon="user-circle-o"
-                            onPress={() => navigation.navigate("TodosLosUsuarios")}
-                            />
-                        </View>
-                    </View>
+          <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+            <View style={styles.viewContainer}>
+              <View style={styles.generalContainer}>
+                <View style={styles.viewContainerFirstColumn}>
+                  <BotonPrincipal
+                    title="Alta Usuarios"
+                    btnIcon="user-plus"
+                    onPress={() => navigation.navigate("AltaUsuarios")}
+                  />
+                  <BotonPrincipal
+                    title="Ver Usuarios"
+                    btnIcon="user-circle-o"
+                    onPress={() => navigation.navigate("TodosLosUsuarios")}
+                  />
                 </View>
-            </ScrollView>
+              </View>
+            </View>
+          </ScrollView>
         </SafeAreaView>
-     
-     );
+      </Background>
+    );
 }
  
 const styles = StyleSheet.create({

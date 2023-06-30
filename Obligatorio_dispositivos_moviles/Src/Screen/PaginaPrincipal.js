@@ -7,6 +7,7 @@ import {
   ScrollView,
 } from "react-native";
 import MyBotonPrincipal from "../Componentes/BotonPrincipal";
+import Background from "../Componentes/Background";
 
 const MainScreen = ({ navigation }) => {
   let backgroundImageSource =
@@ -17,12 +18,7 @@ const MainScreen = ({ navigation }) => {
   
 
   return (
-    <ImageBackground
-      source={{ uri: backgroundImageSource }}
-      style={styles.background}
-      resizeMode="cover"
-      imageStyle={styles.backgroundImage}
-    >
+    <Background>
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollViewContainer}>
           <View style={styles.viewContainer}>
@@ -75,7 +71,7 @@ const MainScreen = ({ navigation }) => {
           </View>
         </ScrollView>
       </SafeAreaView>
-    </ImageBackground>
+      </Background>
   );
 };
 
@@ -107,13 +103,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
   },
-  background: {
-    flex: 1,
-    resizeMode: "cover",
-  },
-  backgroundImage: {
-    opacity: 0.5,
-  },
+ 
 });
 
 export default MainScreen;

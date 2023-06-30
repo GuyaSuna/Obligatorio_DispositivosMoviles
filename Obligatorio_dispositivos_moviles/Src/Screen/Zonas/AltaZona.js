@@ -16,6 +16,7 @@ import DatabaseConnection from "../../DataBase/dbConnection";
 import {Picker} from '@react-native-picker/picker';
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
+import Background from "../../Componentes/Background";
 
 const AltaZona = () => {
 
@@ -138,54 +139,55 @@ checkLocationPermission();
   };
     
   return (
-    <SafeAreaView>
-      <View>
+    <Background>
+      <SafeAreaView>
         <View>
-          <ScrollView>
-            <KeyboardAvoidingView>
-             
-              <Picker 
-                selectedValue={Lugar}
-                onValueChange={handleLugar}
-                style={styles.inputEmail}
-              >
-                <Picker.Item label="Lugar" value="" />
-                <Picker.Item label="Estancia" value="Estancia" />
-                <Picker.Item label="Quinta" value="Quinta" />
-                <Picker.Item label="Plantacion" value="Plantacion" />
-              </Picker>
-              <MyInputText
-                styles={styles.inputEmail}
-                placeholder="Departamento"
-                onChangeText={handleDepartamento}
-                value={Departamento}
-              />
+          <View style={styles.listItemView}>
+            <ScrollView>
+              <KeyboardAvoidingView>
+                <Picker
+                  selectedValue={Lugar}
+                  onValueChange={handleLugar}
+                  style={styles.inputLugar}
+                >
+                  <Picker.Item label="Lugar" value="" />
+                  <Picker.Item label="Estancia" value="Estancia" />
+                  <Picker.Item label="Quinta" value="Quinta" />
+                  <Picker.Item label="Plantacion" value="Plantacion" />
+                </Picker>
+                <MyInputText
+                  styles={styles.inputEmail}
+                  placeholder="Departamento"
+                  onChangeText={handleDepartamento}
+                  value={Departamento}
+                />
 
-          <MapView
-            style={styles.map}
-            initialRegion={{
-              latitude: Latitud || 0,
-              longitude: Longitud || 0,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-            onPress={handleMapPress}
-          >
-            {selectedLocation && <Marker coordinate={selectedLocation} />}
-          </MapView>
-              <MyInputText
-                styles={styles.inputEmail}
-                placeholder="Cantidad Trabajadores"
-                onChangeText={handleCantidad}
-                value={Cantidad}
-              />
+                <MapView
+                  style={styles.map}
+                  initialRegion={{
+                    latitude: Latitud || 0,
+                    longitude: Longitud || 0,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                  }}
+                  onPress={handleMapPress}
+                >
+                  {selectedLocation && <Marker coordinate={selectedLocation} />}
+                </MapView>
+                <MyInputText
+                  styles={styles.inputStyle}
+                  placeholder="Cantidad Trabajadores"
+                  onChangeText={handleCantidad}
+                  value={Cantidad}
+                />
 
-              <BotonPrincipal title="Alta Zona" onPress={addZone} />
-            </KeyboardAvoidingView>
-          </ScrollView>
+                <BotonPrincipal title="Alta Zona" onPress={addZone} />
+              </KeyboardAvoidingView>
+            </ScrollView>
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Background>
   );
 };
 
@@ -193,12 +195,27 @@ export default AltaZona;
 
 const styles = StyleSheet.create({
   container: {},
-  inputUser: {},
-  inputPassword: {},
+  inputLugar: {
+    borderColor: 'grey',
+    borderWidth: 2,
+    borderRadius: 10,
+  },
+  inputStyle: {
+    width: '100%',
+  },
   map: {
     width: '100%',
-    height: 250,
+    height: 200,
     marginBottom: 10,
+    borderColor: 'grey',
+    borderRadius: '20px',
+    borderWidth: '3px',
+  },
+  listItemView: {
+    backgroundColor: "white",
+    margin: 10,
+    padding: 10,
+    borderRadius: 10,
   },
   
 });

@@ -14,7 +14,7 @@ import MyText from "../../Componentes/MyText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection"
-
+import Background from "../../Componentes/Background";
 
  const db = DatabaseConnection.getConnection();
 const EditUsuarios = ({route}) => {
@@ -102,43 +102,45 @@ const EditUsuarios = ({route}) => {
     
   
 
-    return ( 
+    return (
+      <Background>
         <SafeAreaView style={styles.container}>
-      <View style={styles.viewContainer}>
-        <View style={styles.generalView}>
-          <ScrollView>
-            <KeyboardAvoidingView style={styles.keyboardView}>
-              <MyText textValue="Buscar usuario" textStyle={styles.textStyle} />
-             
-            
+          <View style={styles.listItemView}>
+            <View style={styles.viewContainer}>
+              <View style={styles.generalView}>
+                <ScrollView>
+                  <KeyboardAvoidingView style={styles.keyboardView}>
+                    <MyText
+                      textValue="Buscar usuario"
+                      textStyle={styles.textStyle}
+                    />
+                    <MyInputText
+                      placeholder="Nombre de usuario"
+                      value={userName}
+                      onChangeText={handleUserName}
+                    />
 
-            <MyInputText 
-              placeholder="Nombre de usuario"
-              value={userName}
-              onChangeText={handleUserName}
-              />
+                    <MyInputText
+                      placeholder="Contraseña"
+                      value={password}
+                      onChangeText={handlePassword}
+                    />
 
-            <MyInputText 
-              placeholder="Contraseña"
-              value={password}
-              onChangeText={handlePassword}
-            />
+                    <MyInputText
+                      placeholder="Correo electronico"
+                      value={email}
+                      onChangeText={handleEmail}
+                    />
 
-            <MyInputText 
-              placeholder="Correo electronico"
-              value={email}
-              onChangeText={handleEmail}
-            />
-
-<BotonPrincipal title="Modificar" onPress={editUsuario} />
-
-            </KeyboardAvoidingView>
-          </ScrollView>
-        </View>
-      </View>
-    </SafeAreaView>
-    
-     );
+                    <BotonPrincipal title="Modificar" onPress={editUsuario} />
+                  </KeyboardAvoidingView>
+                </ScrollView>
+              </View>
+            </View>
+          </View>
+        </SafeAreaView>
+      </Background>
+    );
 }
  
 
@@ -165,6 +167,13 @@ const styles = StyleSheet.create({
     keyboardView: {
       flex: 1,
       justifyContent: "space-between",
-    }
+    },
+    listItemView: {
+      backgroundColor: "white",
+      margin: 8,
+      padding: 10,
+      borderRadius: 10,
+      height: 300,
+    },
   });
   export default EditUsuarios;

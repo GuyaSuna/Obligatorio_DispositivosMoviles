@@ -12,6 +12,7 @@ import MyInputText from "../../Componentes/MyInputText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import DatabaseConnection from "../../DataBase/dbConnection";
 import { useNavigation } from "@react-navigation/native";
+import Background from "../../Componentes/Background";
 
 const db = DatabaseConnection.getConnection();
 
@@ -88,9 +89,10 @@ const AltaInsumo = () => {
   };
 
   return (
+    <Background>
     <SafeAreaView>
       <View>
-        <View>
+        <View style={styles.listItemView}>
           <ScrollView>
             <KeyboardAvoidingView>
               <MyInputText
@@ -116,9 +118,17 @@ const AltaInsumo = () => {
         </View>
       </View>
     </SafeAreaView>
+    </Background>
   );
 };
 
-
+const styles = StyleSheet.create({
+  listItemView: {
+    backgroundColor: "white",
+    margin: 5,
+    padding: 10,
+    borderRadius: 10,
+  },
+});
 export default AltaInsumo;
 

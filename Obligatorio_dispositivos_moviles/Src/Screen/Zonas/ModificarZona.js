@@ -15,6 +15,7 @@ import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection"
 import MyInputOpciones from "../../Componentes/MyInputOpcionMultiple";
+import Background from "../../Componentes/Background";
 
 const ModificarZona = ({route}) => {
   const item = route.params;
@@ -133,66 +134,64 @@ const ModificarZona = ({route}) => {
 
 
   return (
-   
-    <SafeAreaView>
-      <View>
+    <Background>
+      <SafeAreaView>
         <View>
-          <ScrollView>
-            <KeyboardAvoidingView>
-            <MyInputText
-
-                placeholder="Lugar"
-                minLength={8}
-                maxLength={16}
-
-                onChangeText={handleLugar}
-                value={Lugar}
-              />
-
-
-              <MyInputText
-       
-                placeholder="Departamento"
-                minLength={8}
-                maxLength={16}
-                onChangeText={handleDepartamento}
-                value={Departamento}
-              />
-
-              <MyInputText
-
-                placeholder="Cantidad"
-             
-                onChangeText={handleCantidad}
-                value={Cantidad}
-              />
+          <View style={styles.listItemView}>
+            <ScrollView>
+              <KeyboardAvoidingView>
                 <MyInputText
+                  placeholder="Lugar"
+                  minLength={8}
+                  maxLength={16}
+                  onChangeText={handleLugar}
+                  value={Lugar}
+                />
 
-                placeholder="Latutid"
-               
-                onChangeText={handleLatitud}
-                value={Latitud}
-              />
                 <MyInputText
+                  placeholder="Departamento"
+                  minLength={8}
+                  maxLength={16}
+                  onChangeText={handleDepartamento}
+                  value={Departamento}
+                />
 
-                placeholder="Longitud"
-               
-                onChangeText={handleLongitud}
-                value={Longitud}
-              />
+                <MyInputText
+                  placeholder="Cantidad"
+                  onChangeText={handleCantidad}
+                  value={Cantidad}
+                />
+                <MyInputText
+                  placeholder="Latutid"
+                  onChangeText={handleLatitud}
+                  value={Latitud}
+                />
+                <MyInputText
+                  placeholder="Longitud"
+                  onChangeText={handleLongitud}
+                  value={Longitud}
+                />
 
-              <BotonPrincipal title="Modificar Zona" onPress={Modificar} />
-            </KeyboardAvoidingView>
-          </ScrollView>
+                <BotonPrincipal title="Modificar Zona" onPress={Modificar} />
+              </KeyboardAvoidingView>
+            </ScrollView>
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
- 
+      </SafeAreaView>
+    </Background>
   );
 
 };
 
-
+const styles = StyleSheet.create({
+  listItemView: {
+    backgroundColor: "white",
+    margin: 10,
+    padding: 10,
+    borderRadius: 10,
+    height: 400,
+  },
+});
 export default ModificarZona;
 
 

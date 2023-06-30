@@ -43,16 +43,20 @@ export default MyInputText;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 10,
-    marginBottom: 10,
+    marginVertical: 10,
+    marginLeft: 38,
     borderColor: "#d3d3d3",
     borderWidth: 1,
-    padding: 10,
+    borderRadius: 5,
+    backgroundColor: "white",
+    paddingHorizontal: 3,
+
+    width: "80%",
+    alignItems: "center",
+    justifyContent: "center",
   },
   input: {
-    color: "black",
+    width: "100%",
+    height: 40,
   },
 });

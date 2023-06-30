@@ -5,6 +5,7 @@ import DatabaseConnection from "../../DataBase/dbConnection"
 const db = DatabaseConnection.getConnection();
 import { useNavigation } from "@react-navigation/native";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
+import Background from "../../Componentes/Background";
 
 const TodasLasZonas = () => {
   // definir un estado local, para guardar los usuarios
@@ -55,6 +56,7 @@ const TodasLasZonas = () => {
 
   const listItemView = (item) => {
     return (
+      <Background>
       <View key={item.id} style={styles.listItemView}>
         <MyText textValue="Lugar" textStyle={styles.textStyle} />
         <MyText textValue={item.Lugar} textStyle={styles.textStyle} />
@@ -65,10 +67,12 @@ const TodasLasZonas = () => {
         <BotonPrincipal title="Observar" onPress={() => handleObservar(item)} />
         <BotonPrincipal title="Borrar" onPress={()=> handleBorrar(item)}/>
       </View>
+      </Background>
     );
   };
 
   return (
+    <Background>
     <SafeAreaView style={styles.container}>
       <View>
         <View>
@@ -81,6 +85,7 @@ const TodasLasZonas = () => {
         </View>
       </View>
     </SafeAreaView>
+    </Background>
   );
 };
 
