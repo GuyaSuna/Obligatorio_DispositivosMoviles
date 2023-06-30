@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, SafeAreaView, FlatList, Alert } from "react-native";
 import MyText from "../../Componentes/MyText";
 import DatabaseConnection from "../../DataBase/dbConnection"
-const db = DatabaseConnection.getConnection();
 import { useNavigation } from "@react-navigation/native";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
+
+
+const db = DatabaseConnection.getConnection();
 
 const TodasLasObservaciones = () => {
   // definir un estado local, para guardar los usuarios

@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, TouchableOpacity,TouchableHighlight, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const BotonPrincipal = ({
+const BotonLargo = ({
 
   title = 'Fallo',
   btnIcon = '',
@@ -11,12 +11,13 @@ const BotonPrincipal = ({
 }) => {
   return (
 
-   <TouchableHighlight style={btnIcon ? styles.button : styles.button2} onPress={onPress}>
+   <TouchableOpacity style={btnIcon ? styles.button : styles.button2} onPress={onPress}>
            <View style={styles.container}>
         {btnIcon != '' &&  <Icon name={btnIcon} size={40} color="white" />}
         <Text style={styles.text}>{title}</Text>
       </View>
-   </TouchableHighlight>
+   </TouchableOpacity>
+
   );
   
 };
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: 'rgba(0, 128, 0, 0.5)',
-    width: 150,
+    width: 300,
     height: 100,
     borderRadius: 10,
     marginBottom: 10,
@@ -60,4 +61,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BotonPrincipal;
+export default BotonLargo;

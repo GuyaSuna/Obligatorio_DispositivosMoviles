@@ -1,14 +1,22 @@
 import React,{useEffect} from 'react'
-import { View , Text, scrollViewContainer, SafeAreaView , StyleSheet, ScrollView} from 'react-native'
+import { View , Text, scrollViewContainer,ImageBackground, SafeAreaView , StyleSheet, ScrollView} from 'react-native'
 import BotonPrincipal from '../../Componentes/BotonPrincipal'
 import DatabaseConnection from '../../DataBase/dbConnection'
 const Observaciones = ({navigation}) => {
+  let backgroundImageSource =
+  "https://s2.best-wallpaper.net/wallpaper/iphone/1311/Green-nature-branch-leaves-bokeh_iphone_320x480.jpg";
 
    useEffect(() => {
      DatabaseConnection.createObservacionesTable();
   }, []);
 
   return (
+    <ImageBackground
+      source={{ uri: backgroundImageSource }}
+      style={styles.background}
+      resizeMode="cover"
+      imageStyle={styles.backgroundImage}
+    >
     <SafeAreaView style={styles.container}>
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
       <View style={styles.viewContainer}>
@@ -31,6 +39,7 @@ const Observaciones = ({navigation}) => {
     </View>
     </ScrollView>
     </SafeAreaView>
+    </ImageBackground>
   )
 }
 const styles = StyleSheet.create({
@@ -64,6 +73,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
+  background: {
+    flex: 1,
+    resizeMode: "cover",
+  },
+  backgroundImage: {
+    opacity: 0.5,
+  },
 })
 
 
