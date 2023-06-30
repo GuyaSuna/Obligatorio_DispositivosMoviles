@@ -131,7 +131,8 @@ const validateData =()=>{
 export default AltaUsuario;
 
 const styles = StyleSheet.create({
-  container: {
+  container: { flex: 1 },
+  button: {
     flex: 1,
   },
   listItemView: {
