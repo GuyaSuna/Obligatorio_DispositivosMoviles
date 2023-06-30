@@ -59,8 +59,8 @@ const Contactanos = () => {
           </View>
           <View style={styles.personContainer}>
             <Text style={styles.name}>Alejo</Text>
-            <Text style={styles.info}>Correo electrónico: persona2@gmail.com</Text>
-            <Text style={styles.info}>Teléfono: +1 234-567-8901</Text>
+            <Text style={styles.info}>Correo electrónico: alejospinelli2@gmail.com</Text>
+            <Text style={styles.info}>Teléfono: 098717563</Text>
           </View>
           <View style={styles.personContainer}>
             <Text style={styles.name}>Alexis</Text>
