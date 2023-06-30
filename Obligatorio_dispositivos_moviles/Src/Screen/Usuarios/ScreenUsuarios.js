@@ -10,33 +10,30 @@ const ScreenUsuarios = ({navigation}) => {
   useEffect(() =>{
     DatabaseConnection.createUsuariosTable();
  },[]);
-    return ( 
-     <Background>
+    return (
+      <Background>
         <SafeAreaView style={styles.container}>
-            <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-                <View style={styles.viewContainer}>
-                    <View style={styles.viewContainerFirstColumn}>
-                        <BotonPrincipal
-                        title="Alta Usuarios"
-                        btnIcon="user-plus"
-                        onPress={() => navigation.navigate("AltaUsuarios")}
-                        />
-                        
-                        <View style={styles.viewContainerSecondColumn}>
-                            
-
-                            <BotonPrincipal
-                            title="Ver Usuarios"
-                            btnIcon="user-circle-o"
-                            onPress={() => navigation.navigate("TodosLosUsuarios")}
-                            />
-                        </View>
-                    </View>
+          <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+            <View style={styles.viewContainer}>
+              <View style={styles.generalContainer}>
+                <View style={styles.viewContainerFirstColumn}>
+                  <BotonPrincipal
+                    title="Alta Usuarios"
+                    btnIcon="user-plus"
+                    onPress={() => navigation.navigate("AltaUsuarios")}
+                  />
+                  <BotonPrincipal
+                    title="Ver Usuarios"
+                    btnIcon="user-circle-o"
+                    onPress={() => navigation.navigate("TodosLosUsuarios")}
+                  />
                 </View>
-            </ScrollView>
+              </View>
+            </View>
+          </ScrollView>
         </SafeAreaView>
-        </Background>
-     );
+      </Background>
+    );
 }
  
 const styles = StyleSheet.create({

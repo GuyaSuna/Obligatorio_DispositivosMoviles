@@ -10,30 +10,28 @@ const Insumos = ({ navigation }) => {
   }, []);
   return (
     <Background>
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-        <View style={styles.viewContainer}>
-          <View style={styles.generalContainer}>
-            <View style={styles.viewContainerFirstColumn}>
-              <BotonPrincipal
+        <SafeAreaView style={styles.container}>
+          <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+            <View style={styles.viewContainer}>
+              <View style={styles.generalContainer}>
+                <View style={styles.viewContainerFirstColumn}>
+                <BotonPrincipal
                 title="Alta Insumos"
                 btnIcon="user-plus"
                 onPress={() => navigation.navigate("AltaInsumo")}
               />
-          
-            </View>
-            <View style={styles.viewContainerSecondColumn}>
+
               <BotonPrincipal
                 title="Lista Insumos"
                 btnIcon="bell"
                 onPress={() => navigation.navigate("TodosLosInsumos")}
               />
+                </View>
+              </View>
             </View>
-          </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-    </Background>
+          </ScrollView>
+        </SafeAreaView>
+      </Background>
   );
 };
 
