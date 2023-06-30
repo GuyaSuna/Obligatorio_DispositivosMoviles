@@ -2,6 +2,7 @@ import React,{useEffect} from 'react'
 import { View , Text, scrollViewContainer, SafeAreaView , StyleSheet, ScrollView} from 'react-native'
 import BotonPrincipal from '../../Componentes/BotonPrincipal'
 import DatabaseConnection from '../../DataBase/dbConnection'
+import Background from '../../Componentes/Background'
 const Zonas = ({navigation}) => {
 
   useEffect(() => {
@@ -9,6 +10,7 @@ const Zonas = ({navigation}) => {
   }, []);
 
   return (
+    <Background>
     <SafeAreaView style={styles.container}>
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
       <View style={styles.viewContainer}>
@@ -31,6 +33,7 @@ const Zonas = ({navigation}) => {
     </View>
     </ScrollView>
     </SafeAreaView>
+    </Background>
   )
 }
 const styles = StyleSheet.create({

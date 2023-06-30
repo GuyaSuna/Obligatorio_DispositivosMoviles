@@ -5,6 +5,7 @@ import DatabaseConnection from "../../DataBase/dbConnection"
 const db = DatabaseConnection.getConnection();
 import { useNavigation } from "@react-navigation/native";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
+import Background from "../../Componentes/Background";
 
 const TodasLasObservaciones = () => {
   // definir un estado local, para guardar los usuarios
@@ -50,6 +51,7 @@ const TodasLasObservaciones = () => {
   
   const listItemView = (item) => {
     return (
+      <Background>
       <View key={item.id} style={styles.listItemView}>
         <MyText textValue="Titulo" textStyle={styles.textStyle} />
         <MyText textValue={item.Titulo} textStyle={styles.textStyle} />
@@ -63,10 +65,12 @@ const TodasLasObservaciones = () => {
         <BotonPrincipal title="Observar" onPress={() => handleObservar(item)} />
         <BotonPrincipal title="Borrar" onPress={()=> handleBorrar(item)}/>
       </View>
+      </Background>
     );
   };
 
   return (
+    <Background>
     <SafeAreaView style={styles.container}>
       <View>
         <View>
@@ -79,6 +83,7 @@ const TodasLasObservaciones = () => {
         </View>
       </View>
     </SafeAreaView>
+    </Background>
   );
 };
 
@@ -96,8 +101,8 @@ const styles = StyleSheet.create({
   },
   listItemView: {
     backgroundColor: "white",
-    margin: 5,
     padding: 10,
     borderRadius: 10,
+    marginTop:5,
   },
 });

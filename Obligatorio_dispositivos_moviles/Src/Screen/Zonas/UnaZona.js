@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
 import MapView, { Marker } from "react-native-maps";
-
+import Background from "../../Componentes/Background";
 const UnaZona = ({ route }) => {
   const item = route.params;
 const navigation = useNavigation();
@@ -32,17 +32,13 @@ const HandleModificar = () => {
 }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Lugar: {item?.Lugar}</Text>
-
-
-      <Text style={styles.label}>Departamento: {item?.Departamento}</Text>
-    
-
-      <Text style={styles.label}>Cantidad: {item?.Cantidad}</Text>
-   
-
-      <MapView
+    <Background>
+      <View style={styles.container}>
+        <View style={styles.listItemView}>
+        <Text style={styles.label}>Lugar: {item?.Lugar}</Text>
+        <Text style={styles.label}>Departamento: {item?.Departamento}</Text>
+        <Text style={styles.label}>Cantidad: {item?.Cantidad}</Text>
+        <MapView
           ref={mapRef}
           style={styles.map}
           initialRegion={{
@@ -59,22 +55,16 @@ const HandleModificar = () => {
             }}
           />
         </MapView>
-
-
-
-      <BotonPrincipal
-      title="Modificar"
-      onPress={() =>HandleModificar()}
-      />
-    </View>
+        <BotonPrincipal title="Modificar" onPress={() => HandleModificar()} />
+        </View>
+      </View>
+    </Background>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: "#ffffff",
   },
   label: {
     fontSize: 18,
@@ -86,9 +76,16 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   map: {
-    width: "100%",
-    height: 250,
-    marginBottom: 10,
+    height: 200,
+    margin: 20,
+    
+  },
+  listItemView: {
+    backgroundColor: "white",
+    margin: 10,
+    padding: 10,
+    borderRadius: 10,
+    height: 400,
   },
 });
 

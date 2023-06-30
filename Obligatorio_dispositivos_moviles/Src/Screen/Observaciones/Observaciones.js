@@ -2,6 +2,8 @@ import React,{useEffect} from 'react'
 import { View , Text, scrollViewContainer, SafeAreaView , StyleSheet, ScrollView} from 'react-native'
 import BotonPrincipal from '../../Componentes/BotonPrincipal'
 import DatabaseConnection from '../../DataBase/dbConnection'
+import Background from '../../Componentes/Background'
+
 const Observaciones = ({navigation}) => {
 
    useEffect(() => {
@@ -9,29 +11,30 @@ const Observaciones = ({navigation}) => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-    <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-      <View style={styles.viewContainer}>
-        <View style={styles.generalContainer}>
-          <View style={styles.viewContainerFirstColumn}>
-     <BotonPrincipal   onPress={() => navigation.navigate("AltaObservaciones")}
-     btnIcon="plus"
-     title='Alta Observacion'
-     />
+    <Background>
+      <SafeAreaView style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+          <View style={styles.viewContainer}>
+            <View style={styles.generalContainer}>
+              <View style={styles.viewContainerFirstColumn}>
+                <BotonPrincipal
+                  onPress={() => navigation.navigate("AltaObservaciones")}
+                  btnIcon="plus"
+                  title="Alta Observacion"
+                />
 
-
-
-    <BotonPrincipal   onPress={() => navigation.navigate("TodasLasObservaciones")}
-        btnIcon="money"
-        title='Todas Las Observaciones'
-        /> 
-
-    </View>
-    </View>
-    </View>
-    </ScrollView>
-    </SafeAreaView>
-  )
+                <BotonPrincipal
+                  onPress={() => navigation.navigate("TodasLasObservaciones")}
+                  btnIcon="money"
+                  title="Todas Las Observaciones"
+                />
+              </View>
+            </View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </Background>
+  );
 }
 const styles = StyleSheet.create({
 

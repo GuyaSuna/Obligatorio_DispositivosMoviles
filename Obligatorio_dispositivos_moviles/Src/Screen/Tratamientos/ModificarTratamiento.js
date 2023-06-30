@@ -14,7 +14,7 @@ import { Picker } from "@react-native-picker/picker";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import DatabaseConnection from "../../DataBase/dbConnection";
 import { useNavigation } from "@react-navigation/native";
-
+import Background from "../../Componentes/Background";
 
 
 const ModificarTratamiento = ({route}) => {
@@ -262,157 +262,155 @@ const validarCampos = () => {
   };
   
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.inputContainer}>
-
-        <TextInput
-          style={styles.input}
-          placeholder="Nombre de tratamiento"
-          value={nombreTratamiento}
-          onChangeText={setNombreTratamiento}
-        />
-          
-          <TouchableOpacity
-          style={styles.input}
-          onPress={() => setDatePickerVisible(true)}
-        >
-          <Text>
-            {selectedDate !== "" ? selectedDate : "Seleccionar fecha de inicio"}
-          </Text>
-        </TouchableOpacity>
-
-        {isDatePickerVisible && (
-          <Calendar
-            onDayPress={handleDateSelection}
-            markedDates={{ [selectedDate]: { selected: true } }}
-            onMonthChange={() => {}}
-            hideExtraDays
-          />
-        )}
-
-<TouchableOpacity
-          style={styles.input}
-          onPress={() => setEndDatePickerVisible(true)}
-        >
-          <Text>
-            {selectedEndDate !== "" ? selectedEndDate : "Seleccionar fecha de fin"}
-          </Text>
-        </TouchableOpacity>
-
-
-        {isEndDatePickerVisible && (
-          <Calendar
-            onDayPress={handleEndDateSelection}
-            markedDates={{ [selectedEndDate]: { selected: true } }}
-            onMonthChange={() => {}}
-            hideExtraDays
-          />
-        )}
-
-
-        <TextInput
-          style={styles.input}
-          placeholder="Tiempo"
-          value={tiempo}
-          onChangeText={setTiempo}
-        />
-
-        <TextInput
-          style={styles.input}
-          placeholder="Orden de trabajo"
-          value={ordenTrabajo}
-          onChangeText={setOrdenTrabajo}
-        />
-       <Picker
-          style={styles.picker}
-          selectedValue={selectedZona}
-          onValueChange={(itemValue) => setSelectedZona(itemValue)}
-        >
-          <Picker.Item label="Seleccionar Zona" value={null} />
-          {zona.map((zona) => (
-            <Picker.Item
-              key={zona.id}
-              label={zona.Lugar}
-              value={zona.id}
+    <Background>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.listItemView}>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Nombre de tratamiento"
+              value={nombreTratamiento}
+              onChangeText={setNombreTratamiento}
             />
-          ))}
-        </Picker>
-        <Picker
-  style={styles.picker}
-  selectedValue={selectedInsumo}
-  onValueChange={(itemValue) => {
-    setSelectedInsumo(itemValue);
-    handleInsumo(itemValue);
-  }}
->
-  <Picker.Item label="Seleccionar insumo" value={null} />
-  {insumos.map((insumo) => (
-    <Picker.Item
-      key={insumo.Id}
-      label={insumo.Nombre}
-      value={insumo}
-    />
-  ))}
-</Picker>
-      <Picker
-  style={styles.picker}
-  selectedValue={selectedObservacion}
-  onValueChange={(itemValue) => {
-    setSelectedObservacion(null);
-    console.log(itemValue)
-    handleObservacion(itemValue);
-  }}
->
-<Picker.Item label="Seleccionar Observacion" value={null} />
-          {observacion.map((obs) => (
-            <Picker.Item
-              key={obs.id}
-              label={obs.Titulo}
-              value={obs}
-            />
-          ))}
-        </Picker>
-           <Picker
-          style={styles.picker}
-          selectedValue={selectedUsuario}
-          onValueChange={(itemValue) => {
-            setSelectedUsuario(itemValue)
-        
-          }
-          }
-        >
-          <Picker.Item label="Seleccionar usuario" value={null} />
-          {usuarios.map((usuario) => (
-            <Picker.Item
-              key={usuario.id}
-              label={usuario.Nombre}
-              value={usuario.id}
-            />
-          ))}
-        </Picker>
 
-    <View>
-        <Text style={styles.selectedSectionTitle}>Observaciones Seleccionadas:</Text>
-        {renderSelectedObservaciones()}
-      </View>
+            <TouchableOpacity
+              style={styles.input}
+              onPress={() => setDatePickerVisible(true)}
+            >
+              <Text>
+                {selectedDate !== ""
+                  ? selectedDate
+                  : "Seleccionar fecha de inicio"}
+              </Text>
+            </TouchableOpacity>
 
-      <View>
-        <Text style={styles.selectedSectionTitle}>Insumos Seleccionados:</Text>
-        {renderSelectedInsumos()}
-      </View>
-              <BotonPrincipal title="Guardar" onPress={handleGuardar} />
-       </View>
-    </ScrollView>
-  )
+            {isDatePickerVisible && (
+              <Calendar
+                onDayPress={handleDateSelection}
+                markedDates={{ [selectedDate]: { selected: true } }}
+                onMonthChange={() => {}}
+                hideExtraDays
+              />
+            )}
+
+            <TouchableOpacity
+              style={styles.input}
+              onPress={() => setEndDatePickerVisible(true)}
+            >
+              <Text>
+                {selectedEndDate !== ""
+                  ? selectedEndDate
+                  : "Seleccionar fecha de fin"}
+              </Text>
+            </TouchableOpacity>
+
+            {isEndDatePickerVisible && (
+              <Calendar
+                onDayPress={handleEndDateSelection}
+                markedDates={{ [selectedEndDate]: { selected: true } }}
+                onMonthChange={() => {}}
+                hideExtraDays
+              />
+            )}
+
+            <TextInput
+              style={styles.input}
+              placeholder="Tiempo"
+              value={tiempo}
+              onChangeText={setTiempo}
+            />
+
+            <TextInput
+              style={styles.input}
+              placeholder="Orden de trabajo"
+              value={ordenTrabajo}
+              onChangeText={setOrdenTrabajo}
+            />
+            <Picker
+              style={styles.picker}
+              selectedValue={selectedZona}
+              onValueChange={itemValue => setSelectedZona(itemValue)}
+            >
+              <Picker.Item label="Seleccionar Zona" value={null} />
+              {zona.map(zona => (
+                <Picker.Item key={zona.id} label={zona.Lugar} value={zona.id} />
+              ))}
+            </Picker>
+            <Picker
+              style={styles.picker}
+              selectedValue={selectedInsumo}
+              onValueChange={itemValue => {
+                setSelectedInsumo(itemValue);
+                handleInsumo(itemValue);
+              }}
+            >
+              <Picker.Item label="Seleccionar insumo" value={null} />
+              {insumos.map(insumo => (
+                <Picker.Item
+                  key={insumo.Id}
+                  label={insumo.Nombre}
+                  value={insumo}
+                />
+              ))}
+            </Picker>
+            <Picker
+              style={styles.picker}
+              selectedValue={selectedObservacion}
+              onValueChange={itemValue => {
+                setSelectedObservacion(null);
+                console.log(itemValue);
+                handleObservacion(itemValue);
+              }}
+            >
+              <Picker.Item label="Seleccionar Observacion" value={null} />
+              {observacion.map(obs => (
+                <Picker.Item key={obs.id} label={obs.Titulo} value={obs} />
+              ))}
+            </Picker>
+            <Picker
+              style={styles.picker}
+              selectedValue={selectedUsuario}
+              onValueChange={itemValue => {
+                setSelectedUsuario(itemValue);
+              }}
+            >
+              <Picker.Item label="Seleccionar usuario" value={null} />
+              {usuarios.map(usuario => (
+                <Picker.Item
+                  key={usuario.id}
+                  label={usuario.Nombre}
+                  value={usuario.id}
+                />
+              ))}
+            </Picker>
+
+            <View>
+              <Text style={styles.selectedSectionTitle}>
+                Observaciones Seleccionadas:
+              </Text>
+              {renderSelectedObservaciones()}
+            </View>
+
+            <View>
+              <Text style={styles.selectedSectionTitle}>
+                Insumos Seleccionados:
+              </Text>
+              {renderSelectedInsumos()}
+            </View>
+            <BotonPrincipal title="Guardar" onPress={handleGuardar} />
+          </View>
+        </View>
+      </ScrollView>
+    </Background>
+  );
 };
 
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    padding: 16,
-    justifyContent: "center",
-    alignItems: "center",
+  
+    
   },
   inputContainer: {
     width: "100%",
@@ -431,6 +429,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 4,
+    
   },
   selectedItemContainer: {
     flexDirection: "row",
@@ -450,6 +449,12 @@ const styles = StyleSheet.create({
   deleteButtonText: {
     color: "white",
     fontWeight: "bold",
+  },
+  listItemView: {
+    backgroundColor: "white",
+    padding: 10,
+    borderRadius: 10,
+    margin:10,
   },
 });
 

@@ -5,9 +5,10 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
 import { Picker } from '@react-native-picker/picker';
-
+import Background from '../../Componentes/Background';
 import DatabaseConnection from '../../DataBase/dbConnection';
 import { useNavigation } from "@react-navigation/native";
+import BotonPrincipal from '../../Componentes/BotonPrincipal';
 
 
 const ModificarObservacion = ({ route }) => {
@@ -144,54 +145,67 @@ const navigation = useNavigation();
   };
 
   return (
-    <SafeAreaView>
-    <View>
-      <View>
-        <ScrollView>
-    <View style={styles.container}>
-      <Picker
-        selectedValue={title}
-        onValueChange={handleTitle}
-        style={styles.picker}
-      >
-        <Picker.Item label="Titulo" value="" />
-        <Picker.Item label="Plaga Detectada" value="Plaga Detectada" />
-        <Picker.Item label="Planta en mal estado" value="Planta en mal estado" />
-        <Picker.Item label="Falta de Riego" value="Falta de Riego" />
-      </Picker>
+    <Background>
+      <SafeAreaView>
+        <View>
+          <View style={styles.listItemView}>
+            <ScrollView>
+              <View style={styles.container}>
+                <Picker
+                  selectedValue={title}
+                  onValueChange={handleTitle}
+                  style={styles.picker}
+                >
+                  <Picker.Item label="Titulo" value="" />
+                  <Picker.Item
+                    label="Plaga Detectada"
+                    value="Plaga Detectada"
+                  />
+                  <Picker.Item
+                    label="Planta en mal estado"
+                    value="Planta en mal estado"
+                  />
+                  <Picker.Item label="Falta de Riego" value="Falta de Riego" />
+                </Picker>
 
-      <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude: latitude || 0,
-          longitude: longitude || 0,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-        onPress={handleMapPress}
-      >
-        {selectedLocation && <Marker coordinate={selectedLocation} />}
-      </MapView>
-      {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
-      <View style={styles.buttonContainer}>
-        <Button title="Seleccionar imagen" onPress={pickImage} />
-      </View>
-      <View style={styles.buttonContainer}>
-        <Button title="Obtener ubicación" onPress={handleGetLocation} />
-      </View>
-      {latitude && longitude && (
-        <Text style={styles.locationText}>
-          Latitude: {latitude}, Longitude: {longitude}
-        </Text>
-      )}
-       <View style={styles.buttonContainer}>
-        <Button title="Modificar" onPress={Modificar} />
-      </View>
-    </View>
-    </ScrollView>
-    </View>
-    </View>
-    </SafeAreaView>
+                <MapView
+                  style={styles.map}
+                  initialRegion={{
+                    latitude: latitude || 0,
+                    longitude: longitude || 0,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                  }}
+                  onPress={handleMapPress}
+                >
+                  {selectedLocation && <Marker coordinate={selectedLocation} />}
+                </MapView>
+                {imageUri && (
+                  <Image source={{ uri: imageUri }} style={styles.image} />
+                )}
+                <View style={styles.buttonContainer}>
+                  <BotonPrincipal title="Seleccionar imagen" onPress={pickImage} />
+                </View>
+                <View style={styles.buttonContainer}>
+                  <BotonPrincipal
+                    title="Obtener ubicación"
+                    onPress={handleGetLocation}
+                  />
+                </View>
+                {latitude && longitude && (
+                  <Text style={styles.locationText}>
+                    Latitude: {latitude}, Longitude: {longitude}
+                  </Text>
+                )}
+                <View style={styles.buttonContainer}>
+                  <BotonPrincipal title="Modificar" onPress={Modificar} />
+                </View>
+              </View>
+            </ScrollView>
+          </View>
+        </View>
+      </SafeAreaView>
+    </Background>
   );
 };
 
@@ -201,12 +215,19 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   picker: {
+    height: 200,
     marginBottom: 5,
+    borderRadius: '5px',
+    borderWidth: '2px',
+    borderColor: 'grey',
   },
   map: {
     width: '100%',
-    height: 250,
+    height: 200,
     marginBottom: 10,
+    borderRadius: '5px',
+    borderWidth: '2px',
+    borderColor: 'grey',
   },
   image: {
     width: 200,
@@ -216,9 +237,18 @@ const styles = StyleSheet.create({
   locationText: {
     fontSize: 16,
     fontWeight: 'bold',
+    borderWidth: '2px',
+    borderColor: 'grey',
+    borderRadius: '5px',
   },
   buttonContainer: {
     marginBottom: 10,
+  },
+  listItemView: {
+    backgroundColor: "white",
+    padding: 10,
+    borderRadius: 10,
+    margin:10,
   },
 });
 

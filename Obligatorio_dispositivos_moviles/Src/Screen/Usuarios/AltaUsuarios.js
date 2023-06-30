@@ -4,7 +4,7 @@ import MyInputText from "../../Componentes/MyInputText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection";
-
+import Background from "../../Componentes/Background";
 
 
 const AltaUsuario = () => {
@@ -83,60 +83,61 @@ const validateData =()=>{
 }
 
 
-    return ( 
+    return (
+      <Background>
         <SafeAreaView style={styles.container}>
-            <View>
-                <View>
-                    <ScrollView>
-                        <KeyboardAvoidingView behavior="padding" style={styles.container}>
-                            <MyInputText
-                            styles={styles.inputUser}
-                            placeholder="Nombre de usuario"
-                            value={UserName}
-                            onChangeText={handleUserName}
-                            />
-                            <MyInputText 
-                            styles={styles.inputPassword}
-                            placeholder="Contraseña"
-                            value={Password}
-                            onChangeText={handlePassword}
-                            minLength={8}
-                            maxLength={16}
-                            />
-                            <MyInputText
-                            styles={styles.inputEmail}
-                            placeholder="Correo"
-                            value={Email}
-                            onChangeText={handleEmail}
-                            keyboardType="email-address"
-                            />
-                            <BotonPrincipal
-                            title="Registrar Usuario"
-                            btnColor="green"
-                            onPress={addUser}
-                            />
-                        </KeyboardAvoidingView>
-                    </ScrollView>
-                </View>
+          <View>
+            <View style={styles.listItemView}>
+              <ScrollView>
+                <KeyboardAvoidingView
+                  behavior="padding"
+                  style={styles.container}
+                >
+                  <MyInputText
+                    styles={styles.inputUser}
+                    placeholder="Nombre de usuario"
+                    value={UserName}
+                    onChangeText={handleUserName}
+                  />
+                  <MyInputText
+                    styles={styles.inputPassword}
+                    placeholder="Contraseña"
+                    value={Password}
+                    onChangeText={handlePassword}
+                    minLength={8}
+                    maxLength={16}
+                  />
+                  <MyInputText
+                    styles={styles.inputEmail}
+                    placeholder="Correo"
+                    value={Email}
+                    onChangeText={handleEmail}
+                    keyboardType="email-address"
+                  />
+                  <BotonPrincipal
+                    title="Registrar Usuario"
+                    btnColor="green"
+                    onPress={addUser}
+                  />
+                </KeyboardAvoidingView>
+              </ScrollView>
             </View>
+          </View>
         </SafeAreaView>
-     );
+      </Background>
+    );
 }
  
 export default AltaUsuario;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center" },
-  button: {
+  container: {
     flex: 1,
-    alignContent: "center",
-    alignItems: "center",
-    backgroundColor: "black",
-    color: "white",
+  },
+  listItemView: {
+    backgroundColor: "white",
     padding: 10,
-    marginTop: 10,
-    marginLeft: 35,
-    marginRight: 35,
-    borderRadius: 5,
+    borderRadius: 10,
+    margin: 10,
   },
 });

@@ -11,6 +11,7 @@ import MyInputText from "../../Componentes/MyInputText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection";
+import Background from "../../Componentes/Background";
 
 const db = DatabaseConnection.getConnection();
 
@@ -81,9 +82,10 @@ const ModificarInsumos = ({ route }) => {
   };
 
   return (
+    <Background>
     <SafeAreaView>
       <View>
-        <View>
+        <View style={styles.listItemView}>
           <ScrollView>
             <KeyboardAvoidingView>
               <MyInputText
@@ -110,6 +112,7 @@ const ModificarInsumos = ({ route }) => {
         </View>
       </View>
     </SafeAreaView>
+    </Background>
   );
 };
 
@@ -137,5 +140,11 @@ const styles = StyleSheet.create({
   keyboardView: {
     flex: 1,
     justifyContent: "space-between",
+  },
+  listItemView: {
+    backgroundColor: "white",
+    margin: 5,
+    padding: 10,
+    borderRadius: 10,
   },
 });

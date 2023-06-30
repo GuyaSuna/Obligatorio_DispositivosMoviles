@@ -5,7 +5,7 @@ import DatabaseConnection from "../../DataBase/dbConnection"
 const db = DatabaseConnection.getConnection();
 import { useNavigation } from "@react-navigation/native";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
-import Observaciones from "./Tratamientos";
+import Background from "../../Componentes/Background";
 
 const VerTodosLosTratamientos = () => {
 
@@ -62,6 +62,7 @@ console.log(item.id)
   const listItemView = (item) => {
     
     return (
+      <Background>
       <View key={item.id} style={styles.listItemView}>
         <MyText textValue="Nombre" textStyle={styles.textStyle} />
         <MyText textValue={item.Nombre} textStyle={styles.textStyle} />
@@ -77,10 +78,12 @@ console.log(item.id)
         <BotonPrincipal title="Observar" onPress={() => handleObservar(item)} />
         <BotonPrincipal title="Borrar" onPress={()=> handleBorrar(item)}/>
       </View>
+      </Background>
     );
   };
 
   return (
+    <Background>
     <SafeAreaView style={styles.container}>
       <View>
         <View>
@@ -93,6 +96,7 @@ console.log(item.id)
         </View>
       </View>
     </SafeAreaView>
+    </Background>
   );
 };
 

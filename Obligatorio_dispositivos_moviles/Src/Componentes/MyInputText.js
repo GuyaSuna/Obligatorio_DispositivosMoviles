@@ -44,15 +44,15 @@ export default MyInputText;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginLeft: 30,
-    marginRight: 30,
+    marginLeft: 10,
+    marginRight: 10,
     marginTop: 10,
     marginBottom: 10,
     borderColor: "#d3d3d3",
-    borderWidth: 1,
+    borderWidth: 2,
     padding: 10,
   },
   input: {
-    color: "black",
+    color: "gray",
   },
 });

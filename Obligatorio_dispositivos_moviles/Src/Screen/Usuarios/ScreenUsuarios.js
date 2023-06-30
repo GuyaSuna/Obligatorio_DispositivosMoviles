@@ -3,6 +3,7 @@ import {View, Text, SafeAreaView,ScrollView, StyleSheet, ImageBackground} from "
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useEffect } from "react";
 import DatabaseConnection from "../../DataBase/dbConnection";
+import Background from "../../Componentes/Background"
 
 const ScreenUsuarios = ({navigation}) => {
   
@@ -10,7 +11,7 @@ const ScreenUsuarios = ({navigation}) => {
     DatabaseConnection.createUsuariosTable();
  },[]);
     return ( 
-     
+     <Background>
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollViewContainer}>
                 <View style={styles.viewContainer}>
@@ -34,7 +35,7 @@ const ScreenUsuarios = ({navigation}) => {
                 </View>
             </ScrollView>
         </SafeAreaView>
-     
+        </Background>
      );
 }
  

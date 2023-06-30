@@ -2,12 +2,14 @@ import React, { useEffect } from "react";
 import { View, Text, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import DatabaseConnection from "../../DataBase/dbConnection";
+import Background from "../../Componentes/Background";
 
 const Insumos = ({ navigation }) => {
   useEffect(() => {
     DatabaseConnection.CreateInsumosTable();
   }, []);
   return (
+    <Background>
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
         <View style={styles.viewContainer}>
@@ -31,6 +33,7 @@ const Insumos = ({ navigation }) => {
         </View>
       </ScrollView>
     </SafeAreaView>
+    </Background>
   );
 };
 
