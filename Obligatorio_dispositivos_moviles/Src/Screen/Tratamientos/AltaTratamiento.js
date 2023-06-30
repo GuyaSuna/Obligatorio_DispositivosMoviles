@@ -365,7 +365,6 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     borderColor: "#CCCCCC",
-    borderWidth: 1,
     marginBottom: 8,
     paddingLeft: 8,
   },
@@ -373,7 +372,6 @@ const styles = StyleSheet.create({
     height: 200,
     marginBottom: 8,
     borderRadius: '5px',
-    borderWidth: '2px',
     borderColor: 'grey',
   },
   selectedItemsContainer: {

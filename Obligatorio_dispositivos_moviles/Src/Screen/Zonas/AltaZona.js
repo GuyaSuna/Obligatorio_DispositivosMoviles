@@ -197,7 +197,6 @@ const styles = StyleSheet.create({
   container: {},
   inputLugar: {
     borderColor: 'grey',
-    borderWidth: 2,
     borderRadius: 10,
   },
   inputStyle: {
@@ -209,7 +208,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderColor: 'grey',
     borderRadius: '20px',
-    borderWidth: '3px',
   },
   listItemView: {
     backgroundColor: "white",

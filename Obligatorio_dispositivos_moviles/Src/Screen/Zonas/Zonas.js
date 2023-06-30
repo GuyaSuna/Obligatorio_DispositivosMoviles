@@ -4,39 +4,36 @@ import BotonPrincipal from '../../Componentes/BotonPrincipal'
 import DatabaseConnection from '../../DataBase/dbConnection'
 import Background from '../../Componentes/Background'
 const Zonas = ({navigation}) => {
-
   useEffect(() => {
     DatabaseConnection.createZonasTable();
   }, []);
   let backgroundImageSource =
-  "https://s2.best-wallpaper.net/wallpaper/iphone/1311/Green-nature-branch-leaves-bokeh_iphone_320x480.jpg";
+    "https://s2.best-wallpaper.net/wallpaper/iphone/1311/Green-nature-branch-leaves-bokeh_iphone_320x480.jpg";
 
   return (
     <Background>
-    <SafeAreaView style={styles.container}>
-    <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-      <View style={styles.viewContainer}>
-        <View style={styles.generalContainer}>
-          <View style={styles.viewContainerFirstColumn}>
-     <BotonPrincipal   onPress={() => navigation.navigate("AltaZona")}
-     btnIcon="plus"
-     title='Alta Zona'
-     />
-
-
-
-    <BotonPrincipal   onPress={() => navigation.navigate("TodasLasZonas")}
-        btnIcon="money"
-        title='Todas Las Zonas'
-        /> 
-
-    </View>
-    </View>
-    </View>
-    </ScrollView>
-    </SafeAreaView>
+      <SafeAreaView style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+          <View style={styles.viewContainer}>
+            <View style={styles.generalContainer}>
+              <View style={styles.viewContainerFirstColumn}>
+                <BotonPrincipal
+                  onPress={() => navigation.navigate("AltaZona")}
+                  btnIcon="plus"
+                  title="Alta Zona"
+                />
+                <BotonPrincipal
+                  onPress={() => navigation.navigate("TodasLasZonas")}
+                  btnIcon="money"
+                  title="Todas Las Zonas"
+                />
+              </View>
+            </View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     </Background>
-  )
+  );
 }
 const styles = StyleSheet.create({
 
