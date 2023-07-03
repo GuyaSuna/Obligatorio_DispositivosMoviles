@@ -74,7 +74,7 @@ const Contactanos = () => {
           </View>
           <View style={styles.personContainer}>
             <Text style={styles.name}>Alexis</Text>
-            <Text style={styles.info}>Correo electrónico: persona3@gmail.com</Text>
+            <Text style={styles.info}>Correo electrónico: aguacatehamburguesas@gmail.com</Text>
             <Text style={styles.info}>Teléfono: +1 345-678-9012</Text>
           </View>
         </View>
