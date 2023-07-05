@@ -42,7 +42,7 @@ const TodosLosInusmos = () => {
         [
           {
             text: "Ok",
-            onPress: () => navigation.navigate("PaginaPrincipal"),
+            onPress: () => navigation.navigate("Insumos"),
           },
         ],
         {
@@ -103,7 +103,7 @@ const TodosLosInusmos = () => {
       ) : (
         <View style={styles.noInsumosContainer}>
           <View style={styles.noInsumosContent}>
-            <Text style={styles.noInsumosText}>No hay insumos</Text>
+            <Text style={styles.noInsumosText}>No hay Insumos</Text>
             <Button
               title="Ir al MainScreen"
               onPress={() => navigation.navigate("PaginaPrincipal")}

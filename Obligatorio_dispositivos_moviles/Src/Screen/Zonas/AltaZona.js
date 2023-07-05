@@ -13,13 +13,12 @@ import MyInputText from "../../Componentes/MyInputText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection";
-import {Picker} from '@react-native-picker/picker';
-import * as Location from 'expo-location';
-import MapView, { Marker } from 'react-native-maps';
+import { Picker } from "@react-native-picker/picker";
+import * as Location from "expo-location";
+import MapView, { Marker } from "react-native-maps";
 import Background from "../../Componentes/Background";
 
 const AltaZona = () => {
-
   const [Lugar, setLugar] = useState("");
   const [Departamento, setDepartamento] = useState("");
   const [Cantidad, setCantidad] = useState("");
@@ -31,10 +30,9 @@ const AltaZona = () => {
   const navigation = useNavigation();
   const db = DatabaseConnection.getConnection();
 
-  useEffect (() => {
-checkLocationPermission();
+  useEffect(() => {
+    checkLocationPermission();
   }, []);
-
 
   const handleLugar = (lugar) => {
     setLugar(lugar);
@@ -99,7 +97,7 @@ checkLocationPermission();
             [
               {
                 text: "Ok",
-                onPress: () => navigation.navigate("PaginaPrincipal"),
+                onPress: () => navigation.navigate("Zonas"),
               },
             ],
             {
@@ -126,10 +124,9 @@ checkLocationPermission();
     }
   };
 
-
   const checkLocationPermission = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
-    setLocationPermission(status === 'granted');
+    setLocationPermission(status === "granted");
   };
 
   const handleMapPress = (event) => {
@@ -137,7 +134,7 @@ checkLocationPermission();
     setLatitud(event.nativeEvent.coordinate.latitude);
     setLongitud(event.nativeEvent.coordinate.longitude);
   };
-    
+
   return (
     <Background>
       <SafeAreaView>
@@ -196,20 +193,20 @@ export default AltaZona;
 const styles = StyleSheet.create({
   container: {},
   inputLugar: {
-    borderColor: 'grey',
+    borderColor: "grey",
     borderWidth: 2,
     borderRadius: 10,
   },
   inputStyle: {
-    width: '100%',
+    width: "100%",
   },
   map: {
-    width: '100%',
+    width: "100%",
     height: 200,
     marginBottom: 10,
-    borderColor: 'grey',
-    borderRadius: '20px',
-    borderWidth: '3px',
+    borderColor: "grey",
+    borderRadius: "20px",
+    borderWidth: "3px",
   },
   listItemView: {
     backgroundColor: "white",
@@ -217,5 +214,4 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
   },
-  
 });

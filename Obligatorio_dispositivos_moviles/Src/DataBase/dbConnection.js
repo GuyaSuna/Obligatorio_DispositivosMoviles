@@ -69,6 +69,7 @@ const DatabaseConnection = {
       });
     });
   },
+
   ModificarZona: (
     Lugar,
     Departamento,
@@ -229,18 +230,17 @@ const DatabaseConnection = {
     return new Promise((resolve, reject) => {
       const db = DatabaseConnection.getConnection();
       db.transaction((tx) => {
-        tx.executeSql(`SELECT * FROM Usuarios`, [], (tx, results) => {
+        tx.executeSql("SELECT * FROM  Usuarios", [], (tx, results) => {
           console.log("results", results);
           if (results.rows.length > 0) {
-            setUsuario(results.rows._array); // Actualizar el estado Usuarios con los resultados
+            setUsuario(results.rows._array); // Actualizar el estado Zonas con los resultados
             resolve(results.rows._array); // Resolver la promesa con los resultados
-          } else {
-            reject(new Error("No hay Usuarios")); // Rechazar la promesa con un error
           }
         });
       });
     });
   },
+
   CreateInsumosTable: () => {
     const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {
@@ -270,6 +270,7 @@ const DatabaseConnection = {
       );
     });
   },
+
   InsertInsumo: (insumoName, insumoCantidad) => {
     return new Promise((resolve, reject) => {
       const db = DatabaseConnection.getConnection();
@@ -305,6 +306,7 @@ const DatabaseConnection = {
       });
     });
   },
+
   BuscarInsumo: (setInsumos) => {
     return new Promise((resolve, reject) => {
       const db = DatabaseConnection.getConnection();
@@ -319,6 +321,7 @@ const DatabaseConnection = {
       });
     });
   },
+  
   ModificarInsumo: (Nombre, Cantidad, NombreViejo) => {
     return new Promise((resolve, reject) => {
       const db = DatabaseConnection.getConnection();
@@ -451,24 +454,11 @@ const DatabaseConnection = {
     return new Promise((resolve, reject) => {
       const db = DatabaseConnection.getConnection();
       db.transaction((tx) => {
-        tx.executeSql(`SELECT * FROM Observaciones`, [], (tx, results) => {
+        tx.executeSql("SELECT * FROM  Observaciones", [], (tx, results) => {
           console.log("results", results);
           if (results.rows.length > 0) {
             setObservaciones(results.rows._array); // Actualizar el estado Zonas con los resultados
             resolve(results.rows._array); // Resolver la promesa con los resultados
-          } else {
-            Alert.alert(
-              "Mensaje",
-              "No hay Observaciones!!!",
-              [
-                {
-                  text: "Ok",
-                  onPress: () => navigation.navigate("PaginaPrincipal"),
-                },
-              ],
-              { cancelable: false }
-            );
-            reject(new Error("No hay observaciones")); // Rechazar la promesa con un error
           }
         });
       });
@@ -547,24 +537,11 @@ const DatabaseConnection = {
     return new Promise((resolve, reject) => {
       const db = DatabaseConnection.getConnection();
       db.transaction((tx) => {
-        tx.executeSql(`SELECT * FROM Tratamientos`, [], (tx, results) => {
+        tx.executeSql("SELECT * FROM  Tratamientos", [], (tx, results) => {
           console.log("results", results);
           if (results.rows.length > 0) {
-            setTratamientos(results.rows._array);
-            resolve(results.rows._array);
-          } else {
-            Alert.alert(
-              "Mensaje",
-              "No hay Tratamientos!!!",
-              [
-                {
-                  text: "Ok",
-                  onPress: () => navigation.navigate("PaginaPrincipal"),
-                },
-              ],
-              { cancelable: false }
-            );
-            reject(new Error("No hay Tratamientos")); // Rechazar la promesa con un error
+            setTratamientos(results.rows._array); // Actualizar el estado Zonas con los resultados
+            resolve(results.rows._array); // Resolver la promesa con los resultados
           }
         });
       });
