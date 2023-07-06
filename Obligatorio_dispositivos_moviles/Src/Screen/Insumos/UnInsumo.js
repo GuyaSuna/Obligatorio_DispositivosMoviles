@@ -1,9 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
 import Background from "../../Componentes/Background";
-import BotonModificar from "../../Componentes/BotonModificar";
+import BotonPrincipal from "../../Componentes/BotonPrincipal";
 
 const UnInsumo = ({ route }) => {
   const item = route.params;
@@ -20,10 +19,10 @@ const UnInsumo = ({ route }) => {
     <Background>
       <View style={styles.container}>
         <View style={styles.listItemView}>
-        <Text style={styles.label}>Nombre: {item?.Nombre}</Text>
-        <Text style={styles.label}>Cantidad: {item?.Cantidad}</Text>
-        <BotonModificar title="Modificar" onPress={() => HandleModificar()}/>
-        </View>    
+          <Text style={styles.label}>Nombre: {item?.Nombre}</Text>
+          <Text style={styles.label}>Cantidad: {item?.Cantidad}</Text>
+          <BotonPrincipal title="Modificar" onPress={() => HandleModificar()} />
+        </View>
       </View>
     </Background>
   );
@@ -47,7 +46,7 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 10,
     borderRadius: 10,
-    height: 200,
+    height: 180,
   },
 });
 

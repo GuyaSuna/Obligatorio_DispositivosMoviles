@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, SafeAreaView, FlatList, Alert, Text, Button } from "react-native";
+import {
+  StyleSheet,
+  View,
+  SafeAreaView,
+  FlatList,
+  Alert,
+  Text,
+  Button,
+} from "react-native";
 import MyText from "../../Componentes/MyText";
 import DatabaseConnection from "../../DataBase/dbConnection";
 const db = DatabaseConnection.getConnection();
 import { useNavigation } from "@react-navigation/native";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import Background from "../../Componentes/Background";
+import BotonBorrar from "../../Componentes/BotonBorrar";
 
 const TodasLasZonas = () => {
   // definir un estado local, para guardar los usuarios
@@ -61,17 +70,17 @@ const TodasLasZonas = () => {
     return (
       <Background>
         <View key={item.id} style={styles.listItemView}>
-          <MyText textValue="Lugar" textStyle={styles.textStyle} />
+          <MyText textValue="Lugar" textStyle={styles.text} />
           <MyText textValue={item.Lugar} textStyle={styles.textStyle} />
 
-          <MyText textValue="Cantidad" textStyle={styles.textStyle} />
+          <MyText textValue="Cantidad" textStyle={styles.text} />
           <MyText textValue={item.Cantidad} textStyle={styles.textStyle} />
 
           <BotonPrincipal
             title="Observar"
             onPress={() => handleObservar(item)}
           />
-          <BotonPrincipal title="Borrar" onPress={() => handleBorrar(item)} />
+          <BotonBorrar title="Borrar" onPress={() => handleBorrar(item)} />
         </View>
       </Background>
     );
@@ -80,8 +89,7 @@ const TodasLasZonas = () => {
   return (
     <Background>
       {Zonas.length > 0 ? (
-      <SafeAreaView style={styles.container}>
-        <View>
+        <SafeAreaView style={styles.container}>
           <View>
             <View>
               <FlatList
@@ -93,17 +101,6 @@ const TodasLasZonas = () => {
             </View>
           </View>
         </SafeAreaView>
-      ) : (
-        <View style={styles.noZonaContainer}>
-          <View style={styles.noZonaContent}>
-            <Text style={styles.noZonaText}>No hay Zonas</Text>
-            <Button
-              title="Ir al MainScreen"
-              onPress={() => navigation.navigate("PaginaPrincipal")}
-            />
-          </View>
-        </View>
-      </SafeAreaView>
       ) : (
         <View style={styles.noZonaContainer}>
           <View style={styles.noZonaContent}>
@@ -130,6 +127,15 @@ const styles = StyleSheet.create({
     color: "black",
     alignContent: "center",
     justifyContent: "center",
+    fontSize: 18,
+  },
+  text: {
+    padding: 5,
+    color: "black",
+    alignContent: "center",
+    justifyContent: "center",
+    fontSize: 16,
+    fontWeight: "bold",
   },
   listItemView: {
     backgroundColor: "white",

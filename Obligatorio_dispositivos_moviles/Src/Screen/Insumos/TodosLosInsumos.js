@@ -11,6 +11,7 @@ import {
 import MyText from "../../Componentes/MyText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import Background from "../../Componentes/Background";
+import BotonBorrar from "../../Componentes/BotonBorrar";
 import DatabaseConnection from "../../DataBase/dbConnection";
 const db = DatabaseConnection.getConnection();
 
@@ -80,7 +81,7 @@ const TodosLosInusmos = () => {
             title="Observar"
             onPress={() => handleObservar(item)}
           />
-          <BotonPrincipal title="Borrar" onPress={() => handleBorrar(item)} />
+          <BotonBorrar title="Borrar" onPress={() => handleBorrar(item)} />
         </View>
       </Background>
     );

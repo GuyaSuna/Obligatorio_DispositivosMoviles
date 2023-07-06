@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Background from "../../Componentes/Background";
-import BotonModificar from "../../Componentes/BotonModificar";
+import BotonModificar from "../../Componentes/BotonBorrar";
 
 const UnUsuario = ({ route }) => {
   const item = route.params;

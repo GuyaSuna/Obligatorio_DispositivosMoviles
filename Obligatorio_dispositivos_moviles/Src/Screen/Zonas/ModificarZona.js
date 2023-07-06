@@ -6,36 +6,42 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Alert,
+  Keyboard,
 } from "react-native";
 // import MyText from "../../Componentes/MyText"; Lo vamos a usar para el buscador.
 
 import MyInputText from "../../Componentes/MyInputText";
-import MyText from "../../Componentes/MyText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
-import DatabaseConnection from "../../DataBase/dbConnection"
-import MyInputOpciones from "../../Componentes/MyInputOpcionMultiple";
+import DatabaseConnection from "../../DataBase/dbConnection";
 import Background from "../../Componentes/Background";
 
-const ModificarZona = ({route}) => {
+const ModificarZona = ({ route }) => {
   const item = route.params;
 
   const [Lugar, setLugar] = useState(item.Lugar || "");
   const [Departamento, setDepartamento] = useState(item.Departamento || "");
-  const [Cantidad, setCantidad] = useState(item.Cantidad ? String(item.Cantidad) : "");
-  const [Latitud, setLatitud] = useState(item.Latitud ? String(item.Latitud) : "");
-  const [Longitud, setLongitud] = useState(item.Longitud ? String(item.Longitud) : "");
+  const [Cantidad, setCantidad] = useState(
+    item.Cantidad ? String(item.Cantidad) : ""
+  );
+  const [Latitud, setLatitud] = useState(
+    item.Latitud ? String(item.Latitud) : ""
+  );
+  const [Longitud, setLongitud] = useState(
+    item.Longitud ? String(item.Longitud) : ""
+  );
   const navigation = useNavigation();
-  const db = DatabaseConnection.getConnection(); 
+  const db = DatabaseConnection.getConnection();
 
-
-  
+  const hideKeyboard = () => {
+    Keyboard.dismiss();
+  };
 
   const handleLugar = (lugar) => {
     setLugar(lugar);
   };
 
-  const handleDepartamento= (departamento) => {
+  const handleDepartamento = (departamento) => {
     setDepartamento(departamento);
   };
 
@@ -66,12 +72,12 @@ const ModificarZona = ({route}) => {
       Alert.alert("Error", "La cantidad debe ser un número válido");
       return false;
     }
-  
+
     if (isNaN(Latitud)) {
       Alert.alert("Error", "La latitud debe ser un número válido");
       return false;
     }
-  
+
     if (isNaN(Longitud)) {
       Alert.alert("Error", "La longitud debe ser un número válido");
       return false;
@@ -80,58 +86,53 @@ const ModificarZona = ({route}) => {
     return true;
   };
 
-  const Modificar =() => {
+  const Modificar = () => {
     console.log("### modificando Zona ###");
-  
+
     if (validateData()) {
       console.log("### save zona ###");
 
-      // llamar a la db y guardar los datos  
-       DatabaseConnection.ModificarZona(
-          Lugar,
-          Departamento,
-          Cantidad,
-          Latitud,
-          Longitud,
-          item.Latitud,
-          item.Longitud
-        ).then((comprobante) => {
-       
-          if (comprobante) {
-            Alert.alert(
-              "Exito",
-              "Zona modificada correctamente",
-              [
-                {
-                  text: "Ok",
-                  onPress: () => navigation.navigate("PaginaPrincipal"),
-                },
-              ],
+      // llamar a la db y guardar los datos
+      DatabaseConnection.ModificarZona(
+        Lugar,
+        Departamento,
+        Cantidad,
+        Latitud,
+        Longitud,
+        item.Latitud,
+        item.Longitud
+      ).then((comprobante) => {
+        if (comprobante) {
+          Alert.alert(
+            "Exito",
+            "Zona modificada correctamente",
+            [
               {
-                cancelable: false,
-              }
-            );
-          } else {
-            Alert.alert(
-              "Error",
-              "Zona no se modificó correctamente",
-              [
-                {
-                  text: "Ok",
-                },
-              ],
+                text: "Ok",
+                onPress: () => navigation.navigate("PaginaPrincipal"),
+              },
+            ],
+            {
+              cancelable: false,
+            }
+          );
+        } else {
+          Alert.alert(
+            "Error",
+            "Zona no se modificó correctamente",
+            [
               {
-                cancelable: false,
-              }
-            );
-          }
-        });
-    }   
+                text: "Ok",
+              },
+            ],
+            {
+              cancelable: false,
+            }
+          );
+        }
+      });
+    }
   };
-  
-
-  
-
 
   return (
     <Background>
@@ -154,12 +155,15 @@ const ModificarZona = ({route}) => {
                   maxLength={16}
                   onChangeText={handleDepartamento}
                   value={Departamento}
+                  onSubmitEditing={hideKeyboard}
                 />
 
                 <MyInputText
                   placeholder="Cantidad"
                   onChangeText={handleCantidad}
                   value={Cantidad}
+                  onSubmitEditing={hideKeyboard}
+                  keyboardType="numeric"
                 />
                 <MyInputText
                   placeholder="Latutid"
@@ -180,7 +184,6 @@ const ModificarZona = ({route}) => {
       </SafeAreaView>
     </Background>
   );
-
 };
 
 const styles = StyleSheet.create({
@@ -193,5 +196,3 @@ const styles = StyleSheet.create({
   },
 });
 export default ModificarZona;
-
-

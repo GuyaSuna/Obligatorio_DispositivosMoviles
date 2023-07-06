@@ -6,6 +6,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Alert,
+  Keyboard,
 } from "react-native";
 import MyInputText from "../../Componentes/MyInputText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
@@ -27,7 +28,9 @@ const AltaInsumo = () => {
   const handleInsumoCantidad = (insumoCantidad) => {
     setInsumoCantidad(insumoCantidad);
   };
-
+  const hideKeyboard = () => {
+    Keyboard.dismiss();
+  };
   const validateData = () => {
     if (insumoName.trim() === "") {
       Alert.alert("Error", "El nombre del Insumo es obligatorio");
@@ -101,12 +104,14 @@ const AltaInsumo = () => {
                   placeholder="Ingrese el nombre del Insumo"
                   onChangeText={handleInsumoName}
                   value={insumoName}
+                  onSubmitEditing={hideKeyboard}
                 />
                 <MyInputText
                   placeholder="Cantidad"
                   keyboardType="numeric"
                   onChangeText={handleInsumoCantidad}
                   value={insumoCantidad}
+                  onSubmitEditing={hideKeyboard}
                 />
                 <BotonPrincipal
                   title="Ingresar"

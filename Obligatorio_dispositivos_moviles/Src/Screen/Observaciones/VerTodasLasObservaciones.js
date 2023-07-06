@@ -9,6 +9,7 @@ import {
   Button,
 } from "react-native";
 import MyText from "../../Componentes/MyText";
+import BotonBorrar from "../../Componentes/BotonBorrar";
 import DatabaseConnection from "../../DataBase/dbConnection";
 const db = DatabaseConnection.getConnection();
 import { useNavigation } from "@react-navigation/native";
@@ -81,7 +82,7 @@ const TodasLasObservaciones = () => {
             title="Observar"
             onPress={() => handleObservar(item)}
           />
-          <BotonPrincipal title="Borrar" onPress={() => handleBorrar(item)} />
+          <BotonBorrar title="Borrar" onPress={() => handleBorrar(item)} />
         </View>
       </Background>
     );

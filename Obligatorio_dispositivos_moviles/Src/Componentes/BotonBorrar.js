@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const BotonPrincipal = ({
+const BotonBorrar = ({
   title = "Fallo",
   btnIcon = "",
   btnColor = "",
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: "center",
     alignItems: "center",
-    backgroundColor: "#B22222",
+    backgroundColor: "black",
     borderColor: "black",
     color: "white",
     padding: 10,
@@ -40,17 +40,6 @@ const styles = StyleSheet.create({
     marginRight: 35,
     borderRadius: 15,
   },
-  button: {
-    backgroundColor: "#B22222",
-    width: 150,
-    height: 100,
-    borderRadius: 10,
-    marginBottom: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 2,
-    borderColor: "black",
-  },
   text: {
     fontSize: 16,
     fontWeight: "bold",
@@ -58,4 +47,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BotonPrincipal;
+export default BotonBorrar;

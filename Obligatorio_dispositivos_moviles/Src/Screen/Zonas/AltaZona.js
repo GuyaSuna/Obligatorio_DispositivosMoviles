@@ -1,14 +1,13 @@
-import { React, useState, useEffect , useRef } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
-  SafeAreaViewBase,
   View,
   SafeAreaView,
   ScrollView,
   KeyboardAvoidingView,
   Alert,
-  ImageBackground,
-  Text
+  Keyboard,
+  Text,
 } from "react-native";
 import MyInputText from "../../Componentes/MyInputText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
@@ -31,6 +30,10 @@ const AltaZona = () => {
   const navigation = useNavigation();
   const db = DatabaseConnection.getConnection();
   const mapRef = useRef(null);
+
+  const hideKeyboard = () => {
+    Keyboard.dismiss();
+  };
 
   useEffect(() => {
     checkLocationPermission();
@@ -125,20 +128,20 @@ const AltaZona = () => {
       }
     }
   };
-const UbicarMapa = (lati , longi) => {
+  const UbicarMapa = (lati, longi) => {
     mapRef.current.animateToRegion({
       latitude: lati,
       longitude: longi,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
-    }); 
-  }
+    });
+  };
 
   const checkLocationPermission = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     setLocationPermission(status === "granted");
   };
-  
+
   const handleMapPress = (event) => {
     setSelectedLocation(event.nativeEvent.coordinate);
     setLatitud(event.nativeEvent.coordinate.latitude);
@@ -161,7 +164,7 @@ const UbicarMapa = (lati , longi) => {
       console.log("Location permission denied");
     }
   };
-  
+
   return (
     <Background>
       <SafeAreaView>
@@ -184,10 +187,11 @@ const UbicarMapa = (lati , longi) => {
                   placeholder="Departamento"
                   onChangeText={handleDepartamento}
                   value={Departamento}
+                  onSubmitEditing={hideKeyboard}
                 />
 
                 <MapView
-                ref={mapRef}
+                  ref={mapRef}
                   style={styles.map}
                   initialRegion={{
                     latitude: Latitud || 0,
@@ -200,18 +204,16 @@ const UbicarMapa = (lati , longi) => {
                   {selectedLocation && <Marker coordinate={selectedLocation} />}
                 </MapView>
                 <BotonPrincipal
-                    title="Obtener ubicación"
-                    onPress={handleGetLocation}
-                  />
-                 
-                    {Latitud && Longitud && (
-                    <View>
-                  <Text style={styles.locationText}>
-                    Latitude: {Latitud} 
-                  </Text>
-                  <Text style={styles.locationText}>
-                    Longitude: {Longitud}
-                  </Text>
+                  title="Obtener ubicación"
+                  onPress={handleGetLocation}
+                />
+
+                {Latitud && Longitud && (
+                  <View>
+                    <Text style={styles.locationText}>Latitude: {Latitud}</Text>
+                    <Text style={styles.locationText}>
+                      Longitude: {Longitud}
+                    </Text>
                   </View>
                 )}
                 <MyInputText
@@ -219,6 +221,8 @@ const UbicarMapa = (lati , longi) => {
                   placeholder="Cantidad Trabajadores"
                   onChangeText={handleCantidad}
                   value={Cantidad}
+                  onSubmitEditing={hideKeyboard}
+                  keyboardType="numeric"
                 />
 
                 <BotonPrincipal title="Alta Zona" onPress={addZone} />

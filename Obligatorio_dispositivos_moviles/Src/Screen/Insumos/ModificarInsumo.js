@@ -36,82 +36,83 @@ const ModificarInsumos = ({ route }) => {
       Alert.alert("Error", "El nombre del Insumo es obligatorio");
       return false;
     }
-    if (insumoCantidad === "" || !insumoCantidad.trim()  || insumoCantidad <1) {
-      Alert.alert("Error", "La cantidad del Insumo es obligatoria y debe ser una suma valida");
+    if (insumoCantidad === "" || !insumoCantidad.trim() || insumoCantidad < 1) {
+      Alert.alert(
+        "Error",
+        "La cantidad del Insumo es obligatoria y debe ser una suma valida"
+      );
       return false;
     }
     return true;
   };
 
   const modificar = () => {
-    console.log(" Modificar ", insumoName, insumoCantidad , item.Nombre);
+    console.log(" Modificar ", insumoName, insumoCantidad, item.Nombre);
     if (validateData()) {
-      DatabaseConnection.ModificarInsumo(insumoName, insumoCantidad , item.Nombre).then(
-        (comprobante) => {
-          if (comprobante) {
-            Alert.alert(
-              "Exito",
-              "Insumo modificado correctamente",
-              [
-                {
-                  text: "Ok",
-                  onPress: () => navigation.navigate("PaginaPrincipal"),
-                },
-              ],
+      DatabaseConnection.ModificarInsumo(
+        insumoName,
+        insumoCantidad,
+        item.Nombre
+      ).then((comprobante) => {
+        if (comprobante) {
+          Alert.alert(
+            "Exito",
+            "Insumo modificado correctamente",
+            [
               {
-                cancelable: false,
-              }
-            );
-          } else {
-            Alert.alert(
-              "Error",
-              "Insumo no se modificó correctamente",
-              [
-                {
-                  text: "Ok",
-                },
-              ],
+                text: "Ok",
+                onPress: () => navigation.navigate("PaginaPrincipal"),
+              },
+            ],
+            {
+              cancelable: false,
+            }
+          );
+        } else {
+          Alert.alert(
+            "Error",
+            "Insumo no se modificó correctamente",
+            [
               {
-                cancelable: false,
-              }
-            );
-          }
+                text: "Ok",
+              },
+            ],
+            {
+              cancelable: false,
+            }
+          );
         }
-      );
+      });
     }
   };
 
   return (
     <Background>
-    <SafeAreaView>
-      <View>
-        <View style={styles.listItemView}>
-          <ScrollView>
-            <KeyboardAvoidingView>
-              <MyInputText
-                styles={styles.inputInsumo}
-                placeholder="Ingrese el nombre del Insumo"
-                onChangeText={handleInsumoName}
-                value={insumoName}
-              />
-              <MyInputText
-                styles={styles.inputCantidadInsumo}
-                placeholder="Cantidad"
-                keyboardType="numeric"
-                onChangeText={handleInsumoCantidad}
-                value={insumoCantidad}
-              />
+      <SafeAreaView>
+        <View>
+          <View style={styles.listItemView}>
+            <ScrollView>
+              <KeyboardAvoidingView>
+                <MyInputText
+                  styles={styles.inputInsumo}
+                  placeholder="Ingrese el nombre del Insumo"
+                  onChangeText={handleInsumoName}
+                  value={insumoName}
+                />
+                <MyInputText
+                  styles={styles.inputCantidadInsumo}
+                  placeholder="Cantidad"
+                  keyboardType="numeric"
+                  onChangeText={handleInsumoCantidad}
+                  value={insumoCantidad}
+                />
 
-              <BotonPrincipal
-                title="Editar Insumo"
-                btnColor="green"
-                onPress={modificar}
-              />
-            </KeyboardAvoidingView>
-          </ScrollView>
+                <BotonPrincipal title="Editar Insumo" onPress={modificar} />
+              </KeyboardAvoidingView>
+            </ScrollView>
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
     </Background>
   );
 };
