@@ -80,8 +80,7 @@ const styles = StyleSheet.create({
     height: 250,
     marginBottom: 16,
    
-    borderRadius: '5px',
-    borderWidth: '2px',
+
     borderColor: 'grey',
   },
   
