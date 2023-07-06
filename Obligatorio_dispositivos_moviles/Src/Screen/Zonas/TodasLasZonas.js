@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, SafeAreaView, FlatList, Alert } from "react-native";
+import { StyleSheet, View, SafeAreaView, FlatList, Alert, Text, Button } from "react-native";
 import MyText from "../../Componentes/MyText";
 import DatabaseConnection from "../../DataBase/dbConnection";
 const db = DatabaseConnection.getConnection();
@@ -79,6 +79,7 @@ const TodasLasZonas = () => {
 
   return (
     <Background>
+      {Zonas.length > 0 ? (
       <SafeAreaView style={styles.container}>
         <View>
           <View>
@@ -91,6 +92,17 @@ const TodasLasZonas = () => {
           </View>
         </View>
       </SafeAreaView>
+      ) : (
+        <View style={styles.noZonaContainer}>
+          <View style={styles.noZonaContent}>
+            <Text style={styles.noZonaText}>No hay Zonas</Text>
+            <Button
+              title="Ir al MainScreen"
+              onPress={() => navigation.navigate("PaginaPrincipal")}
+            />
+          </View>
+        </View>
+      )}
     </Background>
   );
 };
@@ -112,5 +124,22 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 10,
     borderRadius: 10,
+  },
+  noZonaContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  noZonaContent: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  noZonaText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#B22222",
+    marginBottom: 20,
   },
 });

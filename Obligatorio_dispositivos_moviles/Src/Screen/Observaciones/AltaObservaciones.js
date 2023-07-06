@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useRef} from "react";
 import {
   View,
   Button,
@@ -28,7 +28,7 @@ const MyComponent = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   const navigation = useNavigation();
-
+  const mapRef = useRef(null);
   useEffect(() => {
     checkLocationPermission();
   }, []);
@@ -133,6 +133,7 @@ const MyComponent = () => {
         const location = await Location.getCurrentPositionAsync();
         setLatitude(location.coords.latitude);
         setLongitude(location.coords.longitude);
+        UbicarMapa(location.coords.latitude,location.coords.longitude)
       } catch (error) {
         console.log(error);
       }
@@ -140,7 +141,14 @@ const MyComponent = () => {
       console.log("Location permission denied");
     }
   };
-
+  const UbicarMapa = (lati , longi) => {
+    mapRef.current.animateToRegion({
+      latitude: lati,
+      longitude: longi,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    }); 
+  }
   const handleMapPress = (event) => {
     setSelectedLocation(event.nativeEvent.coordinate);
     setLatitude(event.nativeEvent.coordinate.latitude);
@@ -172,6 +180,7 @@ const MyComponent = () => {
                 </Picker>
 
                 <MapView
+                ref={mapRef}
                   style={styles.map}
                   initialRegion={{
                     latitude: latitude || 0,
@@ -223,16 +232,14 @@ const styles = StyleSheet.create({
   picker: {
     height: 200,
     marginBottom: 5,
-    borderRadius: "5px",
-    borderWidth: "2px",
+  
     borderColor: "grey",
   },
   map: {
     width: "100%",
     height: 200,
     marginBottom: 10,
-    borderRadius: "5px",
-    borderWidth: "2px",
+
     borderColor: "grey",
   },
   image: {
@@ -243,9 +250,7 @@ const styles = StyleSheet.create({
   locationText: {
     fontSize: 16,
     fontWeight: "bold",
-    borderWidth: "2px",
     borderColor: "grey",
-    borderRadius: "5px",
   },
   buttonContainer: {
     marginBottom: 10,
@@ -255,7 +260,7 @@ const styles = StyleSheet.create({
     margin: 10,
     marginBottom: 30,
     padding: 10,
-    borderRadius: 10,
+
     height: 580,
   },
 });

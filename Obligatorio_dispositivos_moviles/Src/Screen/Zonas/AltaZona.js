@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect , useRef } from "react";
 import {
   StyleSheet,
   SafeAreaViewBase,
@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Alert,
   ImageBackground,
+  Text
 } from "react-native";
 import MyInputText from "../../Componentes/MyInputText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
@@ -29,6 +30,7 @@ const AltaZona = () => {
 
   const navigation = useNavigation();
   const db = DatabaseConnection.getConnection();
+  const mapRef = useRef(null);
 
   useEffect(() => {
     checkLocationPermission();
@@ -123,18 +125,43 @@ const AltaZona = () => {
       }
     }
   };
+const UbicarMapa = (lati , longi) => {
+    mapRef.current.animateToRegion({
+      latitude: lati,
+      longitude: longi,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    }); 
+  }
 
   const checkLocationPermission = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     setLocationPermission(status === "granted");
   };
-
+  
   const handleMapPress = (event) => {
     setSelectedLocation(event.nativeEvent.coordinate);
     setLatitud(event.nativeEvent.coordinate.latitude);
     setLongitud(event.nativeEvent.coordinate.longitude);
   };
 
+  const handleGetLocation = async () => {
+    if (locationPermission) {
+      try {
+        const location = await Location.getCurrentPositionAsync();
+        setSelectedLocation({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        });
+        UbicarMapa(location.coords.latitude, location.coords.longitude);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.log("Location permission denied");
+    }
+  };
+  
   return (
     <Background>
       <SafeAreaView>
@@ -160,6 +187,7 @@ const AltaZona = () => {
                 />
 
                 <MapView
+                ref={mapRef}
                   style={styles.map}
                   initialRegion={{
                     latitude: Latitud || 0,
@@ -171,6 +199,21 @@ const AltaZona = () => {
                 >
                   {selectedLocation && <Marker coordinate={selectedLocation} />}
                 </MapView>
+                <BotonPrincipal
+                    title="Obtener ubicación"
+                    onPress={handleGetLocation}
+                  />
+                 
+                    {Latitud && Longitud && (
+                    <View>
+                  <Text style={styles.locationText}>
+                    Latitude: {Latitud} 
+                  </Text>
+                  <Text style={styles.locationText}>
+                    Longitude: {Longitud}
+                  </Text>
+                  </View>
+                )}
                 <MyInputText
                   styles={styles.inputStyle}
                   placeholder="Cantidad Trabajadores"
@@ -204,6 +247,11 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 200,
     marginBottom: 10,
+  },
+  locationText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    borderColor: "grey",
   },
   listItemView: {
     backgroundColor: "white",

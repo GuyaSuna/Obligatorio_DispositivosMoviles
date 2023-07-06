@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "white",
     padding: 10,
-    borderRadius: 10,
     margin: 10,
   },
   label: {
@@ -107,8 +106,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 200,
     marginBottom: 10,
-    borderRadius: '5px',
-    borderWidth: '2px',
     borderColor: 'grey',
   },
   
