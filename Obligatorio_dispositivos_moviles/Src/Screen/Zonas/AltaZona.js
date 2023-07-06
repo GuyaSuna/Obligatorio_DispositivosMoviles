@@ -204,9 +204,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 200,
     marginBottom: 10,
-    borderColor: "grey",
-    borderRadius: "20px",
-    borderWidth: "3px",
   },
   listItemView: {
     backgroundColor: "white",
