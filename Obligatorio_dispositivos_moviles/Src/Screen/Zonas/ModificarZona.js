@@ -10,11 +10,10 @@ import {
 // import MyText from "../../Componentes/MyText"; Lo vamos a usar para el buscador.
 
 import MyInputText from "../../Componentes/MyInputText";
-import MyText from "../../Componentes/MyText";
+import { Picker } from "@react-native-picker/picker";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection"
-import MyInputOpciones from "../../Componentes/MyInputOpcionMultiple";
 import Background from "../../Componentes/Background";
 
 const ModificarZona = ({route}) => {
@@ -140,13 +139,16 @@ const ModificarZona = ({route}) => {
           <View style={styles.listItemView}>
             <ScrollView>
               <KeyboardAvoidingView>
-                <MyInputText
-                  placeholder="Lugar"
-                  minLength={8}
-                  maxLength={16}
-                  onChangeText={handleLugar}
-                  value={Lugar}
-                />
+              <Picker
+                  selectedValue={Lugar}
+                  onValueChange={handleLugar}
+                  style={styles.inputLugar}
+                >
+                  <Picker.Item label="Lugar" value="" />
+                  <Picker.Item label="Estancia" value="Estancia" />
+                  <Picker.Item label="Quinta" value="Quinta" />
+                  <Picker.Item label="Plantacion" value="Plantacion" />
+                </Picker>
 
                 <MyInputText
                   placeholder="Departamento"
