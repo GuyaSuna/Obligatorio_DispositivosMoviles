@@ -8,7 +8,6 @@ const MyInputOpciones = ({ opciones }) => {
     setSelectedOption(option);
   };
 
-
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Opciones:</Text>
