@@ -207,14 +207,15 @@ const MyComponent = () => {
                     onPress={handleGetLocation}
                   />
                 </View>
+                <View style={styles.buttonContainer}>
+                  <BotonPrincipal title="Alta" onPress={addObs} />
+                </View>
                 {latitude && longitude && (
                   <Text style={styles.locationText}>
                     Latitude: {latitude}, Longitude: {longitude}
                   </Text>
                 )}
-                <View style={styles.buttonContainer}>
-                  <BotonPrincipal title="Alta" onPress={addObs} />
-                </View>
+              
               </View>
             </ScrollView>
           </View>
