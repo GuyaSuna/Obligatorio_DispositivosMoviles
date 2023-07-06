@@ -14,6 +14,7 @@ const db = DatabaseConnection.getConnection();
 import { useNavigation } from "@react-navigation/native";
 import BotonBorrar from "../../Componentes/BotonBorrar";
 import Background from "../../Componentes/Background";
+import BotonPrincipal from "../../Componentes/BotonPrincipal";
 
 const VerTodosLosTratamientos = () => {
   const [Tratamientos, setTratamientos] = useState([]);
