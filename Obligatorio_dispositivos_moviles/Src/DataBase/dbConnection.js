@@ -156,6 +156,28 @@ const DatabaseConnection = {
   //   );
   // },
 
+ deleteTablaUsuario: () => {
+    const db = DatabaseConnection.getConnection();
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          "DROP TABLE Usuarios",
+          [],
+          () => {
+            console.log("Tabla Usuarios eliminada correctamente");
+          },
+          (tx, error) => {
+            console.log("Error al eliminar la tabla Usuarios:", error);
+          }
+        );
+      },
+      (error) => {
+        console.log("Error en la transacción:", error);
+      }
+    );
+  },
+  
+
   createUsuariosTable: () => {
     const db = DatabaseConnection.getConnection();
     db.transaction((tx) => {

@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  FlatList,
-  Alert,
-  Text,
-  Button,
-} from "react-native";
+import { StyleSheet, View, SafeAreaView, FlatList, Alert, Text, Button } from "react-native";
 import MyText from "../../Componentes/MyText";
 import DatabaseConnection from "../../DataBase/dbConnection";
 const db = DatabaseConnection.getConnection();
@@ -88,7 +80,8 @@ const TodasLasZonas = () => {
   return (
     <Background>
       {Zonas.length > 0 ? (
-        <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container}>
+        <View>
           <View>
             <View>
               <FlatList
@@ -100,6 +93,17 @@ const TodasLasZonas = () => {
             </View>
           </View>
         </SafeAreaView>
+      ) : (
+        <View style={styles.noZonaContainer}>
+          <View style={styles.noZonaContent}>
+            <Text style={styles.noZonaText}>No hay Zonas</Text>
+            <Button
+              title="Ir al MainScreen"
+              onPress={() => navigation.navigate("PaginaPrincipal")}
+            />
+          </View>
+        </View>
+      </SafeAreaView>
       ) : (
         <View style={styles.noZonaContainer}>
           <View style={styles.noZonaContent}>
