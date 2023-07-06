@@ -18,7 +18,7 @@ import Background from "../../Componentes/Background";
 const AltaUsuario = () => {
   //Aca definimos los estados de los campos del form
   const [UserName, setUserName] = useState("");
-  const [Password, setPassword] = useState("");
+  const [Apellido, setApellido] = useState("");
   const [Email, setEmail] = useState("");
 
   const navigation = useNavigation();
@@ -28,8 +28,8 @@ const AltaUsuario = () => {
   const handleUserName = (userName) => {
     setUserName(userName);
   };
-  const handlePassword = (password) => {
-    setPassword(password);
+  const handleApellido = (apellido) => {
+    setApellido(apellido);
   };
   const handleEmail = (email) => {
     setEmail(email);
@@ -39,10 +39,10 @@ const AltaUsuario = () => {
     console.log("### add User ###");
 
     if (validateData()) {
-      console.log("### save User ###", UserName, Password, Email);
+      console.log("### save User ###", UserName, Apellido, Email);
 
       // llamar a la db y guardar los datos
-      DatabaseConnection.insertUsuario(UserName, Password, Email)
+      DatabaseConnection.insertUsuario(UserName, Apellido, Email)
         .then((result) => {
           Alert.alert(
             "Exito",
@@ -69,8 +69,8 @@ const AltaUsuario = () => {
       Alert.alert("Error", "El nombre de usuario es obligatorio");
       return false;
     }
-    if (Password === "" && !Password.trim()) {
-      Alert.alert("Error", "La contraseña es obligatoria");
+    if (Apellido === "" && !Apellido.trim()) {
+      Alert.alert("Error", "El apellido es obligatorio");
       return false;
     }
     if (!Email.trim()) {
@@ -94,15 +94,15 @@ const AltaUsuario = () => {
               <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <MyInputText
                   styles={styles.inputUser}
-                  placeholder="Nombre de usuario"
+                  placeholder="Nombres"
                   value={UserName}
                   onChangeText={handleUserName}
                 />
                 <MyInputText
-                  styles={styles.inputPassword}
-                  placeholder="Contraseña"
-                  value={Password}
-                  onChangeText={handlePassword}
+                  styles={styles.inputApellido}
+                  placeholder="Apellidos"
+                  value={Apellido}
+                  onChangeText={handleApellido}
                   minLength={8}
                   maxLength={16}
                 />

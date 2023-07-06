@@ -13,8 +13,11 @@ const UnTratamiento = ({ route }) => {
   const mapRef = useRef(null);
 
   useEffect(() => {
-    DatabaseConnection.SeleccionarZonaUnica(parseInt(item.Zona), setSelectedZona);
-    console.log("ZONAAAAA",selectedZona)
+    DatabaseConnection.SeleccionarZonaUnica(
+      parseInt(item.Zona),
+      setSelectedZona
+    );
+    console.log("ZONAAAAA", selectedZona);
   }, []);
 
   const HandleModificar = () => {
@@ -33,7 +36,12 @@ const UnTratamiento = ({ route }) => {
   };
 
   useEffect(() => {
-    if (selectedZona && selectedZona.Latitud && selectedZona.Longitud && mapRef.current) {
+    if (
+      selectedZona &&
+      selectedZona.Latitud &&
+      selectedZona.Longitud &&
+      mapRef.current
+    ) {
       mapRef.current.animateToRegion({
         latitude: selectedZona.Latitud,
         longitude: selectedZona.Longitud,
@@ -104,14 +112,13 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   map: {
-    width: '100%',
+    width: "100%",
     height: 200,
     marginBottom: 10,
-    borderRadius: '5px',
-    borderWidth: '2px',
-    borderColor: 'grey',
+    borderRadius: "5px",
+    borderWidth: "2px",
+    borderColor: "grey",
   },
-  
 });
 
 export default UnTratamiento;

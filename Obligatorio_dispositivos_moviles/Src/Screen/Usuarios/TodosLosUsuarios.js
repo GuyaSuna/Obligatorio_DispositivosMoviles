@@ -3,10 +3,8 @@ import {
   View,
   Text,
   FlatList,
-  scrollViewContainer,
   SafeAreaView,
   StyleSheet,
-  ScrollView,
   Alert,
   Button,
 } from "react-native";
@@ -29,7 +27,7 @@ const TodosLosUsuarios = () => {
   const handleObservar = (item) => {
     navigation.navigate("UnUsuario", {
       Nombre: item.Nombre,
-      Password: item.Password,
+      Apellido: item.Apellido,
       Email: item.Email,
     });
   };
@@ -71,10 +69,12 @@ const TodosLosUsuarios = () => {
     return (
       <Background>
         <View key={item.id} style={styles.listItemView}>
-          <MyText textValue="Nombre" textStyle={styles.textStyle} />
+          <MyText textValue="Nombre" textStyle={styles.text} />
           <MyText textValue={item.Nombre} textStyle={styles.textStyle} />
+          <MyText textValue="Apellido" textStyle={styles.text} />
+          <MyText textValue={item.Apellido} textStyle={styles.textStyle} />
 
-          <MyText textValue="Email" textStyle={styles.textStyle} />
+          <MyText textValue="Email" textStyle={styles.text} />
           <MyText textValue={item.Email} textStyle={styles.textStyle} />
 
           <BotonPrincipal
@@ -126,6 +126,15 @@ const styles = StyleSheet.create({
     color: "black",
     alignContent: "center",
     justifyContent: "center",
+    fontSize: 18,
+  },
+  text: {
+    padding: 5,
+    color: "black",
+    alignContent: "center",
+    justifyContent: "center",
+    fontSize: 16,
+    fontWeight: "bold",
   },
   listItemView: {
     backgroundColor: "white",

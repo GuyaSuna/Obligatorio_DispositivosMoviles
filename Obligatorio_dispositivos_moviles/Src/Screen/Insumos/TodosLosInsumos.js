@@ -70,10 +70,10 @@ const TodosLosInusmos = () => {
     return (
       <Background>
         <View key={item.id} style={styles.listItemView}>
-          <MyText textValue="INSUMO: " textStyle={styles.textStyle} />
+          <MyText textValue="INSUMO " textStyle={styles.text} />
           <MyText textValue={item.Nombre} textStyle={styles.textStyle} />
 
-          <MyText textValue="CANT. EN LITROS: " textStyle={styles.textStyle} />
+          <MyText textValue="CANT. EN LITROS " textStyle={styles.text} />
           <MyText textValue={item.Cantidad} textStyle={styles.textStyle} />
 
           <BotonPrincipal
@@ -126,6 +126,13 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     fontSize: 18,
+  },
+  text: {
+    padding: 5,
+    color: "black",
+    alignContent: "center",
+    justifyContent: "center",
+    fontSize: 16,
     fontWeight: "bold",
   },
   listItemView: {

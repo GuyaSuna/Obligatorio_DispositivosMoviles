@@ -223,16 +223,12 @@ const styles = StyleSheet.create({
   picker: {
     height: 200,
     marginBottom: 5,
-    borderRadius: "5px",
-    borderWidth: "2px",
     borderColor: "grey",
   },
   map: {
     width: "100%",
     height: 200,
     marginBottom: 10,
-    borderRadius: "5px",
-    borderWidth: "2px",
     borderColor: "grey",
   },
   image: {
@@ -243,9 +239,7 @@ const styles = StyleSheet.create({
   locationText: {
     fontSize: 16,
     fontWeight: "bold",
-    borderWidth: "2px",
     borderColor: "grey",
-    borderRadius: "5px",
   },
   buttonContainer: {
     marginBottom: 10,

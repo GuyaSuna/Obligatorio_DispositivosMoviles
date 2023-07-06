@@ -135,6 +135,26 @@ const DatabaseConnection = {
       });
     });
   },
+  // deleteTablaUsuario: () => {
+  //   const db = DatabaseConnection.getConnection();
+  //   db.transaction(
+  //     (tx) => {
+  //       tx.executeSql(
+  //         "DROP TABLE Usuarios",
+  //         [],
+  //         () => {
+  //           console.log("Tabla Usuarios eliminada correctamente");
+  //         },
+  //         (tx, error) => {
+  //           console.log("Error al eliminar la tabla Usuarios:", error);
+  //         }
+  //       );
+  //     },
+  //     (error) => {
+  //       console.log("Error en la transacción:", error);
+  //     }
+  //   );
+  // },
 
   createUsuariosTable: () => {
     const db = DatabaseConnection.getConnection();
@@ -145,7 +165,7 @@ const DatabaseConnection = {
         (tx, results) => {
           if (results.rows.length === 0) {
             tx.executeSql(
-              "CREATE TABLE Usuarios (id INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT,Password TEXT, Email TEXT )",
+              "CREATE TABLE Usuarios (id INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT,Apellido TEXT, Email TEXT )",
               [],
               () => console.log("Tabla Usuarios creada correctamente"),
               (tx, error) =>
@@ -164,13 +184,13 @@ const DatabaseConnection = {
     });
   },
 
-  insertUsuario: (Nombre, Password, Email) => {
+  insertUsuario: (Nombre, Apellido, Email) => {
     return new Promise((resolve, reject) => {
       const db = DatabaseConnection.getConnection();
       db.transaction((tx) => {
         tx.executeSql(
-          "INSERT INTO Usuarios (Nombre, Password, Email) VALUES (?, ?, ?)",
-          [Nombre, Password, Email],
+          "INSERT INTO Usuarios (Nombre, Apellido, Email) VALUES (?, ?, ?)",
+          [Nombre, Apellido, Email],
           (tx, results) => {
             if (results.rowsAffected > 0) {
               resolve(true);
@@ -204,13 +224,13 @@ const DatabaseConnection = {
     });
   },
 
-  ModificarUsuario: (Nombre, Password, Email, NombreViejo, PaswordViejo) => {
+  ModificarUsuario: (Nombre, Apellido, Email, NombreViejo, ApellidoViejo) => {
     return new Promise((resolve, reject) => {
       const db = DatabaseConnection.getConnection();
       db.transaction((tx) => {
         tx.executeSql(
-          "UPDATE Usuarios SET Nombre=?, Password=?, Email=? WHERE Nombre=? AND Password=?",
-          [Nombre, Password, Email, NombreViejo, PaswordViejo],
+          "UPDATE Usuarios SET Nombre=?, Apellido=?, Email=? WHERE Nombre=? AND Apellido=?",
+          [Nombre, Apellido, Email, NombreViejo, ApellidoViejo],
           (_, results) => {
             if (results.rowsAffected > 0) {
               resolve(true);
@@ -321,7 +341,7 @@ const DatabaseConnection = {
       });
     });
   },
-  
+
   ModificarInsumo: (Nombre, Cantidad, NombreViejo) => {
     return new Promise((resolve, reject) => {
       const db = DatabaseConnection.getConnection();

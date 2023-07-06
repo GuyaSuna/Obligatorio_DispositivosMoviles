@@ -68,13 +68,13 @@ const TodasLasObservaciones = () => {
     return (
       <Background>
         <View key={item.id} style={styles.listItemView}>
-          <MyText textValue="Titulo" textStyle={styles.textStyle} />
+          <MyText textValue="Titulo" textStyle={styles.text} />
           <MyText textValue={item.Titulo} textStyle={styles.textStyle} />
 
-          <MyText textValue="Latitud" textStyle={styles.textStyle} />
+          <MyText textValue="Latitud" textStyle={styles.text} />
           <MyText textValue={item.Latitud} textStyle={styles.textStyle} />
 
-          <MyText textValue="Longitud" textStyle={styles.textStyle} />
+          <MyText textValue="Longitud" textStyle={styles.text} />
           <MyText textValue={item.Longitud} textStyle={styles.textStyle} />
 
           <BotonPrincipal
@@ -128,6 +128,15 @@ const styles = StyleSheet.create({
     color: "black",
     alignContent: "center",
     justifyContent: "center",
+    fontSize: 18,
+  },
+  text: {
+    padding: 5,
+    color: "black",
+    alignContent: "center",
+    justifyContent: "center",
+    fontSize: 16,
+    fontWeight: "bold",
   },
   listItemView: {
     backgroundColor: "white",

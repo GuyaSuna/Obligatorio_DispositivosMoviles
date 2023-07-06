@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   TextInput,
-  Button,
   Alert,
   ScrollView,
   StyleSheet,
@@ -42,7 +41,7 @@ const AltaTratamientoForm = () => {
     DatabaseConnection.BuscarUsuarios(setUsuarios);
     DatabaseConnection.BuscarZonas(setZona);
     DatabaseConnection.BuscarObservaciones(setObservacion);
-    console.log("Aca arrancamos", observacion[1]?.id);
+    // console.log("Aca arrancamos", observacion[1]?.id);
   }, []);
 
   const renderSelectedObservaciones = () => {
@@ -367,7 +366,6 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     borderColor: "#CCCCCC",
-    borderWidth: 1,
     marginBottom: 8,
     paddingLeft: 8,
   },
@@ -375,7 +373,6 @@ const styles = StyleSheet.create({
     height: 200,
     marginBottom: 8,
     borderRadius: "5px",
-    borderWidth: "2px",
     borderColor: "grey",
   },
   selectedItemsContainer: {
