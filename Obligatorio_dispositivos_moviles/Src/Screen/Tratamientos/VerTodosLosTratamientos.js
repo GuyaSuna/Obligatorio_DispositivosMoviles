@@ -12,7 +12,7 @@ import MyText from "../../Componentes/MyText";
 import DatabaseConnection from "../../DataBase/dbConnection";
 const db = DatabaseConnection.getConnection();
 import { useNavigation } from "@react-navigation/native";
-import BotonPrincipal from "../../Componentes/BotonPrincipal";
+import BotonBorrar from "../../Componentes/BotonBorrar";
 import Background from "../../Componentes/Background";
 
 const VerTodosLosTratamientos = () => {
@@ -91,7 +91,7 @@ const VerTodosLosTratamientos = () => {
             title="Observar"
             onPress={() => handleObservar(item)}
           />
-          <BotonPrincipal title="Borrar" onPress={() => handleBorrar(item)} />
+          <BotonBorrar title="Borrar" onPress={() => handleBorrar(item)} />
         </View>
       </Background>
     );
