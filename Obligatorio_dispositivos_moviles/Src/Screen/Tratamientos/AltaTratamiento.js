@@ -26,15 +26,14 @@ const AltaTratamientoForm = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [selectedInsumo, setSelectedInsumo] = useState(null);
   const [selectedUsuario, setSelectedUsuario] = useState(null);
-  const [selectedZona , setSelectedZona] = useState(null);
+  const [selectedZona, setSelectedZona] = useState(null);
   const [selectedObservacion, setSelectedObservacion] = useState([]);
   const [selectedInsumosList, setSelectedInsumosList] = useState([]);
   const [selectedObservacionList, setSelectedObservacionList] = useState([]);
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [isEndDatePickerVisible, setEndDatePickerVisible] = useState(false);
-const [selectedEndDate, setSelectedEndDate] = useState("");
-
+  const [selectedEndDate, setSelectedEndDate] = useState("");
 
   const db = DatabaseConnection.getConnection();
   const navigation = useNavigation();
@@ -79,9 +78,8 @@ const [selectedEndDate, setSelectedEndDate] = useState("");
       return;
     }
 
-
-console.log(selectedDate)
-console.log(selectedEndDate)
+    console.log(selectedDate);
+    console.log(selectedEndDate);
     const observacionesTexto = selectedObservacionList
       .map(
         (obs) =>
@@ -95,11 +93,11 @@ console.log(selectedEndDate)
 
     console.log("Texto de Ins:", insumosTexto);
     console.log("Texto de Obs:", observacionesTexto);
-    console.log("Nombre", nombreTratamiento)
-    console.log("Tiempo", tiempo)
-    console.log("Orden", ordenTrabajo)
-    console.log("Zona", selectedZona)
-    console.log("Y ASI?", selectedZona?.Lugar)
+    console.log("Nombre", nombreTratamiento);
+    console.log("Tiempo", tiempo);
+    console.log("Orden", ordenTrabajo);
+    console.log("Zona", selectedZona);
+    console.log("Y ASI?", selectedZona?.Lugar);
 
     DatabaseConnection.inserTratamientos(
       nombreTratamiento,
@@ -111,14 +109,15 @@ console.log(selectedEndDate)
       ordenTrabajo,
       insumosTexto,
       observacionesTexto
-    ).then((result) => {
+    )
+      .then((result) => {
         Alert.alert(
           "Exito",
           "Tratamiento registrado correctamente",
           [
             {
               text: "Ok",
-              onPress: () => navigation.navigate("PaginaPrincipal"),
+              onPress: () => navigation.navigate("Tratamientos"),
             },
           ],
           {
@@ -131,7 +130,6 @@ console.log(selectedEndDate)
       });
 
     console.log("Usuario seleccionado:", selectedUsuario);
-
   };
 
   const validarCampos = () => {
@@ -139,7 +137,7 @@ console.log(selectedEndDate)
       nombreTratamiento === "" ||
       selectedZona === null ||
       selectedUsuario === null ||
-      selectedDate=== "" ||
+      selectedDate === "" ||
       selectedEndDate === "" ||
       tiempo === "" ||
       ordenTrabajo === "" ||
@@ -149,16 +147,19 @@ console.log(selectedEndDate)
       Alert.alert("Error", "Por favor completa todos los campos");
       return false;
     }
-  
+
     // Validar que la fecha de fin no sea anterior a la fecha de inicio
     const fechaInicioObj = new Date(selectedDate);
     const fechaFinObj = new Date(selectedEndDate);
-  
+
     if (fechaFinObj < fechaInicioObj) {
-      Alert.alert("Error", "La fecha de fin no puede ser anterior a la fecha de inicio");
+      Alert.alert(
+        "Error",
+        "La fecha de fin no puede ser anterior a la fecha de inicio"
+      );
       return false;
     }
-  
+
     return true;
   };
 
@@ -169,7 +170,9 @@ console.log(selectedEndDate)
     setSelectedObservacionList(nuevaLista);
   };
   const handleBorrarIns = (itemValue) => {
-    const nuevaLista = selectedInsumosList.filter((Ins) => Ins.id !== itemValue);
+    const nuevaLista = selectedInsumosList.filter(
+      (Ins) => Ins.id !== itemValue
+    );
     setSelectedInsumosList(nuevaLista);
   };
 
@@ -215,7 +218,6 @@ console.log(selectedEndDate)
     setSelectedEndDate(date.dateString);
     setEndDatePickerVisible(false);
   };
-  
 
   return (
     <Background>
@@ -252,10 +254,10 @@ console.log(selectedEndDate)
             <Picker
               style={styles.picker}
               selectedValue={selectedZona}
-              onValueChange={itemValue => setSelectedZona(itemValue)}
+              onValueChange={(itemValue) => setSelectedZona(itemValue)}
             >
               <Picker.Item label="Seleccionar Zona" value={null} />
-              {zona.map(zona => (
+              {zona.map((zona) => (
                 <Picker.Item key={zona.id} label={zona.Lugar} value={zona.id} />
               ))}
             </Picker>
@@ -263,10 +265,10 @@ console.log(selectedEndDate)
             <Picker
               style={styles.picker}
               selectedValue={selectedUsuario}
-              onValueChange={itemValue => setSelectedUsuario(itemValue)}
+              onValueChange={(itemValue) => setSelectedUsuario(itemValue)}
             >
               <Picker.Item label="Seleccionar usuario" value={null} />
-              {usuarios.map(u => (
+              {usuarios.map((u) => (
                 <Picker.Item key={u.id} label={u.Nombre} value={u.id} />
               ))}
             </Picker>
@@ -311,7 +313,7 @@ console.log(selectedEndDate)
               onValueChange={handleInsumo}
             >
               <Picker.Item label="Seleccionar insumo" value={null} />
-              {insumos.map(ins => (
+              {insumos.map((ins) => (
                 <Picker.Item
                   key={ins.id}
                   label={`${ins.Nombre} - Cantidad: ${ins.Cantidad}`}
@@ -333,7 +335,7 @@ console.log(selectedEndDate)
               onValueChange={handleObservacion}
             >
               <Picker.Item label="Seleccionar observacion" value={null} />
-              {observacion.map(obs => (
+              {observacion.map((obs) => (
                 <Picker.Item key={obs.id} label={obs.Titulo} value={obs} />
               ))}
             </Picker>
@@ -371,7 +373,7 @@ const styles = StyleSheet.create({
   picker: {
     height: 200,
     marginBottom: 8,
-    borderRadius: '5px',
+
     borderColor: 'grey',
   },
   selectedItemsContainer: {

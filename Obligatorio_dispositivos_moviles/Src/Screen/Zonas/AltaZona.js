@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect , useRef } from "react";
 import {
   StyleSheet,
   SafeAreaViewBase,
@@ -8,18 +8,18 @@ import {
   KeyboardAvoidingView,
   Alert,
   ImageBackground,
+  Text
 } from "react-native";
 import MyInputText from "../../Componentes/MyInputText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection";
-import {Picker} from '@react-native-picker/picker';
-import * as Location from 'expo-location';
-import MapView, { Marker } from 'react-native-maps';
+import { Picker } from "@react-native-picker/picker";
+import * as Location from "expo-location";
+import MapView, { Marker } from "react-native-maps";
 import Background from "../../Componentes/Background";
 
 const AltaZona = () => {
-
   const [Lugar, setLugar] = useState("");
   const [Departamento, setDepartamento] = useState("");
   const [Cantidad, setCantidad] = useState("");
@@ -30,11 +30,11 @@ const AltaZona = () => {
 
   const navigation = useNavigation();
   const db = DatabaseConnection.getConnection();
+  const mapRef = useRef(null);
 
-  useEffect (() => {
-checkLocationPermission();
+  useEffect(() => {
+    checkLocationPermission();
   }, []);
-
 
   const handleLugar = (lugar) => {
     setLugar(lugar);
@@ -99,7 +99,7 @@ checkLocationPermission();
             [
               {
                 text: "Ok",
-                onPress: () => navigation.navigate("PaginaPrincipal"),
+                onPress: () => navigation.navigate("Zonas"),
               },
             ],
             {
@@ -125,19 +125,41 @@ checkLocationPermission();
       }
     }
   };
-
+const UbicarMapa = (lati , longi) => {
+    mapRef.current.animateToRegion({
+      latitude: lati,
+      longitude: longi,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    }); 
+  }
 
   const checkLocationPermission = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
-    setLocationPermission(status === 'granted');
+    setLocationPermission(status === "granted");
   };
-
+  
   const handleMapPress = (event) => {
     setSelectedLocation(event.nativeEvent.coordinate);
     setLatitud(event.nativeEvent.coordinate.latitude);
     setLongitud(event.nativeEvent.coordinate.longitude);
   };
-    
+
+  const handleGetLocation = async () => {
+    if (locationPermission) {
+      try {
+        const location = await Location.getCurrentPositionAsync();
+        setLatitud(location.coords.latitude);
+        setLongitud(location.coords.longitude);
+        UbicarMapa(location.coords.latitude,location.coords.longitude)
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.log("Location permission denied");
+    }
+  };
+
   return (
     <Background>
       <SafeAreaView>
@@ -163,6 +185,7 @@ checkLocationPermission();
                 />
 
                 <MapView
+                ref={mapRef}
                   style={styles.map}
                   initialRegion={{
                     latitude: Latitud || 0,
@@ -174,6 +197,21 @@ checkLocationPermission();
                 >
                   {selectedLocation && <Marker coordinate={selectedLocation} />}
                 </MapView>
+                <BotonPrincipal
+                    title="Obtener ubicación"
+                    onPress={handleGetLocation}
+                  />
+                 
+                    {Latitud && Longitud && (
+                    <View>
+                  <Text style={styles.locationText}>
+                    Latitude: {Latitud} 
+                  </Text>
+                  <Text style={styles.locationText}>
+                    Longitude: {Longitud}
+                  </Text>
+                  </View>
+                )}
                 <MyInputText
                   styles={styles.inputStyle}
                   placeholder="Cantidad Trabajadores"
@@ -196,18 +234,22 @@ export default AltaZona;
 const styles = StyleSheet.create({
   container: {},
   inputLugar: {
-    borderColor: 'grey',
+    borderColor: "grey",
+    borderWidth: 2,
     borderRadius: 10,
   },
   inputStyle: {
-    width: '100%',
+    width: "100%",
   },
   map: {
-    width: '100%',
+    width: "100%",
     height: 200,
     marginBottom: 10,
-    borderColor: 'grey',
-    borderRadius: '20px',
+  },
+  locationText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    borderColor: "grey",
   },
   listItemView: {
     backgroundColor: "white",
@@ -215,5 +257,4 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
   },
-  
 });

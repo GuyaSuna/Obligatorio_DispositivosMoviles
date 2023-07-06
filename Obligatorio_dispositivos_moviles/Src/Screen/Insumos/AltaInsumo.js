@@ -6,7 +6,6 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Alert,
-
 } from "react-native";
 import MyInputText from "../../Componentes/MyInputText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
@@ -34,8 +33,11 @@ const AltaInsumo = () => {
       Alert.alert("Error", "El nombre del Insumo es obligatorio");
       return false;
     }
-    if (insumoCantidad.trim() === ""  || insumoCantidad < 1 ) {
-      Alert.alert("Error", "La cantidad del Insumo es obligatoria y debe ser un valor aceptado");
+    if (insumoCantidad.trim() === "" || insumoCantidad < 1) {
+      Alert.alert(
+        "Error",
+        "La cantidad del Insumo es obligatoria y debe ser un valor aceptado"
+      );
       return false;
     }
     return true;
@@ -56,7 +58,7 @@ const AltaInsumo = () => {
             [
               {
                 text: "Ok",
-                onPress: () => navigation.navigate("PaginaPrincipal"),
+                onPress: () => navigation.navigate("Insumos"),
               },
             ],
             {
@@ -90,34 +92,32 @@ const AltaInsumo = () => {
 
   return (
     <Background>
-    <SafeAreaView>
-      <View>
-        <View style={styles.listItemView}>
-          <ScrollView>
-            <KeyboardAvoidingView>
-              <MyInputText
-             
-                placeholder="Ingrese el nombre del Insumo"
-                onChangeText={handleInsumoName}
-                value={insumoName}
-              />
-              <MyInputText
-               
-                placeholder="Cantidad"
-                keyboardType="numeric"
-                onChangeText={handleInsumoCantidad}
-                value={insumoCantidad}
-              />
-              <BotonPrincipal
-                title="Ingresar"
-                btnColor="green"
-                onPress={addInsumo}
-              />
-            </KeyboardAvoidingView>
-          </ScrollView>
+      <SafeAreaView>
+        <View>
+          <View style={styles.listItemView}>
+            <ScrollView>
+              <KeyboardAvoidingView>
+                <MyInputText
+                  placeholder="Ingrese el nombre del Insumo"
+                  onChangeText={handleInsumoName}
+                  value={insumoName}
+                />
+                <MyInputText
+                  placeholder="Cantidad"
+                  keyboardType="numeric"
+                  onChangeText={handleInsumoCantidad}
+                  value={insumoCantidad}
+                />
+                <BotonPrincipal
+                  title="Ingresar"
+                  btnColor="green"
+                  onPress={addInsumo}
+                />
+              </KeyboardAvoidingView>
+            </ScrollView>
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
     </Background>
   );
 };
@@ -131,4 +131,3 @@ const styles = StyleSheet.create({
   },
 });
 export default AltaInsumo;
-

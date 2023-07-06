@@ -1,12 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { View, Button, Image, Text, StyleSheet, SafeAreaView, ScrollView, Alert } from 'react-native';
+import React, { useState, useEffect , useRef} from "react";
+import {
+  View,
+  Button,
+  Image,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  Alert,
+} from "react-native";
 
-import * as ImagePicker from 'expo-image-picker';
-import * as Location from 'expo-location';
-import MapView, { Marker } from 'react-native-maps';
-import { Picker } from '@react-native-picker/picker';
-import Background from '../../Componentes/Background';
-import DatabaseConnection from '../../DataBase/dbConnection';
+import * as ImagePicker from "expo-image-picker";
+import * as Location from "expo-location";
+import MapView, { Marker } from "react-native-maps";
+import { Picker } from "@react-native-picker/picker";
+import Background from "../../Componentes/Background";
+import DatabaseConnection from "../../DataBase/dbConnection";
 import { useNavigation } from "@react-navigation/native";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 
@@ -18,8 +27,8 @@ const MyComponent = () => {
   const [locationPermission, setLocationPermission] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
 
-const navigation = useNavigation();
-
+  const navigation = useNavigation();
+  const mapRef = useRef(null);
   useEffect(() => {
     checkLocationPermission();
   }, []);
@@ -53,7 +62,7 @@ const navigation = useNavigation();
   };
 
   const addObs = async () => {
-    console.log("### add Obs ###" , title, imageUri,latitude,longitude);
+    console.log("### add Obs ###", title, imageUri, latitude, longitude);
 
     if (validateData()) {
       console.log("### save Observacion ###");
@@ -73,7 +82,7 @@ const navigation = useNavigation();
             [
               {
                 text: "Ok",
-                onPress: () => navigation.navigate("PaginaPrincipal"),
+                onPress: () => navigation.navigate("Observaciones"),
               },
             ],
             {
@@ -102,7 +111,7 @@ const navigation = useNavigation();
 
   const checkLocationPermission = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
-    setLocationPermission(status === 'granted');
+    setLocationPermission(status === "granted");
   };
 
   const pickImage = async () => {
@@ -124,14 +133,22 @@ const navigation = useNavigation();
         const location = await Location.getCurrentPositionAsync();
         setLatitude(location.coords.latitude);
         setLongitude(location.coords.longitude);
+        UbicarMapa(location.coords.latitude,location.coords.longitude)
       } catch (error) {
         console.log(error);
       }
     } else {
-      console.log('Location permission denied');
+      console.log("Location permission denied");
     }
   };
-
+  const UbicarMapa = (lati , longi) => {
+    mapRef.current.animateToRegion({
+      latitude: lati,
+      longitude: longi,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    }); 
+  }
   const handleMapPress = (event) => {
     setSelectedLocation(event.nativeEvent.coordinate);
     setLatitude(event.nativeEvent.coordinate.latitude);
@@ -163,6 +180,7 @@ const navigation = useNavigation();
                 </Picker>
 
                 <MapView
+                ref={mapRef}
                   style={styles.map}
                   initialRegion={{
                     latitude: latitude || 0,
@@ -178,7 +196,10 @@ const navigation = useNavigation();
                   <Image source={{ uri: imageUri }} style={styles.image} />
                 )}
                 <View style={styles.buttonContainer}>
-                  <BotonPrincipal title="Seleccionar imagen" onPress={pickImage} />
+                  <BotonPrincipal
+                    title="Seleccionar imagen"
+                    onPress={pickImage}
+                  />
                 </View>
                 <View style={styles.buttonContainer}>
                   <BotonPrincipal
@@ -211,13 +232,15 @@ const styles = StyleSheet.create({
   picker: {
     height: 200,
     marginBottom: 5,
-    borderColor: 'grey',
+  
+    borderColor: "grey",
   },
   map: {
-    width: '100%',
+    width: "100%",
     height: 200,
     marginBottom: 10,
-    borderColor: 'grey',
+
+    borderColor: "grey",
   },
   image: {
     width: 200,
@@ -226,8 +249,8 @@ const styles = StyleSheet.create({
   },
   locationText: {
     fontSize: 16,
-    fontWeight: 'bold',
-    borderColor: 'grey',
+    fontWeight: "bold",
+    borderColor: "grey",
   },
   buttonContainer: {
     marginBottom: 10,
@@ -235,9 +258,9 @@ const styles = StyleSheet.create({
   listItemView: {
     backgroundColor: "white",
     margin: 10,
-    marginBottom:30,
+    marginBottom: 30,
     padding: 10,
-    borderRadius: 10,
+
     height: 580,
   },
 });

@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, SafeAreaView, FlatList, Alert } from "react-native";
+import {
+  StyleSheet,
+  View,
+  SafeAreaView,
+  FlatList,
+  Alert,
+  Button,
+  Text,
+} from "react-native";
 import MyText from "../../Componentes/MyText";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import Background from "../../Componentes/Background";
@@ -34,7 +42,7 @@ const TodosLosInusmos = () => {
         [
           {
             text: "Ok",
-            onPress: () => navigation.navigate("PaginaPrincipal"),
+            onPress: () => navigation.navigate("Insumos"),
           },
         ],
         {
@@ -58,7 +66,7 @@ const TodosLosInusmos = () => {
     }
   };
   //LISTA DE INSUMOS
-  const listItemView = item => {
+  const listItemView = (item) => {
     return (
       <Background>
         <View key={item.id} style={styles.listItemView}>
@@ -79,18 +87,30 @@ const TodosLosInusmos = () => {
   };
   return (
     <Background>
-      <SafeAreaView style={styles.container}>
-        <View>
+      {Insumos.length > 0 ? (
+        <SafeAreaView style={styles.container}>
           <View>
-            <FlatList
-              data={Insumos}
-              keyExtractor={item => item.id.toString()}
-              renderItem={({ item }) => listItemView(item)}
-              contentContainerStyle={{ paddingHorizontal: 15 }}
+            <View>
+              <FlatList
+                data={Insumos}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => listItemView(item)}
+                contentContainerStyle={{ paddingHorizontal: 15 }}
+              />
+            </View>
+          </View>
+        </SafeAreaView>
+      ) : (
+        <View style={styles.noInsumosContainer}>
+          <View style={styles.noInsumosContent}>
+            <Text style={styles.noInsumosText}>No hay Insumos</Text>
+            <Button
+              title="Ir al MainScreen"
+              onPress={() => navigation.navigate("PaginaPrincipal")}
             />
           </View>
         </View>
-      </SafeAreaView>
+      )}
     </Background>
   );
 };
@@ -113,5 +133,22 @@ const styles = StyleSheet.create({
     marginTop: 5,
     padding: 10,
     borderRadius: 10,
+  },
+  noInsumosContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  noInsumosContent: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  noInsumosText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#B22222",
+    marginBottom: 20,
   },
 });

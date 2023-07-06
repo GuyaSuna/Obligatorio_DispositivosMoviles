@@ -10,8 +10,6 @@ import TodasLasObservaciones from "../Screen/Observaciones/VerTodasLasObservacio
 import VerObservacion from "../Screen/Observaciones/VerObservacion";
 import ModificarObservacion from "../Screen/Observaciones/ModificarObservaiones";
 
-
-
 import Tratamientos from "../Screen/Tratamientos/Tratamientos";
 import AltaTratamiento from "../Screen/Tratamientos/AltaTratamiento";
 import VerTodosLosTratamientos from "../Screen/Tratamientos/VerTodosLosTratamientos";
@@ -61,7 +59,7 @@ const Navigation = () => {
           options={{
             headerTitle: "Fruit Farm",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -78,7 +76,7 @@ const Navigation = () => {
           options={{
             title: "Pagina Usuario",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -92,7 +90,7 @@ const Navigation = () => {
           options={{
             title: "AltaUsuarios",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -100,14 +98,14 @@ const Navigation = () => {
             },
           }}
         />
-       
+
         <Stack.Screen
           name="TodosLosUsuarios"
           component={TodosLosUsuarios}
           options={{
             headerTitle: "Todos Los Usuarios",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -123,7 +121,7 @@ const Navigation = () => {
           options={{
             headerTitle: "Ver Un Usuario",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -139,7 +137,7 @@ const Navigation = () => {
           options={{
             headerTitle: "Editar Usuario",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -156,7 +154,7 @@ const Navigation = () => {
           options={{
             title: "Insumos",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -170,7 +168,7 @@ const Navigation = () => {
           options={{
             title: "Ingreso Insumos",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -184,7 +182,7 @@ const Navigation = () => {
           options={{
             title: "Modificar Insumos",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -198,7 +196,7 @@ const Navigation = () => {
           options={{
             headerTitle: "Ver todos los Insumos",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -214,7 +212,7 @@ const Navigation = () => {
           options={{
             headerTitle: "Ver un Insumo",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -230,7 +228,7 @@ const Navigation = () => {
           options={{
             headerTitle: "Zonas",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -246,7 +244,7 @@ const Navigation = () => {
           options={{
             headerTitle: "Alta Zonas",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -263,7 +261,7 @@ const Navigation = () => {
           options={{
             headerTitle: "Modificar Zonas",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -279,7 +277,7 @@ const Navigation = () => {
           options={{
             headerTitle: "Ver Todas Las Zonas",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -295,7 +293,7 @@ const Navigation = () => {
           options={{
             headerTitle: "Ver Una Zona",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -311,7 +309,7 @@ const Navigation = () => {
           options={{
             title: "Observaciones",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -319,13 +317,13 @@ const Navigation = () => {
             },
           }}
         />
-                <Stack.Screen
+        <Stack.Screen
           name="AltaObservaciones"
           component={AltaObservaciones}
           options={{
             title: "Alta Observaciones",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -340,7 +338,7 @@ const Navigation = () => {
           options={{
             title: "Todas las Observaciones",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -355,7 +353,7 @@ const Navigation = () => {
           options={{
             title: "Una Observacion",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -363,13 +361,13 @@ const Navigation = () => {
             },
           }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="ModificarObservacion"
           component={ModificarObservacion}
           options={{
             title: "Modificar Observacion",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -383,7 +381,7 @@ const Navigation = () => {
           options={{
             title: "Tratamientos",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -391,13 +389,13 @@ const Navigation = () => {
             },
           }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="AltaTratamientos"
           component={AltaTratamiento}
           options={{
             title: "Alta Tratamientos",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -405,13 +403,13 @@ const Navigation = () => {
             },
           }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="VerTodosLosTratamientos"
           component={VerTodosLosTratamientos}
           options={{
             title: "Ver Tratamientos",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -419,13 +417,13 @@ const Navigation = () => {
             },
           }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="ModificarTratamiento"
           component={ModificarTratamiento}
           options={{
             title: "Modificar Tratamiento",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -433,13 +431,13 @@ const Navigation = () => {
             },
           }}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="UnTratamiento"
           component={UnTratamiento}
           options={{
             title: "Un Tratamiento",
             headerStyle: {
-              backgroundColor: "#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -447,13 +445,13 @@ const Navigation = () => {
             },
           }}
         />
-                  <Stack.Screen
+        <Stack.Screen
           name="Contactanos"
           component={Contactanos}
           options={{
             title: "Contactanos",
             headerStyle: {
-              backgroundColor:"#95C117",
+              backgroundColor: "#B22222",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
