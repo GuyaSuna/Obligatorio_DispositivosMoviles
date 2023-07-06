@@ -10,10 +10,12 @@ import Background from "../../Componentes/Background";
 const TodasLasZonas = () => {
   // definir un estado local, para guardar los usuarios
   const [Zonas, setZonas] = useState([]);
+  const [Tratamientos , setTratamientos] = useState([]);
   const navigation = useNavigation();
   // useEffect para cargar las zonas
   useEffect(() => {
-    DatabaseConnection.BuscarZonas(setZonas); // Llamada a BuscarZonas con setZonas como argumento
+    DatabaseConnection.BuscarZonas(setZonas);
+    DatabaseConnection.BuscarTratamientos(setTratamientos);
   }, []);
   const handleObservar = (item) => {
     navigation.navigate("UnaZona", {
@@ -25,6 +27,13 @@ const TodasLasZonas = () => {
     });
   };
   const handleBorrar = (item) => {
+Tratamientos.forEach(Trat => {
+  if(Trat.Zona === item.id){
+    Alert.alert("Esta Zona esta siendo utilizada en un tratamiento")
+    return;
+  }
+});
+
     let comprobante = DatabaseConnection.DeleteZona(item.id);
     if ((comprobante = true)) {
       Alert.alert(
