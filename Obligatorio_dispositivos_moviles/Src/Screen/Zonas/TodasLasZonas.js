@@ -27,12 +27,13 @@ const TodasLasZonas = () => {
     });
   };
   const handleBorrar = (item) => {
-Tratamientos.forEach(Trat => {
-  if(Trat.Zona === item.id){
-    Alert.alert("Esta Zona esta siendo utilizada en un tratamiento")
-    return;
+
+  for(let i = 0 ; i < Tratamientos.length ; i++){
+    if(parseFloat(Tratamientos[i].Zona) === item.id){
+    Alert.alert("Esta zona no puede borrarse ya que es parte de un Tratamiento")
+      return;
+    }
   }
-});
 
     let comprobante = DatabaseConnection.DeleteZona(item.id);
     if ((comprobante = true)) {

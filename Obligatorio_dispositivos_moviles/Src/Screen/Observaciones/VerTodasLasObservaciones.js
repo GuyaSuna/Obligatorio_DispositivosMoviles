@@ -18,10 +18,12 @@ import Background from "../../Componentes/Background";
 const TodasLasObservaciones = () => {
   // definir un estado local, para guardar los usuarios
   const [Observaciones, setObservaciones] = useState([]);
+  const [Tratamientos , setTratamientos] = useState([]);
   const navigation = useNavigation();
   // useEffect para cargar las zonas
   useEffect(() => {
     DatabaseConnection.BuscarObservaciones(setObservaciones); // Llamada a BuscarZonas con setZonas como argumento
+    DatabaseConnection.BuscarTratamientos(setTratamientos);
   }, []);
   const handleObservar = (item) => {
     navigation.navigate("VerObservaciones", {
@@ -33,6 +35,21 @@ const TodasLasObservaciones = () => {
   };
 
   const handleBorrar = async (item) => {
+
+    let id = 0;
+for(let j = 0 ; j < Tratamientos.length ; j ++){
+    let partesObs = Tratamientos[j].Observaciones.split("**");
+    for (let i = 0; i < partesObs.length; i++) {
+      let AtributosObs = partesObs[i].split(",");
+      if (AtributosObs.length === 5) {      
+          id = parseInt(AtributosObs[0])           
+            if(item.id === id){
+              Alert.alert("No se puede eliminar una observacion que es parte de un Tratamiento")
+              return
+            }   
+          }
+      }
+    } 
     try {
       DatabaseConnection.DeleteObservaciones(item.id);
       Alert.alert(
