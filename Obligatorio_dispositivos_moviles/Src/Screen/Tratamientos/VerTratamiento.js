@@ -17,6 +17,10 @@ const UnTratamiento = ({ route }) => {
     console.log("ZONAAAAA",selectedZona)
   }, []);
 
+  useEffect(() => {
+    let Insu = item.Insumos.split("**");
+    for(let i = 0 ; i < )
+  },[item])
   const HandleModificar = () => {
     navigation.navigate("ModificarTratamiento", {
       Id: item.Id,
@@ -51,9 +55,7 @@ const UnTratamiento = ({ route }) => {
           <Text style={styles.label}>Nombre: {item?.Nombre}</Text>
           <Text style={styles.label}>Tiempo: {item?.Tiempo}</Text>
           <Text style={styles.label}>FechaInicio: {item?.FechaInicio}</Text>
-          <Text style={styles.label}>
-            FechaFinalizacion: {item?.FechaFinalizacion}
-          </Text>
+          <Text style={styles.label}>FechaFinalizacion: {item?.FechaFinalizacion}  </Text>
           <Text style={styles.label}>Usuario: {item?.Usuario}</Text>
           <Text style={styles.label}>
             Zona:{" "}

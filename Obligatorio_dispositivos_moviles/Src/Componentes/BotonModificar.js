@@ -11,7 +11,7 @@ const BotonModificar = ({
 }) => {
   return (
 
-   <TouchableOpacity style={btnIcon ? styles.button : styles.button2} onPress={onPress}>
+   <TouchableOpacity style={styles.button2} onPress={onPress}>
            <View style={styles.container}>
         {btnIcon != '' &&  <Icon name={btnIcon} size={40} color="white" />}
         <Text style={styles.text}>{title}</Text>
