@@ -8,6 +8,8 @@ import Background from "../../Componentes/Background";
 
 const UnTratamiento = ({ route }) => {
   const [selectedZona, setSelectedZona] = useState(null);
+    const [Insumos, setInsumos] = useState([]);
+    const [Observaciones, setObservaciones] = useState([]);
   const item = route.params;
   const navigation = useNavigation();
   const mapRef = useRef(null);
@@ -19,8 +21,24 @@ const UnTratamiento = ({ route }) => {
 
   useEffect(() => {
     let Insu = item.Insumos.split("**");
-    for(let i = 0 ; i < )
+let Guardados = [];
+    for(let i = 0 ; i <Insu.length ; i++ ){
+      let ParteInsu = Insu[i] 
+        Guardados.push(ParteInsu); 
+    }
+    Guardados.pop()
+ setInsumos(Guardados)
+
+ let Obs = item.Observaciones.split("**");
+ let GuardadosObs = [];
+     for(let j = 0 ; j <Obs.length ; j++ ){
+       let ParteObs = Obs[j] 
+         GuardadosObs.push(ParteObs); 
+     }
+     GuardadosObs.pop()
+  setObservaciones(Guardados)
   },[item])
+
   const HandleModificar = () => {
     navigation.navigate("ModificarTratamiento", {
       Id: item.Id,
@@ -57,9 +75,19 @@ const UnTratamiento = ({ route }) => {
           <Text style={styles.label}>FechaInicio: {item?.FechaInicio}</Text>
           <Text style={styles.label}>FechaFinalizacion: {item?.FechaFinalizacion}  </Text>
           <Text style={styles.label}>Usuario: {item?.Usuario}</Text>
-          <Text style={styles.label}>
-            Zona:{" "}
-            {selectedZona
+          {Insumos.map((Insumo, index) => (
+          <View key={index}>
+            <Text  style={styles.itemName}>Nombre del insumo: {Insumo.split(",")[1]}</Text>
+            <Text style={styles.itemQuantity}>Cantidad: {Insumo.split(",")[2]}</Text>
+          </View>
+        ))}
+          {Observaciones.map((Observacion, index) => (
+          <View key={index}>
+            <Text  style={styles.itemName}>Titulo de la Observacion: {Observacion.split(",")[1]}</Text>
+            <Text style={styles.itemQuantity}>Anda a saber: {Observacion.split(",")[2]}</Text>
+          </View>
+        ))}
+          <Text style={styles.label}> Zona:{" "} {selectedZona
               ? `Latitud: ${selectedZona.Latitud}, Longitud: ${selectedZona.Longitud}`
               : ""}
           </Text>
@@ -110,7 +138,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderColor: 'grey',
   },
-  
+  itemName: {
+    fontSize: 14,
+    fontWeight: "bold",
+  },
+  itemQuantity: {
+    fontSize: 12,
+  },
 });
 
 export default UnTratamiento;
