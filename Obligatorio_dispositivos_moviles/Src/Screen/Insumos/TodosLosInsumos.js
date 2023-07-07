@@ -21,12 +21,14 @@ const TodosLosInusmos = () => {
   //Definimos un estado local para guardar los datos de Insumos
 
   const [Insumos, setInsumos] = useState([]);
+  const [Tratamientos, setTratamientos] = useState([]);
   const navigation = useNavigation();
 
   //Con el useEffect cargamos los insumos.
 
   useEffect(() => {
     DatabaseConnection.BuscarInsumo(setInsumos);
+    DatabaseConnection.BuscarTratamientos(setTratamientos);
   }, []);
   const handleObservar = (item) => {
     navigation.navigate("UnInsumo", {
@@ -35,11 +37,27 @@ const TodosLosInusmos = () => {
     });
   };
   const handleBorrar = (item) => {
+    let id = 0;
+    for (let j = 0; j < Tratamientos.length; j++) {
+      let partesIns = Tratamientos[j].Insumos.split("**");
+      for (let i = 0; i < partesIns.length; i++) {
+        let AtributosIns = partesIns[i].split(",");
+        if (AtributosIns.length === 3) {
+          id = parseInt(AtributosIns[0]);
+          if (item.id === id) {
+            Alert.alert(
+              "No se puede eliminar un insumo que es parte de un Tratamiento"
+            );
+            return;
+          }
+        }
+      }
+    }
     let comprobante = DatabaseConnection.DeleteInsumo(item.id);
     if ((comprobante = true)) {
       Alert.alert(
         "Exito",
-        "Insumo eliminado correctamente",
+        "Insumo borrado correctamente",
         [
           {
             text: "Ok",

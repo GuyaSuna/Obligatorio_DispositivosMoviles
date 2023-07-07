@@ -19,10 +19,12 @@ const db = DatabaseConnection.getConnection();
 
 const TodosLosUsuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
+  const [Tratamientos, setTratamientos] = useState([]);
   const navigation = useNavigation();
 
   useEffect(() => {
     DatabaseConnection.BuscarUsuarios(setUsuarios);
+    DatabaseConnection.BuscarTratamientos(setTratamientos);
   }, []);
 
   const handleObservar = (item) => {
@@ -34,6 +36,14 @@ const TodosLosUsuarios = () => {
   };
 
   const handleBorrar = (item) => {
+    for (let i = 0; i < Tratamientos.length; i++) {
+      if (parseFloat(Tratamientos[i].Usuario) === item.id) {
+        Alert.alert(
+          "El usuario no puede borrarse ya que es parte de un Tratamiento"
+        );
+        return;
+      }
+    }
     let comprobante = DatabaseConnection.DeleteUsuario(item.id);
     if ((comprobante = true)) {
       Alert.alert(
