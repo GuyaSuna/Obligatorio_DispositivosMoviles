@@ -36,7 +36,7 @@ let Guardados = [];
          GuardadosObs.push(ParteObs); 
      }
      GuardadosObs.pop()
-  setObservaciones(Guardados)
+  setObservaciones(GuardadosObs)
   },[item])
 
   const HandleModificar = () => {
@@ -81,7 +81,7 @@ let Guardados = [];
             <Text style={styles.itemQuantity}>Cantidad: {Insumo.split(",")[2]}</Text>
           </View>
         ))}
-          {Observaciones.map((Observacion, index) => (
+          {Observaciones.map((Observacion, index ) => (
           <View key={index}>
             <Text  style={styles.itemName}>Titulo de la Observacion: {Observacion.split(",")[1]}</Text>
             <Text style={styles.itemQuantity}>Anda a saber: {Observacion.split(",")[2]}</Text>
