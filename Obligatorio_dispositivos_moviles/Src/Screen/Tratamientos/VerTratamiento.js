@@ -13,6 +13,10 @@ const UnTratamiento = ({ route }) => {
   const item = route.params;
   const navigation = useNavigation();
   const mapRef = useRef(null);
+  const Fecha = new Date();
+  const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+  const FechaFormateada = Fecha.toLocaleDateString("es-UY", options);
+
 
   useEffect(() => {
     DatabaseConnection.SeleccionarZonaUnica(parseInt(item.Zona), setSelectedZona);
@@ -70,6 +74,8 @@ let Guardados = [];
       <ScrollView>
         <View style={styles.container}>
           <Text style={styles.label}>Id: {item?.Id}</Text>
+          { item.FechaFinalizacion < FechaFormateada && <Text>Tratamiento Finalizado</Text>}
+          { item.FechaFinalizacion > FechaFormateada && <Text>Tratamiento En Progreso </Text>}
           <Text style={styles.label}>Nombre: {item?.Nombre}</Text>
           <Text style={styles.label}>Tiempo: {item?.Tiempo}</Text>
           <Text style={styles.label}>FechaInicio: {item?.FechaInicio}</Text>
@@ -84,7 +90,6 @@ let Guardados = [];
           {Observaciones.map((Observacion, index ) => (
           <View key={index}>
             <Text  style={styles.itemName}>Titulo de la Observacion: {Observacion.split(",")[1]}</Text>
-            <Text style={styles.itemQuantity}>Anda a saber: {Observacion.split(",")[2]}</Text>
           </View>
         ))}
           <Text style={styles.label}> Zona:{" "} {selectedZona
