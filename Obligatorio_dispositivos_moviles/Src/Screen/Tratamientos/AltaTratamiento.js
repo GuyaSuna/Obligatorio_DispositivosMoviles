@@ -335,7 +335,7 @@ const AltaTratamientoForm = () => {
                 )}
                 <View style={styles.buttonContainer}>
                   <BotonPrincipal
-                    title="Seleccionar imagen"
+                    title="Seleccionar Orden"
                     onPress={pickImage}
                   />
                 </View>

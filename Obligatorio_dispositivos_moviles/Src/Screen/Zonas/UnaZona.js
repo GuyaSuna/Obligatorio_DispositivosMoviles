@@ -23,6 +23,7 @@ useEffect(() => {
 
 const HandleModificar = () => {
   navigation.navigate("ModificarZona",  { 
+    Id: item.Id,
     Lugar : item.Lugar,
     Departamento: item.Departamento,
     Cantidad: item.Cantidad,

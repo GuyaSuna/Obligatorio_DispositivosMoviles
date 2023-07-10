@@ -24,7 +24,10 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSMusicUsageDescription": "Permite reproducir música en la aplicación."
+      }
     },
     "android": {
       "adaptiveIcon": {

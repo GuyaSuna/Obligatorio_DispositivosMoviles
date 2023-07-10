@@ -76,22 +76,20 @@ const DatabaseConnection = {
     Cantidad,
     Latitud,
     Longitud,
-    Latitud2,
-    Longitud2
+    Id
   ) => {
     return new Promise((resolve, reject) => {
       const db = DatabaseConnection.getConnection();
       db.transaction((tx) => {
         tx.executeSql(
-          "UPDATE Zonas SET Lugar=?, Departamento=?, Cantidad=?, Latitud=?, Longitud=? WHERE Latitud=? AND Longitud=?",
+          "UPDATE Zonas SET Lugar=?, Departamento=?, Cantidad=?, Latitud=?, Longitud=? WHERE Id=?",
           [
             Lugar,
             Departamento,
             Cantidad,
             Latitud,
             Longitud,
-            Latitud2,
-            Longitud2,
+            Id,
           ],
           (_, results) => {
             if (results.rowsAffected > 0) {
@@ -246,13 +244,13 @@ const DatabaseConnection = {
     });
   },
 
-  ModificarUsuario: (Nombre, Apellido, Email, NombreViejo, ApellidoViejo) => {
+  ModificarUsuario: (Nombre, Apellido, Email, Id) => {
     return new Promise((resolve, reject) => {
       const db = DatabaseConnection.getConnection();
       db.transaction((tx) => {
         tx.executeSql(
-          "UPDATE Usuarios SET Nombre=?, Apellido=?, Email=? WHERE Nombre=? AND Apellido=?",
-          [Nombre, Apellido, Email, NombreViejo, ApellidoViejo],
+          "UPDATE Usuarios SET Nombre=?, Apellido=?, Email=? WHERE Id=?",
+          [Nombre, Apellido, Email, Id],
           (_, results) => {
             if (results.rowsAffected > 0) {
               resolve(true);

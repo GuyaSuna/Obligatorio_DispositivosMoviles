@@ -77,8 +77,6 @@ const VerTodosLosTratamientos = () => {
           <MyText textValue="Nombre" textStyle={styles.textStyle} />
           <MyText textValue={item.Nombre} textStyle={styles.textStyle} />
 
-          <MyText textValue={item.id} textStyle={styles.textStyle} />
-
           <MyText textValue="Fecha Inicio" textStyle={styles.textStyle} />
           <MyText textValue={item.FechaInicio} textStyle={styles.textStyle} />
 

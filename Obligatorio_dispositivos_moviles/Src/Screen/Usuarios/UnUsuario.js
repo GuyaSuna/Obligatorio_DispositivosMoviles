@@ -10,6 +10,7 @@ const UnUsuario = ({ route }) => {
 
   const HandleModificar = () => {
     navigation.navigate("EditUsuarios", {
+      Id : item.Id,
       Nombre: item.Nombre,
       Apellido: item.Apellido,
       Email: item.Email,

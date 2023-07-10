@@ -90,6 +90,7 @@ const Contactanos = () => {
             <Text style={styles.info}>Correo electrónico: aguacatehamburguesas@gmail.com</Text>
             <Text style={styles.info}>Teléfono: +1 345-678-9012</Text>
           </View>
+          <Text style={styles.info}>Musica solo disponible en Android jeje</Text>
         </View>
       </View>
       <TouchableOpacity style={styles.button} onPress={isPlaying ? stopMusic : playMusic}>

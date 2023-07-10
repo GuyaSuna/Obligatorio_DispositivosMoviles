@@ -28,7 +28,6 @@ const AltaZona = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   const navigation = useNavigation();
-  const db = DatabaseConnection.getConnection();
   const mapRef = useRef(null);
 
   const hideKeyboard = () => {

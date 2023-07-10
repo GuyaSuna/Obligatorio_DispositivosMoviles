@@ -1,5 +1,5 @@
 import { React, useEffect, useState, useRef } from "react";
-import { StyleSheet, Text, View, ScrollView , Image} from "react-native";
+import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection";
@@ -83,7 +83,6 @@ const UnTratamiento = ({ route }) => {
     <Background>
       <ScrollView>
         <View style={styles.container}>
-          <Text style={styles.label}>Id: {item?.Id}</Text>
           {item.FechaFinalizacion < FechaFormateada && (
             <Text style={styles.label}>Tratamiento Finalizado</Text>
           )}
@@ -98,8 +97,8 @@ const UnTratamiento = ({ route }) => {
           </Text>
           <Text style={styles.label}>Usuario: {item?.Usuario}</Text>
           {item.OrdenTrabajo && (
-                  <Image source={{ uri: item.OrdenTrabajo }} style={styles.image} />
-                )}
+            <Image source={{ uri: item.OrdenTrabajo }} style={styles.image} />
+          )}
           {Insumos.map((Insumo, index) => (
             <View key={index}>
               <Text style={styles.itemName}>
@@ -124,7 +123,7 @@ const UnTratamiento = ({ route }) => {
               ? `Latitud: ${selectedZona.Latitud}, Longitud: ${selectedZona.Longitud}`
               : ""}
           </Text>
-        
+
           <MapView
             ref={mapRef}
             style={styles.map}

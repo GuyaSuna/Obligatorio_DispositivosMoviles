@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect, useRef } from "react";
 import {
   StyleSheet,
   View,
@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Alert,
   Keyboard,
+  Text
 } from "react-native";
 // import MyText from "../../Componentes/MyText"; Lo vamos a usar para el buscador.
 
@@ -16,6 +17,8 @@ import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection"
 import Background from "../../Componentes/Background";
+import * as Location from "expo-location";
+import MapView, { Marker } from "react-native-maps";
 
 const ModificarZona = ({ route }) => {
   const item = route.params;
@@ -31,8 +34,15 @@ const ModificarZona = ({ route }) => {
   const [Longitud, setLongitud] = useState(
     item.Longitud ? String(item.Longitud) : ""
   );
+  const [locationPermission, setLocationPermission] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
   const navigation = useNavigation();
-  const db = DatabaseConnection.getConnection();
+  const mapRef = useRef(null);
+
+  useEffect(() => {
+    checkLocationPermission();
+  }, []);
 
   const hideKeyboard = () => {
     Keyboard.dismiss();
@@ -50,13 +60,7 @@ const ModificarZona = ({ route }) => {
     setCantidad(cantidad);
   };
 
-  const handleLatitud = (latitud) => {
-    setLatitud(latitud);
-  };
-
-  const handleLongitud = (longitud) => {
-    setLongitud(longitud);
-  };
+ 
 
   const validateData = () => {
     if (Lugar === "" && !Lugar.trim()) {
@@ -91,7 +95,7 @@ const ModificarZona = ({ route }) => {
     console.log("### modificando Zona ###");
 
     if (validateData()) {
-      console.log("### save zona ###");
+      console.log("### save zona ###", item.Id);
 
       // llamar a la db y guardar los datos
       DatabaseConnection.ModificarZona(
@@ -100,8 +104,7 @@ const ModificarZona = ({ route }) => {
         Cantidad,
         Latitud,
         Longitud,
-        item.Latitud,
-        item.Longitud
+        item.Id
       ).then((comprobante) => {
         if (comprobante) {
           Alert.alert(
@@ -132,6 +135,41 @@ const ModificarZona = ({ route }) => {
           );
         }
       });
+    }
+  };
+
+
+  const UbicarMapa = (lati, longi) => {
+    mapRef.current.animateToRegion({
+      latitude: lati,
+      longitude: longi,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    });
+  };
+  const checkLocationPermission = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    setLocationPermission(status === "granted");
+  };
+
+  const handleMapPress = (event) => {
+    setSelectedLocation(event.nativeEvent.coordinate);
+    setLatitud(event.nativeEvent.coordinate.latitude);
+    setLongitud(event.nativeEvent.coordinate.longitude);
+  };
+
+  const handleGetLocation = async () => {
+    if (locationPermission) {
+      try {
+        const location = await Location.getCurrentPositionAsync();
+        setLatitud(location.coords.latitude);
+        setLongitud(location.coords.longitude);
+        UbicarMapa(location.coords.latitude,location.coords.longitude)
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.log("Location permission denied");
     }
   };
 
@@ -169,16 +207,37 @@ const ModificarZona = ({ route }) => {
                   onSubmitEditing={hideKeyboard}
                   keyboardType="numeric"
                 />
-                <MyInputText
-                  placeholder="Latutid"
-                  onChangeText={handleLatitud}
-                  value={Latitud}
+                 <MapView
+          ref={mapRef}
+          style={styles.map}
+          initialRegion={{
+            latitude: item?.Latitud || 0,
+            longitude: item?.Longitud || 0,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+          onPress={handleMapPress}
+        >
+          <Marker
+            coordinate={{
+              latitude: item?.Latitud || 0,
+              longitude: item?.Longitud || 0,
+            }}
+          />
+        </MapView>
+                <BotonPrincipal
+                  title="Obtener ubicación"
+                  onPress={handleGetLocation}
                 />
-                <MyInputText
-                  placeholder="Longitud"
-                  onChangeText={handleLongitud}
-                  value={Longitud}
-                />
+
+                {Latitud && Longitud && (
+                  <View>
+                    <Text style={styles.locationText}>Latitude: {Latitud}</Text>
+                    <Text style={styles.locationText}>
+                      Longitude: {Longitud}
+                    </Text>
+                  </View>
+                )}
 
                 <BotonPrincipal title="Modificar Zona" onPress={Modificar} />
               </KeyboardAvoidingView>
@@ -195,8 +254,19 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     margin: 10,
     padding: 10,
-    borderRadius: 10,
     height: 400,
   },
+  map: {
+    width: "100%",
+    height: 200,
+    marginBottom: 10,
+    borderColor: "grey",
+  },
+  locationText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    borderColor: "grey",
+  },
+ 
 });
 export default ModificarZona;

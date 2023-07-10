@@ -60,14 +60,13 @@ const EditUsuarios = ({ route }) => {
   };
 
   const editUsuario = () => {
-    console.log(userName, apellido, email, item.Nombre, item.Apellido);
+    console.log(userName, apellido, email, item.Id);
     if (validateDate()) {
       DatabaseConnection.ModificarUsuario(
         userName,
         apellido,
         email,
-        item.Nombre,
-        item.Apellido
+        item.Id
       ).then((comprobante) => {
         if (comprobante) {
           Alert.alert(
