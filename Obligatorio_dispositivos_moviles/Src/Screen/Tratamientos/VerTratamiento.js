@@ -85,7 +85,6 @@ const UnTratamiento = ({ route }) => {
     <Background>
       <ScrollView>
         <View style={styles.container}>
-          <Text style={styles.label}>Id: {item?.Id}</Text>
           { item.FechaFinalizacion < FechaFormateada && <Text style={styles.label}>Tratamiento Finalizado</Text>}
           { item.FechaFinalizacion >= FechaFormateada && <Text style={styles.label}>Tratamiento En Progreso </Text>}
           <Text style={styles.label}>Nombre: {item?.Nombre}</Text>
