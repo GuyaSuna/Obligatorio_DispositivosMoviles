@@ -152,11 +152,9 @@ const AltaZona = () => {
     if (locationPermission) {
       try {
         const location = await Location.getCurrentPositionAsync();
-        setSelectedLocation({
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-        });
-        UbicarMapa(location.coords.latitude, location.coords.longitude);
+        setLatitud(location.coords.latitude);
+        setLongitud(location.coords.longitude);
+        UbicarMapa(location.coords.latitude,location.coords.longitude)
       } catch (error) {
         console.log(error);
       }

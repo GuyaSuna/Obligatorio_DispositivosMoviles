@@ -372,8 +372,8 @@ const styles = StyleSheet.create({
   picker: {
     height: 200,
     marginBottom: 8,
-    borderRadius: "5px",
-    borderColor: "grey",
+
+    borderColor: 'grey',
   },
   selectedItemsContainer: {
     marginBottom: 16,

@@ -19,7 +19,7 @@ import BotonBorrar from "../../Componentes/BotonBorrar";
 const TodasLasZonas = () => {
   // definir un estado local, para guardar los usuarios
   const [Zonas, setZonas] = useState([]);
-  const [Tratamientos, setTratamientos] = useState([]);
+  const [Tratamientos , setTratamientos] = useState([]);
   const navigation = useNavigation();
   // useEffect para cargar las zonas
   useEffect(() => {
@@ -36,14 +36,14 @@ const TodasLasZonas = () => {
     });
   };
   const handleBorrar = (item) => {
-    for (let i = 0; i < Tratamientos.length; i++) {
-      if (parseFloat(Tratamientos[i].Zona) === item.id) {
-        Alert.alert(
-          "Esta zona no puede borrarse ya que es parte de un Tratamiento"
-        );
-        return;
-      }
+
+  for(let i = 0 ; i < Tratamientos.length ; i++){
+    if(parseFloat(Tratamientos[i].Zona) === item.id){
+    Alert.alert("Esta zona no puede borrarse ya que es parte de un Tratamiento")
+      return;
     }
+  }
+
     let comprobante = DatabaseConnection.DeleteZona(item.id);
     if ((comprobante = true)) {
       Alert.alert(

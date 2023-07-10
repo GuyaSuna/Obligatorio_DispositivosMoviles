@@ -14,6 +14,8 @@ const Contactanos = () => {
     "https://s2.best-wallpaper.net/wallpaper/iphone/1311/Green-nature-branch-leaves-bokeh_iphone_320x480.jpg";
   const [titleColor, setTitleColor] = useState("#fff");
   const [sound, setSound] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,12 +45,20 @@ const Contactanos = () => {
     };
   }, []);
 
+  const stopMusic = async () => {
+    if (sound) {
+      await sound.stopAsync();
+      setIsPlaying(false);
+    }
+  };
+  
   const playMusic = async () => {
     if (sound) {
+      setIsPlaying(true);
       await sound.replayAsync();
     }
   };
-
+  
   return (
     <ImageBackground
       source={{ uri: backgroundImageSource }}
@@ -76,17 +86,16 @@ const Contactanos = () => {
             <Text style={styles.info}>Teléfono: (+598)98 71 75 63</Text>
           </View>
           <View style={styles.personContainer}>
-            <Text style={styles.name}>Alexis Araujo</Text>
-            <Text style={styles.info}>
-              Correo electrónico: alexisar1@hotmail.com
-            </Text>
-            <Text style={styles.info}>Teléfono: (+598)98 38 52 77</Text>
+            <Text style={styles.name}>Alexis</Text>
+            <Text style={styles.info}>Correo electrónico: aguacatehamburguesas@gmail.com</Text>
+            <Text style={styles.info}>Teléfono: +1 345-678-9012</Text>
           </View>
         </View>
       </View>
-      <TouchableOpacity style={styles.button} onPress={playMusic}>
-        <Text style={styles.buttonText}>Reproducir música</Text>
-      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={isPlaying ? stopMusic : playMusic}>
+  <Text style={styles.buttonText}>{isPlaying ? 'Detener música' : 'Reproducir música'}</Text>
+</TouchableOpacity>
+
     </ImageBackground>
   );
 };
