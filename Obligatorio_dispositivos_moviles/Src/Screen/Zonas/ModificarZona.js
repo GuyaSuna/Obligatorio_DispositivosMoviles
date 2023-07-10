@@ -60,13 +60,7 @@ const ModificarZona = ({ route }) => {
     setCantidad(cantidad);
   };
 
-  const handleLatitud = (latitud) => {
-    setLatitud(latitud);
-  };
-
-  const handleLongitud = (longitud) => {
-    setLongitud(longitud);
-  };
+ 
 
   const validateData = () => {
     if (Lugar === "" && !Lugar.trim()) {
@@ -101,7 +95,7 @@ const ModificarZona = ({ route }) => {
     console.log("### modificando Zona ###");
 
     if (validateData()) {
-      console.log("### save zona ###");
+      console.log("### save zona ###", item.Id);
 
       // llamar a la db y guardar los datos
       DatabaseConnection.ModificarZona(
@@ -110,8 +104,7 @@ const ModificarZona = ({ route }) => {
         Cantidad,
         Latitud,
         Longitud,
-        item.Latitud,
-        item.Longitud
+        item.Id
       ).then((comprobante) => {
         if (comprobante) {
           Alert.alert(
@@ -214,19 +207,24 @@ const ModificarZona = ({ route }) => {
                   onSubmitEditing={hideKeyboard}
                   keyboardType="numeric"
                 />
-                              <MapView
-                  ref={mapRef}
-                  style={styles.map}
-                  initialRegion={{
-                    latitude: Latitud || 0,
-                    longitude: Longitud || 0,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
-                  }}
-                  onPress={handleMapPress}
-                >
-                  {selectedLocation && <Marker coordinate={selectedLocation} />}
-                </MapView>
+                 <MapView
+          ref={mapRef}
+          style={styles.map}
+          initialRegion={{
+            latitude: item?.Latitud || 0,
+            longitude: item?.Longitud || 0,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+          onPress={handleMapPress}
+        >
+          <Marker
+            coordinate={{
+              latitude: item?.Latitud || 0,
+              longitude: item?.Longitud || 0,
+            }}
+          />
+        </MapView>
                 <BotonPrincipal
                   title="Obtener ubicación"
                   onPress={handleGetLocation}
@@ -262,6 +260,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 200,
     marginBottom: 10,
+    borderColor: "grey",
   },
   locationText: {
     fontSize: 16,

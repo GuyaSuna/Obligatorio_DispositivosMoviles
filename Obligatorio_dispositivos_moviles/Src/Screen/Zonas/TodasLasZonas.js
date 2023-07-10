@@ -28,6 +28,7 @@ const TodasLasZonas = () => {
   }, []);
   const handleObservar = (item) => {
     navigation.navigate("UnaZona", {
+      Id: item.id,
       Lugar: item.Lugar,
       Departamento: item.Departamento,
       Cantidad: item.Cantidad,

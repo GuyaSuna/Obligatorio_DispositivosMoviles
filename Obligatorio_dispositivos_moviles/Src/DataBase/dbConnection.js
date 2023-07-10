@@ -76,22 +76,20 @@ const DatabaseConnection = {
     Cantidad,
     Latitud,
     Longitud,
-    Latitud2,
-    Longitud2
+    Id
   ) => {
     return new Promise((resolve, reject) => {
       const db = DatabaseConnection.getConnection();
       db.transaction((tx) => {
         tx.executeSql(
-          "UPDATE Zonas SET Lugar=?, Departamento=?, Cantidad=?, Latitud=?, Longitud=? WHERE Latitud=? AND Longitud=?",
+          "UPDATE Zonas SET Lugar=?, Departamento=?, Cantidad=?, Latitud=?, Longitud=? WHERE Id=?",
           [
             Lugar,
             Departamento,
             Cantidad,
             Latitud,
             Longitud,
-            Latitud2,
-            Longitud2,
+            Id,
           ],
           (_, results) => {
             if (results.rowsAffected > 0) {

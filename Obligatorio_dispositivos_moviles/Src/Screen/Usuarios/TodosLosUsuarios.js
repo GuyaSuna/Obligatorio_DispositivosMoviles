@@ -29,7 +29,7 @@ const TodosLosUsuarios = () => {
 
   const handleObservar = (item) => {
     navigation.navigate("UnUsuario", {
-      Id: item.id,
+      Id: item.Id,
       Nombre: item.Nombre,
       Apellido: item.Apellido,
       Email: item.Email,
