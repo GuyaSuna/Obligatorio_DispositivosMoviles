@@ -11,6 +11,7 @@ const UnTratamiento = ({ route }) => {
   const item = route.params;
   const navigation = useNavigation();
   const mapRef = useRef(null);
+  const [selectedInsumo, setSelectedInsumo] = useState();
 
   useEffect(() => {
     DatabaseConnection.SeleccionarZonaUnica(
@@ -19,6 +20,23 @@ const UnTratamiento = ({ route }) => {
     );
     console.log("ZONAAAAA", selectedZona);
   }, []);
+
+  useEffect(() => {
+    let partesInsumos = item.Insumos.split("**");
+    for (let i = 0; i < partesInsumos.length; i++) {
+      let AtributosInsumos = partesInsumos[i].split(",");
+      if (AtributosInsumos.length === 3) {
+        let id = parseInt(AtributosInsumos[0]);
+        if (item.id === id) {
+          setSelectedInsumo({
+            nombre: AtributosInsumos[1],
+            cantidad: AtributosInsumos[2],
+          });
+          break;
+        }
+      }
+    }
+  }, [item]);
 
   const HandleModificar = () => {
     navigation.navigate("ModificarTratamiento", {
@@ -63,12 +81,21 @@ const UnTratamiento = ({ route }) => {
             FechaFinalizacion: {item?.FechaFinalizacion}
           </Text>
           <Text style={styles.label}>Usuario: {item?.Usuario}</Text>
+
           <Text style={styles.label}>
             Zona:{" "}
             {selectedZona
               ? `Latitud: ${selectedZona.Latitud}, Longitud: ${selectedZona.Longitud}`
               : ""}
           </Text>
+          {selectedInsumo && (
+            <View>
+              <Text style={styles.label}>
+                Insumo: {selectedInsumo.nombre} | Cantidad:{" "}
+                {selectedInsumo.cantidad}
+              </Text>
+            </View>
+          )}
           <MapView
             ref={mapRef}
             style={styles.map}
