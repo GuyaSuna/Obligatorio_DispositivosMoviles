@@ -111,14 +111,7 @@ const UnTratamiento = ({ route }) => {
               ? `Latitud: ${selectedZona.Latitud}, Longitud: ${selectedZona.Longitud}`
               : ""}
           </Text>
-          {selectedInsumo && (
-            <View>
-              <Text style={styles.label}>
-                Insumo: {selectedInsumo.nombre} | Cantidad:{" "}
-                {selectedInsumo.cantidad}
-              </Text>
-            </View>
-          )}
+        
           <MapView
             ref={mapRef}
             style={styles.map}
