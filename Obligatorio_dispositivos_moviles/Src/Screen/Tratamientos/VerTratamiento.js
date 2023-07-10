@@ -25,21 +25,25 @@ const UnTratamiento = ({ route }) => {
 
   useEffect(() => {
     let Insu = item.Insumos.split("**");
-let Guardados = [];
+    let Guardados = [];
     for(let i = 0 ; i <Insu.length ; i++ ){
       let ParteInsu = Insu[i] 
-        Guardados.push(ParteInsu); 
+      if(ParteInsu.split(",").length = 3){
+          Guardados.push(ParteInsu); 
+      }  
     }
-    Guardados.pop()
  setInsumos(Guardados)
+
+
 
  let Obs = item.Observaciones.split("**");
  let GuardadosObs = [];
      for(let j = 0 ; j <Obs.length ; j++ ){
        let ParteObs = Obs[j] 
-         GuardadosObs.push(ParteObs); 
+       if(ParteObs.split(",").length = 5){
+                 GuardadosObs.push(ParteObs); 
+       }
      }
-     GuardadosObs.pop()
   setObservaciones(GuardadosObs)
   },[item])
 
@@ -74,8 +78,8 @@ let Guardados = [];
       <ScrollView>
         <View style={styles.container}>
           <Text style={styles.label}>Id: {item?.Id}</Text>
-          { item.FechaFinalizacion < FechaFormateada && <Text>Tratamiento Finalizado</Text>}
-          { item.FechaFinalizacion > FechaFormateada && <Text>Tratamiento En Progreso </Text>}
+          { item.FechaFinalizacion < FechaFormateada && <Text style={styles.label}>Tratamiento Finalizado</Text>}
+          { item.FechaFinalizacion >= FechaFormateada && <Text style={styles.label}>Tratamiento En Progreso </Text>}
           <Text style={styles.label}>Nombre: {item?.Nombre}</Text>
           <Text style={styles.label}>Tiempo: {item?.Tiempo}</Text>
           <Text style={styles.label}>FechaInicio: {item?.FechaInicio}</Text>
