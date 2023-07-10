@@ -1,5 +1,5 @@
 import { React, useEffect, useState, useRef } from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView , Image} from "react-native";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
 import { useNavigation } from "@react-navigation/native";
 import DatabaseConnection from "../../DataBase/dbConnection";
@@ -97,6 +97,9 @@ const UnTratamiento = ({ route }) => {
             FechaFinalizacion: {item?.FechaFinalizacion}{" "}
           </Text>
           <Text style={styles.label}>Usuario: {item?.Usuario}</Text>
+          {item.OrdenTrabajo && (
+                  <Image source={{ uri: item.OrdenTrabajo }} style={styles.image} />
+                )}
           {Insumos.map((Insumo, index) => (
             <View key={index}>
               <Text style={styles.itemName}>
@@ -121,14 +124,7 @@ const UnTratamiento = ({ route }) => {
               ? `Latitud: ${selectedZona.Latitud}, Longitud: ${selectedZona.Longitud}`
               : ""}
           </Text>
-          {selectedInsumo && (
-            <View>
-              <Text style={styles.label}>
-                Insumo: {selectedInsumo.nombre} | Cantidad:{" "}
-                {selectedInsumo.cantidad}
-              </Text>
-            </View>
-          )}
+        
           <MapView
             ref={mapRef}
             style={styles.map}
@@ -182,6 +178,11 @@ const styles = StyleSheet.create({
   },
   itemQuantity: {
     fontSize: 12,
+  },
+  image: {
+    width: 200,
+    height: 200,
+    marginBottom: 20,
   },
 });
 

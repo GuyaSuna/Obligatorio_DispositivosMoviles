@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   TextInput,
-  Button,
+  Image,
   Alert,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
 } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 import { Calendar } from "react-native-calendars";
 import { Picker } from "@react-native-picker/picker";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
@@ -241,6 +242,34 @@ const ModificarTratamiento = ({ route }) => {
     console.log("Jiji");
   };
 
+  const pickImage = async () => {
+    try {
+      let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  
+      if (permissionResult.granted === false) {
+        Alert.alert(
+          "Permiso requerido",
+          "Se requiere acceso a la biblioteca de imágenes para seleccionar una imagen."
+        );
+        return;
+      }
+  
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+  
+      if (!result.canceled && result.assets.length > 0) {
+        setOrdenTrabajo(result.assets[0].uri);
+      }
+    } catch (error) {
+      console.log("Error al seleccionar la imagen:", error);
+    }
+  };
+
+
   const handleBorrarObs = (itemValue) => {
     const nuevaLista = selectedObservacionList.filter(
       (obs) => obs.id !== parseInt(itemValue)
@@ -323,12 +352,17 @@ const ModificarTratamiento = ({ route }) => {
               onChangeText={setTiempo}
             />
 
-            <TextInput
-              style={styles.input}
-              placeholder="Orden de trabajo"
-              value={ordenTrabajo}
-              onChangeText={setOrdenTrabajo}
-            />
+            {ordenTrabajo && (
+                  <Image source={{ uri: ordenTrabajo }} style={styles.image} />
+             )}
+
+                <View style={styles.buttonContainer}>
+                  <BotonPrincipal
+                    title="Seleccionar imagen"
+                    onPress={pickImage}
+                  />
+                </View>
+
             <Picker
               style={styles.picker}
               selectedValue={selectedZona}
@@ -454,6 +488,11 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     margin: 10,
+  },
+  image: {
+    width: 200,
+    height: 200,
+    marginBottom: 20,
   },
 });
 
