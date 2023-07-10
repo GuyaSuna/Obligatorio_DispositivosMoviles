@@ -246,13 +246,13 @@ const DatabaseConnection = {
     });
   },
 
-  ModificarUsuario: (Nombre, Apellido, Email, NombreViejo, ApellidoViejo) => {
+  ModificarUsuario: (Nombre, Apellido, Email, Id) => {
     return new Promise((resolve, reject) => {
       const db = DatabaseConnection.getConnection();
       db.transaction((tx) => {
         tx.executeSql(
-          "UPDATE Usuarios SET Nombre=?, Apellido=?, Email=? WHERE Nombre=? AND Apellido=?",
-          [Nombre, Apellido, Email, NombreViejo, ApellidoViejo],
+          "UPDATE Usuarios SET Nombre=?, Apellido=?, Email=? WHERE Id=?",
+          [Nombre, Apellido, Email, Id],
           (_, results) => {
             if (results.rowsAffected > 0) {
               resolve(true);
