@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   TextInput,
-  Button,
+ Image,
   Alert,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
 } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 import { Picker } from "@react-native-picker/picker";
 import { Calendar } from "react-native-calendars";
 import BotonPrincipal from "../../Componentes/BotonPrincipal";
@@ -19,7 +20,7 @@ import Background from "../../Componentes/Background";
 const AltaTratamientoForm = () => {
   const [nombreTratamiento, setNombreTratamiento] = useState("");
   const [tiempo, setTiempo] = useState("");
-  const [ordenTrabajo, setOrdenTrabajo] = useState("");
+  const [ordenTrabajo, setOrdenTrabajo] = useState(null);
   const [insumos, setInsumos] = useState([]);
   const [observacion, setObservacion] = useState([]);
   const [zona, setZona] = useState([]);
@@ -44,6 +45,35 @@ const AltaTratamientoForm = () => {
     DatabaseConnection.BuscarObservaciones(setObservacion);
     console.log("Aca arrancamos", observacion[1]?.id);
   }, []);
+
+  
+  const pickImage = async () => {
+    try {
+      let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  
+      if (permissionResult.granted === false) {
+        Alert.alert(
+          "Permiso requerido",
+          "Se requiere acceso a la biblioteca de imágenes para seleccionar una imagen."
+        );
+        return;
+      }
+  
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+  
+      if (!result.canceled && result.assets.length > 0) {
+        setOrdenTrabajo(result.assets[0].uri);
+      }
+    } catch (error) {
+      console.log("Error al seleccionar la imagen:", error);
+    }
+  };
+  
 
   const renderSelectedObservaciones = () => {
     return selectedObservacionList.map((obs) => (
@@ -300,12 +330,15 @@ const AltaTratamientoForm = () => {
               onChangeText={setTiempo}
             />
 
-            <TextInput
-              style={styles.input}
-              placeholder="Orden de trabajo"
-              value={ordenTrabajo}
-              onChangeText={setOrdenTrabajo}
-            />
+            {ordenTrabajo && (
+                  <Image source={{ uri: ordenTrabajo }} style={styles.image} />
+                )}
+                <View style={styles.buttonContainer}>
+                  <BotonPrincipal
+                    title="Seleccionar imagen"
+                    onPress={pickImage}
+                  />
+                </View>
 
             <Picker
               style={styles.picker}
@@ -378,6 +411,11 @@ const styles = StyleSheet.create({
   },
   selectedItemsContainer: {
     marginBottom: 16,
+  },
+  image: {
+    width: 200,
+    height: 200,
+    marginBottom: 20,
   },
   selectedItemsTitle: {
     fontWeight: "bold",
